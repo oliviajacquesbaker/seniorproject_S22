@@ -20,6 +20,10 @@ public class Bow : MonoBehaviour
 
     private float initialFov;
 
+    private float initialTurnVelocity;
+
+    public float targetTurnVelocity;
+
     public KeyCode fireButton;
 
     public Transform spawn;
@@ -30,9 +34,15 @@ public class Bow : MonoBehaviour
 
     private GameObject Player;
 
+    private GameObject bullet;
+
     private ThirdPersonMovement playerSpeed;
 
     private CinemachineFreeLook cam; 
+
+    //public Cinemachine.CinemachineImpulseSource source;
+
+    public CinemachineVirtualCamera aimCamera;
 
     public bool isAiming;
     
@@ -43,6 +53,10 @@ public class Bow : MonoBehaviour
         bowRotation = gameObject.transform;
         cam = GameObject.Find("Third Person Camera").GetComponent<CinemachineFreeLook>();
         initialFov = cam.m_Lens.FieldOfView;
+        initialTurnVelocity = playerSpeed.turnSmoothTime;
+        bullet = (GameObject)Resources.Load("prefabs/BulletDebug", typeof(GameObject));
+        //source = bullet.GetComponent<Cinemachine.CinemachineImpulseSource>();
+        aimCamera = GameObject.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
     }
 
     void Update()
@@ -64,19 +78,15 @@ public class Bow : MonoBehaviour
 
         if (isAiming) 
         {
-            playerSpeed.speed = 5f;
-            bowRotation.Rotate(Input.GetAxis("Mouse Y") * rotationSpeed * -1, 0.0f, 0.0f, Space.Self);
-            var currentFov = cam.m_Lens.FieldOfView;
-            var fov = Mathf.Lerp(currentFov, fovTarget, Time.deltaTime * lerpValue);
-            cam.m_Lens.FieldOfView = fov;
-            Debug.Log(fov);
+            playerSpeed.speed = 2f;
+            bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
+            playerSpeed.turnSmoothTime = targetTurnVelocity;
         }
         else
         {
+
             playerSpeed.speed = 10f;
-            bowRotation.Rotate(0.0f, 0.0f, 0.0f, Space.Self); // reset x to 0
-            var currentFov = cam.m_Lens.FieldOfView;
-            cam.m_Lens.FieldOfView = Mathf.Lerp(currentFov, initialFov, Time.deltaTime * lerpValue);
+            playerSpeed.turnSmoothTime = initialTurnVelocity;
         }
     }
 }

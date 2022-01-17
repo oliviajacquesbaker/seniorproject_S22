@@ -7,16 +7,29 @@ public class ThirdPersonMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
+    private Bow bowObj;
+
+    private GameObject Player;
+
     public float speed = 6f;
+
+    public float rotationSpeed = 1f;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
-    // Update is called once per frame
+    void Start()
+    {
+        bowObj = GameObject.Find("Bow").GetComponent<Bow>();
+        Player = GameObject.Find("Player");
+    }
+
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
@@ -27,10 +40,10 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
         }
-    }
 
-    public void SlowDown(int amount)
-    {
-        speed -= amount;
+        if (bowObj.isAiming)
+        {
+            Player.transform.Rotate(Vector3.up, mouseX);
+        }
     }
 }
