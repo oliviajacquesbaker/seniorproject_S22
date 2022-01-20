@@ -58,7 +58,7 @@ public class IdentifyShadows : MonoBehaviour
         }
     }
 
-    public Color[] DetectShadows()
+    public Color[] DetectShadows(ShadowType overrideDetect = ShadowType.none)
     {
         shadows = new List<Shadow>();
         RenderTexture inbetween = new RenderTexture(3 * Screen.width / 4, Screen.height, 24);
@@ -89,6 +89,8 @@ public class IdentifyShadows : MonoBehaviour
                 if (toAdd.pixels.Count > 10) shadows.Add(toAdd);
             }
         }
+
+        if (overrideDetect != ShadowType.none) shadows[0].label = overrideDetect;
 
         //all this is just to check if everything was properlly identified
         Color[] testpixels = ApplyShapeColorFilter(pixels);

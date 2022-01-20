@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Shadows\Label.cs" />
     <Compile Include="Assets\Scripts\Shadows\FollowCam.cs" />
+    <Compile Include="Assets\Scripts\InterractableItems\DemoPipe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

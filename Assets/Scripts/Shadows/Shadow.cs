@@ -186,7 +186,7 @@ public class Shadow
         else if (label == ShadowType.oval) labelPrefab = labelPrefabs[1];
         else if (label == ShadowType.rect) labelPrefab = labelPrefabs[2];
         else if (label == ShadowType.square) labelPrefab = labelPrefabs[3];
-        else return; // labelPrefab = labelPrefabs[4];
+        else return;// labelPrefab = labelPrefabs[4];
         int yPos, xPos;
         yPos = Mathf.FloorToInt(cornerVerts[0] / imgWidth);
         xPos = cornerVerts[0] % imgWidth;
