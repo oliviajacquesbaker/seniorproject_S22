@@ -53,8 +53,8 @@
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Enemy\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Shadows\FollowCam.cs" />
     <Compile Include="Assets\Scripts\Player\CameraController.cs" />
     <Compile Include="Assets\Scripts\Weapons\Melee.cs" />
     <Compile Include="Assets\Scripts\Shadows\Shadow.cs" />
@@ -63,10 +63,12 @@
     <Compile Include="Assets\Scripts\Shadows\IdentifyShadows.cs" />
     <Compile Include="Assets\Scripts\Weapons\Bow.cs" />
     <Compile Include="Assets\Scripts\Shadows\LocateShadows.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
-    <Compile Include="Assets\Scripts\Shadows\Label.cs" />
-    <Compile Include="Assets\Scripts\Shadows\FollowCam.cs" />
     <Compile Include="Assets\Scripts\InterractableItems\DemoPipe.cs" />
+    <Compile Include="Assets\Scripts\Shadows\Label.cs" />
+    <Compile Include="Assets\Scripts\Enemy\BoosterMob.cs" />
+    <Compile Include="Assets\Scripts\Enemy\_AIStats.cs" />
+    <Compile Include="Assets\Scripts\Enemy\_AIStatsController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

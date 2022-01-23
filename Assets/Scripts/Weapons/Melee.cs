@@ -13,10 +13,10 @@ public class Melee : MonoBehaviour
     {
         if (Input.GetKeyDown(attackButton))
         {
-            if (collider.GetComponent<EnemyStats>())
+            if (collider.GetComponent<_AIStats>())
             {
-                EnemyStats stats = collider.GetComponent<EnemyStats>();
-                stats.Hit(damage);
+                _AIStats stats = collider.GetComponent<_AIStats>();
+                stats.Damage(damage);
             }
         }
     }
