@@ -5,27 +5,75 @@ using UnityEngine;
 public class BoosterMob : MonoBehaviour
 {
     [SerializeField]
-    float boostAmount = 2f;
+    private Light boostedLight;
     [SerializeField]
-    Light boostedLight;
+    private float maxBoostAmount = 2f;
+    [SerializeField]
+    private Material deadMat;
+    private Material[] materials;
+    private float minBoostAmount;
+    private float initIntensity;
+    private float initRange;
+    private float increment;
+    private float downMod;
+    private bool up = false, flare = false;
+    private bool active = true;
+    private Animator animator;
 
-    private void Start()
+    void Start()
     {
-        BoostLight();
+        animator = gameObject.GetComponentInParent<Animator>();
+        materials = gameObject.GetComponent<Renderer>().materials;
+        initIntensity = boostedLight.intensity;
+        initRange = boostedLight.range;
+        minBoostAmount = initIntensity + maxBoostAmount / 2;
+        increment = (maxBoostAmount - minBoostAmount) / 300;
+        downMod = -0.6f;
+        BoostLight(maxBoostAmount);
     }
 
-    private void BoostLight()
+    private void Update()
     {
-        boostedLight.intensity += boostAmount;
+        if (active)
+        {
+            if (flare) increment *= 1.15f;
+            if (up) BoostLight(increment);
+            else BoostLight(downMod * increment);
+
+            if (boostedLight.intensity > maxBoostAmount) up = false;
+            else if (boostedLight.intensity < minBoostAmount)
+            {
+                up = true;
+                if (flare) active = false;
+            }
+        }
     }
 
-    private void RemoveBoost()
+    private void BoostLight(float amount)
     {
-        boostedLight.intensity -= boostAmount;
+        boostedLight.intensity += amount;
+        boostedLight.range += amount/2;
+    }
+
+    private void ResetLight()
+    {
+        boostedLight.intensity = initIntensity;
+        boostedLight.range = initRange;
+    }
+
+    private void Flare()
+    {
+        flare = true;
+        up = true;
+        downMod = -1f;
+        maxBoostAmount *= 8f;
     }
 
     public void OnDeath()
     {
-        RemoveBoost();
+        Flare();
+        animator.SetTrigger("Death");
+        materials[1] = deadMat;
+        gameObject.GetComponent<Renderer>().materials = materials;
     }
 }
