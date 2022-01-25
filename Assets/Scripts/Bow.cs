@@ -14,12 +14,6 @@ public class Bow : MonoBehaviour
 
     public float rotationSpeed;
 
-    public float lerpValue;
-
-    public float fovTarget;
-
-    private float initialFov;
-
     private float initialTurnVelocity;
 
     public float targetTurnVelocity;
@@ -28,7 +22,7 @@ public class Bow : MonoBehaviour
 
     public Transform spawn;
 
-    public Transform bowRotation;
+    private Transform bowRotation;
 
     public Rigidbody arrowObj;
 
@@ -42,9 +36,19 @@ public class Bow : MonoBehaviour
 
     //public Cinemachine.CinemachineImpulseSource source;
 
-    public CinemachineVirtualCamera aimCamera;
+    //private CinemachineVirtualCamera aimCamera;
 
+    public float maxRotation;
+
+    public float minRotation;
+
+    private float currentBowRotation;
     public bool isAiming;
+    private GameObject mainCamera;
+    private GameObject aimCamera;
+    private GameObject crosshair;
+    private GameObject inv;
+    
     
     void Start()
     {
@@ -52,41 +56,54 @@ public class Bow : MonoBehaviour
         playerSpeed = Player.GetComponent<ThirdPersonMovement>();
         bowRotation = gameObject.transform;
         cam = GameObject.Find("Third Person Camera").GetComponent<CinemachineFreeLook>();
-        initialFov = cam.m_Lens.FieldOfView;
         initialTurnVelocity = playerSpeed.turnSmoothTime;
         bullet = (GameObject)Resources.Load("prefabs/BulletDebug", typeof(GameObject));
-        //source = bullet.GetComponent<Cinemachine.CinemachineImpulseSource>();
-        aimCamera = GameObject.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
+        mainCamera = GameObject.Find("Third Person Camera");
+        aimCamera = GameObject.Find("Aim Camera");
+        crosshair = GameObject.Find("Crosshair");
+        inv = GameObject.Find("Inventory");
     }
 
     void Update()
     {
-        if (Input.GetKey(fireButton) && _charge < chargeMax)
-        {
-            _charge += Time.deltaTime * chargeRate;
-            isAiming = true;
-            //Debug.Log(_charge.ToString());
-        }
-
-        if (Input.GetKeyUp(fireButton))
-        {
-            Rigidbody arrow = Instantiate(arrowObj, spawn.position, Quaternion.identity) as Rigidbody;
-            arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
-            _charge = 0;
-            isAiming = false;
-        }
-
-        if (isAiming) 
-        {
-            playerSpeed.speed = 2f;
-            bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
-            playerSpeed.turnSmoothTime = targetTurnVelocity;
-        }
-        else
+        if (!inv.activeInHierarchy && gameObject.activeInHierarchy) // check if inventory is not open AND bow is active weapon
         {
 
-            playerSpeed.speed = 10f;
-            playerSpeed.turnSmoothTime = initialTurnVelocity;
+            if (Input.GetKey(fireButton) && _charge < chargeMax)
+            {
+                _charge += Time.deltaTime * chargeRate;
+                isAiming = true;
+                //Debug.Log(_charge.ToString());
+            }
+
+            if (Input.GetKeyUp(fireButton))
+            {
+                Rigidbody arrow = Instantiate(arrowObj, spawn.position, Quaternion.identity) as Rigidbody;
+                arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
+                _charge = 0;
+                isAiming = false;
+            }
+
+            if (isAiming) 
+            {
+                currentBowRotation = gameObject.transform.eulerAngles.x;
+                playerSpeed.speed = 2f;
+                playerSpeed.turnSmoothTime = targetTurnVelocity;
+                //Debug.Log(currentBowRotation);
+                Player.transform.Rotate(Vector3.up, Input.GetAxis("Mouse X"));
+                bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
+                mainCamera.SetActive(false);
+                aimCamera.SetActive(true);
+                crosshair.SetActive(true);
+            }
+            else
+            {
+                playerSpeed.speed = 10f;
+                playerSpeed.turnSmoothTime = initialTurnVelocity;
+                mainCamera.SetActive(true);
+                aimCamera.SetActive(false); 
+                crosshair.SetActive(false);
+            }
         }
     }
 }

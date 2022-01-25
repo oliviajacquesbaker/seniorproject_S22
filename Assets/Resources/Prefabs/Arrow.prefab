@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4938337158242618532}
   - component: {fileID: 5748264773308490165}
   - component: {fileID: 577996322903541215}
-  - component: {fileID: 325022408303723268}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -82,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &325022408303723268
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291926398708346026}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &2737694346978462941
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +92,6 @@ GameObject:
   - component: {fileID: 9087653701415160896}
   - component: {fileID: 5639469550665588572}
   - component: {fileID: 5307380479780462677}
-  - component: {fileID: 7810150905485197105}
   m_Layer: 6
   m_Name: Back
   m_TagString: Untagged
@@ -178,19 +162,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7810150905485197105
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2737694346978462941}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3360374554058872275
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +173,6 @@ GameObject:
   - component: {fileID: 2535702621175318841}
   - component: {fileID: 6496182584927128446}
   - component: {fileID: 3188340016577995173}
-  - component: {fileID: 6742996793658961388}
   m_Layer: 6
   m_Name: Back1
   m_TagString: Untagged
@@ -273,19 +243,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6742996793658961388
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3360374554058872275}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7355074238183021090
 GameObject:
   m_ObjectHideFlags: 0

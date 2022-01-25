@@ -5,9 +5,8 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
+    
     public Transform cam;
-
-    private Bow bowObj;
 
     private GameObject Player;
 
@@ -20,7 +19,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Start()
     {
-        bowObj = GameObject.Find("Bow").GetComponent<Bow>();
         Player = GameObject.Find("Player");
     }
 
@@ -39,11 +37,6 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
-        }
-
-        if (bowObj.isAiming)
-        {
-            Player.transform.Rotate(Vector3.up, mouseX);
         }
     }
 }
