@@ -32,7 +32,6 @@ public class Inventory : MonoBehaviour
         bow = GameObject.Find("Bow");
         sword = GameObject.Find("Sword");
         inv = GameObject.Find("Inventory");
-        initialDeltaTimeScale = Time.fixedDeltaTime;
         currWeapon = bow;
         numItems = buttons.Count;
         InitWeapons();
@@ -64,7 +63,7 @@ public class Inventory : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && inv.activeInHierarchy)
         {
             ButtonDown();
             //inv.SetActive(false);
