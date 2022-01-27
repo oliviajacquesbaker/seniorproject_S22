@@ -6,7 +6,7 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
 
-    public Bow bow;
+    //public Bow bow;
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject crosshair;
@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 //        bow = GameObject.Find("Bow").GetComponent<Bow>();
         mainCamera = GameObject.Find("Third Person Camera");
         aimCamera = GameObject.Find("Aim Camera");
-        crosshair = GameObject.Find("Crosshair");
+        //crosshair = GameObject.Find("Crosshair");
         arrow = (GameObject)Resources.Load("prefabs/BulletDebug", typeof(GameObject));
         source = arrow.GetComponent<CinemachineImpulseSource>();
         GameObject.Find("Crosshair").SetActive(false);

@@ -9,7 +9,6 @@ public class Arrow : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(Clear(5f));
         Destroy(gameObject, 5f);
     }
 
@@ -22,8 +21,4 @@ public class Arrow : MonoBehaviour
            }
     }
 
-    IEnumerator Clear(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-    }
 }

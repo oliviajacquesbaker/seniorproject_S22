@@ -39,12 +39,13 @@
      <Compile Include="Assets\Scripts\EnemyStats.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\Melee.cs" />
+     <Compile Include="Assets\Scripts\Sword.cs" />
+     <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\Arrow.cs" />
      <Compile Include="Assets\Scripts\ThirdPersonMovement.cs" />
      <Compile Include="Assets\Scripts\Bow.cs" />
      <Compile Include="Assets\Scripts\EnemyAI.cs" />
-     <Compile Include="Assets\Scripts\Inventory.cs" />
+     <Compile Include="Assets\Scripts\StateHandler.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

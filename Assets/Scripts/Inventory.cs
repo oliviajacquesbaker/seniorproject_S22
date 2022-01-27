@@ -12,61 +12,46 @@ public class Inventory : MonoBehaviour
     private Vector2 from = new Vector2(0.5f, 1.0f);
     private Vector2 center = new Vector2(0.5f, 0.5f);
     private Vector2 to;
-    private GameObject inv;
     public KeyCode hotkey;
     public int numItems = 1;
     public int currMenuItem;
     private int prevMenuItem;
     private int selectedWeapon;
     private float initialDeltaTimeScale;
+    public GameObject inv;
     private GameObject currWeapon;
     private GameObject bow;
     private GameObject sword;
     private GameObject weapons;
+    private StateHandler state;
 
     void Start()
     {
-        // selectedWeapon = 0;
-        // SelectWeapon();
-        //weapons = GameObject.Find("Weapons");
         bow = GameObject.Find("Bow");
         sword = GameObject.Find("Sword");
         inv = GameObject.Find("Inventory");
-        currWeapon = bow;
-        numItems = buttons.Count;
-        InitWeapons();
-
-        foreach(MenuButton button in buttons)
-        {
-            button.sceneImage.color = button.normal;
-        } 
-
-        currMenuItem = 0;
-        prevMenuItem = 0;
+        state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
+        InitInventory();
     }
 
     void Update()
     {
         GetCurrMenuItem();
+        //Debug.Log(IsOpen());
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(hotkey))
         {
-            Time.timeScale = timeSlowRatio;
-            inv.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+            ShowInventory();
         }
 
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(hotkey))
         {
-            Time.timeScale = 1.0f;
-            inv.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+            CloseInventory();
         }
 
-        if (Input.GetButtonDown("Fire1") && inv.activeInHierarchy)
+        if (Input.GetButtonDown("Fire1"))
         {
-            ButtonDown();
-            //inv.SetActive(false);
+            GiveItem();
         }
     }
 
@@ -76,19 +61,35 @@ public class Inventory : MonoBehaviour
         bow.SetActive(false);
         sword.SetActive(false);
     }
-    // void SelectWeapon()
-    // {
-    //     int i = 0;
-    //     foreach (Transform weapon in weapons.transform)
-    //     {
-    //         if (i == selectedWeapon)
-    //             weapon.gameObject.SetActive(true);
-    //         else
-    //             weapon.gameObject.SetActive(false);
-    //         i++;
-    //     }
 
-    // }
+    void InitInventory()
+    {
+        InitWeapons();
+        
+        foreach(MenuButton button in buttons)
+        {
+            button.sceneImage.color = button.normal;
+        }
+
+        currWeapon = bow;
+        numItems = buttons.Count;
+        currMenuItem = 0;
+        prevMenuItem = 0;
+    }
+
+    public void ShowInventory()
+    {
+        inv.SetActive(true);
+        Time.timeScale = timeSlowRatio;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void CloseInventory()
+    {
+        inv.SetActive(false);
+        Time.timeScale = 1.0f;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     public void GetCurrMenuItem()
     {
@@ -101,7 +102,9 @@ public class Inventory : MonoBehaviour
             angle += 360;
         }
 
-        currMenuItem = (int) (angle / (360 / numItems));
+        //Debug.Log(numItems);
+        if (numItems > 0)
+            currMenuItem = (int) (angle / (360 / numItems));
 
         if (currMenuItem != prevMenuItem)
         {
@@ -112,8 +115,11 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void ButtonDown()
+    void GiveItem()
     {
+
+        if (!IsOpen()) {return;}
+
         buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].pressed;
 
         if (currMenuItem == 0) // bow
@@ -134,11 +140,12 @@ public class Inventory : MonoBehaviour
             currWeapon = sword;
         }
         // repeat for all other weapons
+
     }
 
     public bool IsOpen()
     {
-        return gameObject.activeInHierarchy;
+        return GameObject.Find("Inventory");
     }
 
 }
