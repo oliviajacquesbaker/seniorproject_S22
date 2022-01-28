@@ -23,6 +23,7 @@ public class Inventory : MonoBehaviour
     private GameObject bow;
     private GameObject sword;
     private GameObject weapons;
+    private GameObject blur;
     private StateHandler state;
 
     void Start()
@@ -31,6 +32,7 @@ public class Inventory : MonoBehaviour
         sword = GameObject.Find("Sword");
         inv = GameObject.Find("Inventory");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
+        blur = GameObject.Find("Background Blur");
         InitInventory();
     }
 
@@ -75,11 +77,13 @@ public class Inventory : MonoBehaviour
         numItems = buttons.Count;
         currMenuItem = 0;
         prevMenuItem = 0;
+        blur.SetActive(false);
     }
 
     public void ShowInventory()
     {
         inv.SetActive(true);
+        blur.SetActive(true);
         Time.timeScale = timeSlowRatio;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -87,6 +91,7 @@ public class Inventory : MonoBehaviour
     public void CloseInventory()
     {
         inv.SetActive(false);
+        blur.SetActive(false);
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked;
     }
