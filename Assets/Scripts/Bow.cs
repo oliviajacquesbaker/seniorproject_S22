@@ -11,6 +11,7 @@ public class Bow : MonoBehaviour
     public float rotationSpeed;
     private float initialTurnVelocity;
     public float targetTurnVelocity;
+    public float fireDecay;
     public KeyCode fireButton;
     public Transform spawn;
     private Transform bowRotation;
@@ -19,8 +20,8 @@ public class Bow : MonoBehaviour
     private GameObject bullet;
     private ThirdPersonMovement playerSpeed;
     private CinemachineFreeLook cam; 
-    public float maxRotation;
-    public float minRotation;
+    //public float maxRotation;
+    //public float minRotation;
     private float currentBowRotation;
     public bool isAiming;
     private GameObject mainCamera;
@@ -28,6 +29,7 @@ public class Bow : MonoBehaviour
     private GameObject crosshair;
     private GameObject inv;
     private StateHandler state;
+    private Durability durability;
     
     void Start()
     {
@@ -40,17 +42,18 @@ public class Bow : MonoBehaviour
         aimCamera = GameObject.Find("Aim Camera");
         crosshair = GameObject.Find("Crosshair");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
+        durability = gameObject.GetComponent<Durability>();
     }
 
     void Update()
     {
-        if (!state.InvOpen() && gameObject.activeInHierarchy) // check if inventory is not open AND bow is active weapon
+        if (!state.InvOpen()/* && gameObject.activeInHierarchy*/) // check if inventory is not open AND bow is active weapon
         {         
             if (Input.GetKey(fireButton))
             {
                 Aim();
                 
-                if (_charge < chargeMax )
+                if (_charge < chargeMax)
                 {
                     ChargeBow();
                 }
@@ -76,6 +79,7 @@ public class Bow : MonoBehaviour
         Rigidbody arrow = Instantiate(arrowObj, spawn.position, Quaternion.identity) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
+        durability.currDurability -= fireDecay;
         isAiming = false;
     }
 
@@ -101,10 +105,10 @@ public class Bow : MonoBehaviour
         crosshair.SetActive(false);
     }
 
-    IEnumerator CrosshairDelay(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        crosshair.SetActive(true);
-    }
+    // IEnumerator CrosshairDelay(float seconds)
+    // {
+    //     yield return new WaitForSeconds(seconds);
+    //     crosshair.SetActive(true);
+    // }
 
 }

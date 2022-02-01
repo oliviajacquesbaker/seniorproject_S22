@@ -123,7 +123,7 @@ public class Inventory : MonoBehaviour
     void GiveItem()
     {
 
-        if (!IsOpen()) {return;}
+        if (!IsOpen()) return;
 
         buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].pressed;
 
