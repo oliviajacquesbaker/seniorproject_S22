@@ -129,9 +129,8 @@ MonoBehaviour:
   chargeRate: 25
   rotationSpeed: 10
   targetTurnVelocity: 1
+  fireDecay: 0
   fireButton: 323
   spawn: {fileID: 0}
   arrowObj: {fileID: 964018137615635252, guid: fcc2da4b590684942bb5462c0ae326a9, type: 3}
-  maxRotation: 360
-  minRotation: 0
   isAiming: 0

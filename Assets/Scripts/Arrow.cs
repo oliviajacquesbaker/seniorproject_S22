@@ -6,10 +6,11 @@ public class Arrow : MonoBehaviour
 {
     
     public int damage;
+    public float destroyTimer;
 
     void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, destroyTimer);
     }
 
     void OnTriggerEnter(Collider col)

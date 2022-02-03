@@ -76,7 +76,7 @@ public class Bow : MonoBehaviour
 
     void Fire()
     {
-        Rigidbody arrow = Instantiate(arrowObj, spawn.position, Quaternion.identity) as Rigidbody;
+        Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
         durability.currDurability -= fireDecay;
