@@ -55,24 +55,28 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Misc\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Player\_LightIntensity.cs" />
+    <Compile Include="Assets\Scripts\Player\_PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\ShadowSlime\BreatheAnimate.cs" />
     <Compile Include="Assets\Scripts\Weapons\Durability.cs" />
+    <Compile Include="Assets\Scripts\Enemy\_AILightIntensity.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyStats.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\LightScript.cs" />
     <Compile Include="Assets\Scripts\Player\StateHandler.cs" />
+    <Compile Include="Assets\Scripts\ShadowSlime\CollectScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy\_AIStats.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Player\_PlayerStatsController.cs" />
     <Compile Include="Assets\Scripts\Weapons\Arrow.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
     <Compile Include="Assets\Scripts\Weapons\Bow.cs" />
-    <Compile Include="Assets\Scripts\Player\_PlayerStats.cs" />
-    <Compile Include="Assets\Scripts\ShadowSlime\CollectScript.cs" />
-    <Compile Include="Assets\Scripts\Player\_PlayerStatsController.cs" />
-    <Compile Include="Assets\Scripts\ShadowSlime\BreatheAnimate.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderController.cs" />
     <Compile Include="Assets\Scripts\Enemy\_AIStatsController.cs" />
     <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
-    <Compile Include="Assets\Scripts\Enemy\_AIStats.cs" />
-    <Compile Include="Assets\Scripts\Enemy\_AILightIntensity.cs" />
-    <Compile Include="Assets\Scripts\Player\_LightIntensity.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderAttackController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderFall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
