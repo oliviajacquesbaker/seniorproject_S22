@@ -5,9 +5,11 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
 
-    private float startingPos;
-    public float targetPos;
+    //private float startingPos;
+    //public float targetPos;
     public float attackRange = 0.5f;
+    public float attackTimer;
+    private float nextAttackTime;
     public KeyCode attackButton;
     public Transform attackPoint;
     public LayerMask enemyLayers;
@@ -16,12 +18,13 @@ public class Sword : MonoBehaviour
 
     void Start()
     {
-        startingPos = transform.rotation.z;
+        //startingPos = transform.rotation.z;
+        nextAttackTime = 0;
     }
 
     void Update()
     {
-        if (Input.GetKey(attackButton))
+        if (Input.GetKey(attackButton) && Time.time > nextAttackTime)
         {
             Attack();
         }
@@ -54,6 +57,8 @@ public class Sword : MonoBehaviour
                 stats.Hit(damage);
             }
         }
+
+        nextAttackTime = Time.time + attackTimer;
     }
 
     void OnDrawGizmosSelected()
