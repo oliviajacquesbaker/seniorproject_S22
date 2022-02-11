@@ -30,17 +30,17 @@ public class Sword : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (Input.GetKeyDown(attackButton))
-        {
-            if (collider.GetComponent<EnemyStats>())
-            {
-                EnemyStats stats = collider.GetComponent<EnemyStats>();
-                stats.Hit(damage);
-            }
-        }
-    }
+    // void OnTriggerEnter(Collider collider)
+    // {
+    //     if (Input.GetKeyDown(attackButton))
+    //     {
+    //         if (collider.GetComponent<EnemyStats>())
+    //         {
+    //             EnemyStats stats = collider.GetComponent<EnemyStats>();
+    //             stats.Hit(damage);
+    //         }
+    //     }
+    // }
 
     void Attack()
     {
@@ -50,11 +50,13 @@ public class Sword : MonoBehaviour
 
         foreach(Collider enemy in hitEnemies)
         {
-            //Debug.Log("Hit enemy " + enemy.name);
-            if (enemy.GetComponent<EnemyStats>())
+            Debug.Log("Hit enemy " + enemy.name);
+            if (enemy.GetComponent<_AIStatsController>())
             {
-                EnemyStats stats = enemy.GetComponent<EnemyStats>();
-                stats.Hit(damage);
+                _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
+                stats.DetractHealth(damage, true);
+                Debug.Log("Remaining hp: " + stats.currAi.GetHealth());
+
             }
         }
 
