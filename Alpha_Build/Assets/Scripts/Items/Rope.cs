@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rope : MonoBehaviour
 {
     public int ropeLength = 1;
-    public float partDistance = 0.21f;
+    public float partDistance = 0.12f;
     public GameObject partPrefab, parentObj;
     public bool reset, spawn, snapFirst, snapLast;
 

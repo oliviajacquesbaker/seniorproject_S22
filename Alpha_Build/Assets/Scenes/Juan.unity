@@ -1801,7 +1801,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883605134}
-  m_LocalRotation: {x: 0.20066574, y: 0.20786636, z: -0.04361506, w: 0.956359}
+  m_LocalRotation: {x: 0.20066576, y: 0.20786579, z: -0.043614943, w: 0.95635915}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1964,7 +1964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.1937083, y: 0.20805089, z: -0.042083915, w: 0.9578209}
+  m_LocalRotation: {x: 0.19370833, y: 0.20805044, z: -0.04208383, w: 0.957821}
   m_LocalPosition: {x: 0.82390976, y: 4.06856, z: -4.2915773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2830,7 +2830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeLength: 10
-  partDistance: 0.21
+  partDistance: 0.15
   partPrefab: {fileID: 130474348045292499, guid: 1cd337c6db9facd49a4e0cdbc4bebcb6, type: 3}
   parentObj: {fileID: 89247394}
   reset: 0
@@ -3548,7 +3548,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655587799}
-  m_LocalRotation: {x: 0.20066081, y: 0.20724, z: -0.043476045, w: 0.9565023}
+  m_LocalRotation: {x: 0.20066082, y: 0.20724002, z: -0.043476067, w: 0.9565023}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
