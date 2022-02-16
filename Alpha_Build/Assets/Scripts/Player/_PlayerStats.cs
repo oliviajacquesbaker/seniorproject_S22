@@ -8,10 +8,17 @@ public class _PlayerStats : MonoBehaviour
     private float health = 100;
     [SerializeField]
     private int slimesCollected = 0;
+    [SerializeField]
+    private string activeTool = "none";
 
     void Start()
     {
         health = 100f;
+    }
+
+    private void Update()
+    {
+        health = Mathf.Clamp(health, 0f, 150f);
     }
 
     public void SetHealth(float diffHealth)
@@ -39,5 +46,15 @@ public class _PlayerStats : MonoBehaviour
     public void SetSlimes(int slimes)
     {
         slimesCollected = slimes;
+    }
+
+    public void SetActiveTool(string toolName)
+    {
+        activeTool = toolName;
+    }
+
+    public string GetActiveTool()
+    {
+        return activeTool;
     }
 }

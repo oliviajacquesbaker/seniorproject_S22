@@ -67,16 +67,19 @@
     <Compile Include="Assets\Scripts\ShadowSlime\CollectScript.cs" />
     <Compile Include="Assets\Scripts\Enemy\_AIStats.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderFall.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory.cs" />
     <Compile Include="Assets\Scripts\Player\_PlayerStatsController.cs" />
     <Compile Include="Assets\Scripts\Weapons\Arrow.cs" />
     <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderAttackController.cs" />
     <Compile Include="Assets\Scripts\Weapons\Bow.cs" />
     <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderController.cs" />
     <Compile Include="Assets\Scripts\Enemy\_AIStatsController.cs" />
     <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderAttackController.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderFall.cs" />
+    <Compile Include="Assets\Scripts\HUD\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\HUD\ShadowIndicator.cs" />
+    <Compile Include="Assets\Scripts\HUD\ToolDurability.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
