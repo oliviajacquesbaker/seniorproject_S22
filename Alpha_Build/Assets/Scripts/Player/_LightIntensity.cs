@@ -22,7 +22,7 @@ public class _LightIntensity : MonoBehaviour
 
     private void PlayerPassThrough()
     {
-        float perceivedLight = (LightLevel - defaultLightLevel) / 10000;
+        float perceivedLight = (LightLevel - defaultLightLevel) / 1000;
 
         _PlayerStatsController player = GetComponent<_PlayerStatsController>();
         player.UpdateHealth(perceivedLight); //Passes perceived light values to AI health controller.

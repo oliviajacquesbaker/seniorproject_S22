@@ -17,10 +17,20 @@ public class Durability : MonoBehaviour
 
     void Update()
     {
+        currDurability = Mathf.Clamp(currDurability, 0f, 100f);
         DecayDurability();
         //Debug.Log(currDurability);
     }
 
+    public float GetCurrDurability()
+    {
+        return currDurability;
+    }
+
+    public float GetMaxDurability()
+    {
+        return maxDurability;
+    }
 
     void DecayDurability()
     {

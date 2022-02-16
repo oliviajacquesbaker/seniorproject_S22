@@ -10,6 +10,8 @@ public class _PlayerStatsController : MonoBehaviour
     float lightIntensity = 0;
     [SerializeField]
     bool debug, log, healDark = false;
+    [SerializeField]
+    float currentIntensity = 0;
 
     void Start()
     {
@@ -18,6 +20,7 @@ public class _PlayerStatsController : MonoBehaviour
     //Updates Health in regard to light intensity
     public void UpdateHealth(float perceivedIntensity)
     {
+        currentIntensity = perceivedIntensity;
         if (!debug)
         {
             if (perceivedIntensity < 0.15) //Heals Player in Dark
@@ -114,4 +117,13 @@ public class _PlayerStatsController : MonoBehaviour
     {
         player.SetHealth(player.GetHealth() + 1.25f);
     }
+
+    public float GetPerceivedIntensity()
+    {
+        if (debug)
+            return lightIntensity;
+        else
+            return currentIntensity;
+    }
+
 }

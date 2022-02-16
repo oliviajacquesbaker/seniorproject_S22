@@ -26,6 +26,11 @@ public class Inventory : MonoBehaviour
     private GameObject blur;
     private StateHandler state;
 
+    //passes back to player
+    private string activeWeapon;
+    private _PlayerStats playerStats;
+
+
     void Start()
     {
         bow = GameObject.Find("Bow");
@@ -34,6 +39,8 @@ public class Inventory : MonoBehaviour
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
         InitInventory();
+
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
     }
 
     void Update()
@@ -135,6 +142,7 @@ public class Inventory : MonoBehaviour
             currWeapon.SetActive(false);
             bow.SetActive(true);
             currWeapon = bow;
+            playerStats.SetActiveTool("bow"); //set the active tool in playerstats for reference elsewhere in the codebase. Lowercase lettering only.
         }
         else if (currMenuItem == 1) // sword
         {
@@ -143,6 +151,7 @@ public class Inventory : MonoBehaviour
             currWeapon.SetActive(false);
             sword.SetActive(true);
             currWeapon = sword;
+            playerStats.SetActiveTool("sword");
         }
         // repeat for all other weapons
 
