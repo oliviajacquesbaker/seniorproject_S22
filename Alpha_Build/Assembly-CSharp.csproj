@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderController.cs" />
      <Compile Include="Assets\Scripts\Enemy\_AIStatsController.cs" />
      <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
+     <Compile Include="Assets\Scripts\Items\SelectionManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

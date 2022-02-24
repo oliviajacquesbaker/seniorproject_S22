@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
-    public int ropeLength = 1;
-    public float partDistance = 0.12f;
-    public GameObject partPrefab, parentObj;
+    private float ropeLength;
+    public float partDistance = 0.15f, lengthModifier = 0.80f;
+    public GameObject partPrefab, parentObj, floor;
     public bool reset, spawn, snapFirst, snapLast;
+    private float hookPos, floorPos;
 
+    void Start()
+    {
+        DistanceToFloor();
+    }
     void Update()
     {
         if (reset)
         {
-            foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Rope"))
-            {
-                Destroy(temp);
-            }
-
-            reset = false;
+            Reset();
         }
 
         if (spawn)
         {
             Spawn();
-
-            spawn = false;
         }
     }
 
-    void Spawn()
+    public void Spawn()
     {
-        int count = (int) (ropeLength / partDistance);
+        DistanceToFloor();
+        int count = (int) ((ropeLength*lengthModifier) / partDistance);
+        Debug.Log("Rope length: " + ropeLength + ". There are " + count + " segments.");
 
         for (int i = 0; i < count; i++)
         {
             GameObject temp;
-            temp = Instantiate(partPrefab, new Vector3(transform.position.x, (transform.position.y + partDistance * (i+1)*-1), transform.position.z), Quaternion.identity, parentObj.transform);
+            temp = Instantiate(partPrefab, new Vector3(parentObj.transform.position.x, (parentObj.transform.position.y + partDistance * (i+1)*-1), parentObj.transform.position.z), Quaternion.identity, parentObj.transform);
             temp.transform.eulerAngles = new Vector3(180,0,0);
 
             temp.name = parentObj.transform.childCount.ToString();
@@ -60,5 +60,23 @@ public class Rope : MonoBehaviour
         {
             parentObj.transform.Find((parentObj.transform.childCount).ToString()).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
+
+        spawn = false;
+    } 
+
+    public void Reset()
+    {
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Rope"))
+        {
+            Destroy(temp);
+        }
+
+        reset = false;
+    }  
+    void DistanceToFloor()
+    {
+        hookPos = parentObj.transform.position.y;
+        floorPos = floor.transform.position.y;
+        ropeLength = hookPos - floorPos;
     }
 }

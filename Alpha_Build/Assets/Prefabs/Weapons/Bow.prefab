@@ -40,7 +40,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3534657571160689633}
   - component: {fileID: 3534657570264839220}
-  - component: {fileID: 3534657570264839219}
   - component: {fileID: 3534657570264839218}
   m_Layer: 8
   m_Name: Bow
@@ -87,23 +86,6 @@ MonoBehaviour:
   spawn: {fileID: 3534657570070425400}
   arrowObj: {fileID: 5837680868602767113, guid: 818fef385afc84d4eb60fbc4f64c1a21, type: 3}
   isAiming: 0
---- !u!1818360609 &3534657570264839219
-RotationConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3534657570264839217}
-  m_Enabled: 0
-  m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_IsContraintActive: 0
-  m_IsLocked: 0
-  m_Sources: []
 --- !u!114 &3534657570264839218
 MonoBehaviour:
   m_ObjectHideFlags: 0

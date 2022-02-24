@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour
     private GameObject currWeapon;
     private GameObject bow;
     private GameObject sword;
+    private GameObject rope;
     private GameObject weapons;
     private GameObject blur;
     private StateHandler state;
@@ -33,6 +34,7 @@ public class Inventory : MonoBehaviour
         inv = GameObject.Find("Inventory");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
+        rope = GameObject.Find("RopeItem");
         InitInventory();
     }
 
@@ -62,6 +64,7 @@ public class Inventory : MonoBehaviour
         inv.SetActive(false);
         bow.SetActive(false);
         sword.SetActive(false);
+        rope.SetActive(false);
     }
 
     void InitInventory()
@@ -143,6 +146,13 @@ public class Inventory : MonoBehaviour
             currWeapon.SetActive(false);
             sword.SetActive(true);
             currWeapon = sword;
+        }
+        else if (currMenuItem == 2) // rope
+        {
+            Debug.Log("You have been given a rope!");
+            currWeapon.SetActive(false);
+            rope.SetActive(true);
+            currWeapon = rope;
         }
         // repeat for all other weapons
 

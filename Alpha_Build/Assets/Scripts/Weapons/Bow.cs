@@ -16,6 +16,7 @@ public class Bow : MonoBehaviour
     public Transform spawn;
     private Transform bowRotation;
     public Rigidbody arrowObj;
+    private Rigidbody playerRB;
     private GameObject Player;
     private GameObject bullet;
     private ThirdPersonMovement playerSpeed;
@@ -30,6 +31,7 @@ public class Bow : MonoBehaviour
     private GameObject inv;
     private StateHandler state;
     private Durability durability;
+    private CameraController camController;
     
     void Start()
     {
@@ -43,11 +45,13 @@ public class Bow : MonoBehaviour
         crosshair = GameObject.Find("Crosshair");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         durability = gameObject.GetComponent<Durability>();
+        camController = Player.GetComponent<CameraController>();
+        playerRB = Player.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        if (!state.InvOpen()/* && gameObject.activeInHierarchy*/) // check if inventory is not open AND bow is active weapon
+        if (!state.InvOpen()) // check if inventory is not open
         {         
             if (Input.GetKey(fireButton))
             {
@@ -85,24 +89,22 @@ public class Bow : MonoBehaviour
 
     void Aim()
     {
-        currentBowRotation = gameObject.transform.eulerAngles.x;
-        playerSpeed.speed = 2f;
-        playerSpeed.turnSmoothTime = targetTurnVelocity;
-        Player.transform.Rotate(Vector3.up, Input.GetAxis("Mouse X"));
+
+        camController.Aim();
+        //bowRotation.transform.rotation = camController.aimPoint.transform.rotation;
+        //Player.transform.Rotate(Vector3.up, Input.GetAxis("Mouse X"));
+        Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
         bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
-        mainCamera.SetActive(false);
-        aimCamera.SetActive(true);
-        //StartCoroutine(CrosshairDelay(0.5f));
-        crosshair.SetActive(true);
+        //bowRotation.rotation = Player.transform.rotation;
+        //GameObject.Find("AimPoint").transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
+        //bowRotation.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
+        //Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f, Space.World);
+
     }
 
     void StopAiming()
     {
-        playerSpeed.speed = 10f;
-        playerSpeed.turnSmoothTime = initialTurnVelocity;
-        mainCamera.SetActive(true);
-        aimCamera.SetActive(false); 
-        crosshair.SetActive(false);
+        camController.StopAim();
     }
 
     // IEnumerator CrosshairDelay(float seconds)

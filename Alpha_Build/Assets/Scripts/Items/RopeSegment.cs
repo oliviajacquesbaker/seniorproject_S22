@@ -21,7 +21,7 @@ public class RopeSegment : MonoBehaviour
         {
             aboveSegment.connectedBelow = gameObject;
             float spawnPos = bounds.size.y;
-            GetComponent<HingeJoint>().connectedAnchor = new Vector3(0, (spawnPos-1) * -1, 0);
+            GetComponent<HingeJoint>().connectedAnchor = new Vector3(0, (spawnPos) * -1, 0);
         }
         else
         {
