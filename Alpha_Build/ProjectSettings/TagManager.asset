@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Melee
+  - shadow_cam
+  - labeler
   layers:
   - Default
   - TransparentFX
