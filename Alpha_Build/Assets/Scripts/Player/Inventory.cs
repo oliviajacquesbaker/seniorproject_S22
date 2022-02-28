@@ -133,26 +133,19 @@ public class Inventory : MonoBehaviour
         if (currMenuItem == 0) // bow
         {
             Debug.Log("You have been given a bow!");
-            // give player weapon
-            //sword.SetActive(false);
-            currWeapon.SetActive(false);
-            bow.SetActive(true);
-            currWeapon = bow;
+            GiveBow();
+
         }
         else if (currMenuItem == 1) // sword
         {
             Debug.Log("You have been given a sword!");
-            //bow.SetActive(false);
-            currWeapon.SetActive(false);
-            sword.SetActive(true);
-            currWeapon = sword;
+            GiveSword();
+
         }
         else if (currMenuItem == 2) // rope
         {
             Debug.Log("You have been given a rope!");
-            currWeapon.SetActive(false);
-            rope.SetActive(true);
-            currWeapon = rope;
+            GiveRope();
         }
         // repeat for all other weapons
 
@@ -161,6 +154,27 @@ public class Inventory : MonoBehaviour
     public bool IsOpen()
     {
         return GameObject.Find("Inventory");
+    }
+
+    public void GiveBow()
+    {
+        currWeapon.SetActive(false);
+        bow.SetActive(true);
+        currWeapon = bow;
+    }
+
+    public void GiveSword()
+    {
+        currWeapon.SetActive(false);
+        sword.SetActive(true);
+        currWeapon = sword;
+    }
+
+    public void GiveRope()
+    {
+        currWeapon.SetActive(false);
+        rope.SetActive(true);
+        currWeapon = rope;
     }
 
 }

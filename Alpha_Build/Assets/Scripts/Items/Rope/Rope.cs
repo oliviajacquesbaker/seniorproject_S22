@@ -9,10 +9,12 @@ public class Rope : MonoBehaviour
     public GameObject partPrefab, parentObj, floor;
     public bool reset, spawn, snapFirst, snapLast;
     private float hookPos, floorPos;
+    private Hook hook;
 
     void Start()
     {
         DistanceToFloor();
+        hook = GetComponentInParent<Hook>();
     }
     void Update()
     {
@@ -29,9 +31,11 @@ public class Rope : MonoBehaviour
 
     public void Spawn()
     {
+         if (hook.hasRope) { return; }
+
         DistanceToFloor();
         int count = (int) ((ropeLength*lengthModifier) / partDistance);
-        Debug.Log("Rope length: " + ropeLength + ". There are " + count + " segments.");
+        //Debug.Log("Rope length: " + ropeLength + ". There are " + count + " segments.");
 
         for (int i = 0; i < count; i++)
         {

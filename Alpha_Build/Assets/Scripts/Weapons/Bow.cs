@@ -91,20 +91,14 @@ public class Bow : MonoBehaviour
     {
 
         camController.Aim();
-        //bowRotation.transform.rotation = camController.aimPoint.transform.rotation;
-        //Player.transform.Rotate(Vector3.up, Input.GetAxis("Mouse X"));
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
         bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
-        //bowRotation.rotation = Player.transform.rotation;
-        //GameObject.Find("AimPoint").transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
-        //bowRotation.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
-        //Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f, Space.World);
-
     }
 
     void StopAiming()
     {
         camController.StopAim();
+        //transform.rotation = Quaternion.identity;
     }
 
     // IEnumerator CrosshairDelay(float seconds)

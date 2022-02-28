@@ -36,13 +36,15 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Items\RopeSegment.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeSegment.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Misc\CameraController.cs" />
      <Compile Include="Assets\Scripts\Player\_LightIntensity.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeCreator.cs" />
      <Compile Include="Assets\Scripts\Player\_PlayerStats.cs" />
      <Compile Include="Assets\Scripts\ShadowSlime\BreatheAnimate.cs" />
      <Compile Include="Assets\Scripts\Weapons\Durability.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\Hook.cs" />
      <Compile Include="Assets\Scripts\Enemy\_AILightIntensity.cs" />
      <Compile Include="Assets\Scripts\Enemy\Light Spider\LightScript.cs" />
      <Compile Include="Assets\Scripts\Player\StateHandler.cs" />
@@ -53,14 +55,14 @@
      <Compile Include="Assets\Scripts\Player\Inventory.cs" />
      <Compile Include="Assets\Scripts\Player\_PlayerStatsController.cs" />
      <Compile Include="Assets\Scripts\Weapons\Arrow.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\Rope.cs" />
      <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
      <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderAttackController.cs" />
      <Compile Include="Assets\Scripts\Weapons\Bow.cs" />
      <Compile Include="Assets\Scripts\Enemy\Light Spider\SpiderController.cs" />
      <Compile Include="Assets\Scripts\Enemy\_AIStatsController.cs" />
      <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
-     <Compile Include="Assets\Scripts\Items\SelectionManager.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeClimb.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
