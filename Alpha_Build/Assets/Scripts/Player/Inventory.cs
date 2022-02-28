@@ -22,14 +22,10 @@ public class Inventory : MonoBehaviour
     private GameObject currWeapon;
     private GameObject bow;
     private GameObject sword;
+    private GameObject rope;
     private GameObject weapons;
     private GameObject blur;
     private StateHandler state;
-
-    //passes back to player
-    private string activeWeapon;
-    private _PlayerStats playerStats;
-
 
     void Start()
     {
@@ -38,9 +34,8 @@ public class Inventory : MonoBehaviour
         inv = GameObject.Find("Inventory");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
+        rope = GameObject.Find("RopeItem");
         InitInventory();
-
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
     }
 
     void Update()
@@ -69,6 +64,7 @@ public class Inventory : MonoBehaviour
         inv.SetActive(false);
         bow.SetActive(false);
         sword.SetActive(false);
+        rope.SetActive(false);
     }
 
     void InitInventory()
@@ -137,21 +133,19 @@ public class Inventory : MonoBehaviour
         if (currMenuItem == 0) // bow
         {
             Debug.Log("You have been given a bow!");
-            // give player weapon
-            //sword.SetActive(false);
-            currWeapon.SetActive(false);
-            bow.SetActive(true);
-            currWeapon = bow;
-            playerStats.SetActiveTool("bow"); //set the active tool in playerstats for reference elsewhere in the codebase. Lowercase lettering only.
+            GiveBow();
+
         }
         else if (currMenuItem == 1) // sword
         {
             Debug.Log("You have been given a sword!");
-            //bow.SetActive(false);
-            currWeapon.SetActive(false);
-            sword.SetActive(true);
-            currWeapon = sword;
-            playerStats.SetActiveTool("sword");
+            GiveSword();
+
+        }
+        else if (currMenuItem == 2) // rope
+        {
+            Debug.Log("You have been given a rope!");
+            GiveRope();
         }
         // repeat for all other weapons
 
@@ -160,6 +154,27 @@ public class Inventory : MonoBehaviour
     public bool IsOpen()
     {
         return GameObject.Find("Inventory");
+    }
+
+    public void GiveBow()
+    {
+        currWeapon.SetActive(false);
+        bow.SetActive(true);
+        currWeapon = bow;
+    }
+
+    public void GiveSword()
+    {
+        currWeapon.SetActive(false);
+        sword.SetActive(true);
+        currWeapon = sword;
+    }
+
+    public void GiveRope()
+    {
+        currWeapon.SetActive(false);
+        rope.SetActive(true);
+        currWeapon = rope;
     }
 
 }
