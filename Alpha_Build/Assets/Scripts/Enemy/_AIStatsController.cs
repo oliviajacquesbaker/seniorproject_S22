@@ -16,6 +16,14 @@ public class _AIStatsController : MonoBehaviour
         currAi = GetComponent<_AIStats>();
     }
 
+    void Update()
+    {
+        if (currAi.GetHealth() <= 0)
+        {
+            Kill();
+        }
+    }
+
     //This controller function deals with damage or healing in regards to light intensity. NOT normal attack damage/healing
     public void UpdateHealth(float perceivedIntensity)
     {
@@ -62,7 +70,7 @@ public class _AIStatsController : MonoBehaviour
         }
     }
 
-    public void DetractHealth(float damage, bool hit)
+    public void DetractHealth(float damage, bool hit) // for hit purposes
     {
         currAi.SetHealth(currAi.GetHealth() - damage);
     }
@@ -88,4 +96,8 @@ public class _AIStatsController : MonoBehaviour
         }
     }
 
+    public void Kill()
+    {
+        Destroy(gameObject);
+    }
 }

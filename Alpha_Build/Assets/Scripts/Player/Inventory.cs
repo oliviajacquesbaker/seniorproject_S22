@@ -31,10 +31,10 @@ public class Inventory : MonoBehaviour
     {
         bow = GameObject.Find("Bow");
         sword = GameObject.Find("Sword");
+        rope = GameObject.Find("RopeItem");
         inv = GameObject.Find("Inventory");
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
-        rope = GameObject.Find("RopeItem");
         InitInventory();
     }
 

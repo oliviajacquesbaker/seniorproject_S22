@@ -541,8 +541,8 @@ GameObject:
   m_Component:
   - component: {fileID: 187967382}
   - component: {fileID: 187967385}
-  - component: {fileID: 187967383}
   - component: {fileID: 187967384}
+  - component: {fileID: 187967383}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -573,19 +573,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 187967381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Script: {fileID: 11500000, guid: a4c41ac9245b87c4192012080077d830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: -0.43150008, z: -3.7464986}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
-  m_AngularDampingMode: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AngularDamping: 0
+  m_Damping: 0
 --- !u!114 &187967384
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -595,10 +586,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 187967381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c41ac9245b87c4192012080077d830, type: 3}
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damping: 0
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: -3.5}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
 --- !u!114 &187967385
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -697,7 +697,6 @@ GameObject:
   - component: {fileID: 196852291}
   - component: {fileID: 196852294}
   - component: {fileID: 196852293}
-  - component: {fileID: 196852292}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -719,20 +718,6 @@ Transform:
   m_Father: {fileID: 370709841}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.868}
---- !u!136 &196852292
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196852290}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000002
-  m_Height: 2.0000005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.0000009536743, z: 0}
 --- !u!23 &196852293
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1467,7 +1452,7 @@ Transform:
   - {fileID: 45083834}
   - {fileID: 148571231}
   m_Father: {fileID: 1609650425}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &423703735
 MonoBehaviour:
@@ -1485,16 +1470,10 @@ MonoBehaviour:
   player: {fileID: 1609650424}
   camTransf: {fileID: 963194228}
   keycode: 323
-  climbRate: 5
-  checkRadius: 1.5
   turnSmoothTime: 0
   turnSmoothVelocity: 0
   ropeRange: 40
-  isClimbing: 0
   controller: {fileID: 1609650426}
-  ropeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   crosshair: {fileID: 1614137776}
   original:
     serializedVersion: 2
@@ -1513,9 +1492,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bow
       objectReference: {fileID: 0}
+    - target: {fileID: 3534657570264839220, guid: bc1ba55400d19634d865426446d087f2, type: 3}
+      propertyPath: arrowObj
+      value: 
+      objectReference: {fileID: 964018137615635252, guid: fcc2da4b590684942bb5462c0ae326a9, type: 3}
     - target: {fileID: 3534657571160689633, guid: bc1ba55400d19634d865426446d087f2, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3534657571160689633, guid: bc1ba55400d19634d865426446d087f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2178,7 +2161,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883605134}
-  m_LocalRotation: {x: 0.26811397, y: 0.20420302, z: -0.058263417, w: 0.9396922}
+  m_LocalRotation: {x: 0.26811406, y: 0.20420186, z: -0.058263097, w: 0.93969244}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2342,7 +2325,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.24466008, y: 0.20546705, z: -0.05316143, w: 0.94609654}
+  m_LocalRotation: {x: 0.24466021, y: 0.20546615, z: -0.05316117, w: 0.9460968}
   m_LocalPosition: {x: 1.1800189, y: 4.6656575, z: -3.5083566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2485,10 +2468,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1829880669}
   aimCamera: {fileID: 1338624449}
   crosshair: {fileID: 1614137776}
-  arrow: {fileID: 0}
-  aimPoint: {fileID: 0}
   playerSpeed: {fileID: 1609650426}
-  initialTurnVelocity: 0
   targetTurnVelocity: 0
 --- !u!1 &966777128
 GameObject:
@@ -2691,6 +2671,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983186019}
   m_CullTransparentMesh: 1
+--- !u!4 &1022916548 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3534657571584613901, guid: bc1ba55400d19634d865426446d087f2, type: 3}
+  m_PrefabInstance: {fileID: 459170076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1038866347
 GameObject:
   m_ObjectHideFlags: 0
@@ -2903,7 +2888,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071957391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 199.99998}
+  m_LocalPosition: {x: 0, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1614137780}
@@ -3365,8 +3350,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 1022916548}
+  m_Follow: {fileID: 1022916548}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 5
@@ -3390,7 +3375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338624449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.78, y: 0.33249992, z: -1.5364985}
+  m_LocalPosition: {x: 4.618, y: 1.4635, z: -0.33249998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 187967382}
@@ -3830,8 +3815,8 @@ Transform:
   m_Children:
   - {fileID: 370709841}
   - {fileID: 1871400995}
-  - {fileID: 423703734}
   - {fileID: 459170077}
+  - {fileID: 423703734}
   - {fileID: 2004013404}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -3887,11 +3872,8 @@ MonoBehaviour:
   mainCamera: {fileID: 1829880669}
   aimCamera: {fileID: 1338624449}
   crosshair: {fileID: 1614137776}
-  arrow: {fileID: 0}
-  aimPoint: {fileID: 0}
   playerSpeed: {fileID: 1609650426}
-  initialTurnVelocity: 0
-  targetTurnVelocity: 0
+  targetTurnVelocity: 1.5
 --- !u!54 &1609650429
 Rigidbody:
   m_ObjectHideFlags: 0

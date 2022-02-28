@@ -8,11 +8,10 @@ public class CameraController : MonoBehaviour
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject crosshair;
-    public GameObject arrow;
-    public GameObject aimPoint;
+    private GameObject aimPoint;
     public ThirdPersonMovement playerSpeed;
-    private CinemachineImpulseSource source;
-    public float initialTurnVelocity, targetTurnVelocity;
+    public float targetTurnVelocity;
+    private float initialTurnVelocity;
 
 
     void Start()
@@ -29,7 +28,7 @@ public class CameraController : MonoBehaviour
     public void Aim()
     {
         playerSpeed.speed = 2f;
-        playerSpeed.turnSmoothTime = 1.5f;
+        playerSpeed.turnSmoothTime = targetTurnVelocity;
         //GameObject.Find("AimPoint").transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
         mainCamera.SetActive(false);
         aimCamera.SetActive(true);

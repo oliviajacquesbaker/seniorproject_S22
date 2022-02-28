@@ -10,13 +10,9 @@ public class RopeCreator : MonoBehaviour
     public Transform camTransf;
     private Rope rope;
     public KeyCode keycode;
-    public float climbRate, checkRadius;
-    public float turnSmoothTime, turnSmoothVelocity;
-    public float ropeRange;
-    public bool isClimbing;
+    public float turnSmoothTime, turnSmoothVelocity, ropeRange;
     public ThirdPersonMovement controller;
     private StateHandler state;
-    public LayerMask ropeLayers;
     public GameObject crosshair;
     public Color32 original, highlighted;
     //private float camSens = 1.0f;
@@ -26,7 +22,6 @@ public class RopeCreator : MonoBehaviour
         rope = ropeObj.GetComponent<Rope>();
         cam = GameObject.Find("Player").GetComponent<CameraController>();
         player = GameObject.Find("Player");
-        isClimbing = false;
         controller = player.GetComponent<ThirdPersonMovement>();
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
 //        original = crosshair.GetComponent<Image>().color;
@@ -62,7 +57,6 @@ public class RopeCreator : MonoBehaviour
             var selection = hit.transform;
             if (selection.gameObject.tag == "Hook")
             {  
-                //bool hasRope = selection.gameObject.GetComponentInChildren<Rope>().hasRope;
                 rope.snapFirst = true;
                 //ShowCrosshairIndicator();
                 if (Input.GetKeyUp(keycode))
