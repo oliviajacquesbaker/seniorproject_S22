@@ -93,8 +93,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.61242104, y: 19.541086, z: 0.5677531}
-  m_Center: {x: 0.018975511, y: 0.00011253457, z: -1.0641806}
+  m_Size: {x: 0.61242104, y: 19.541086, z: 0.6531188}
+  m_Center: {x: 0.01897552, y: 0.00011262013, z: -1.0214978}
 --- !u!1 &1527969528039033958
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1527969528039133254}
   - component: {fileID: 964018137615635252}
   - component: {fileID: -523846931782365312}
-  - component: {fileID: -3861519306341431166}
+  - component: {fileID: 2310409581316939497}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -157,9 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ccfb50dd922ff4a86698ee90c15444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 100
   destroyTimer: 10
---- !u!65 &-3861519306341431166
+--- !u!65 &2310409581316939497
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,5 +170,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 6.0404444, z: 0.7505268}
+  m_Center: {x: 0, y: -7.282105, z: -0.9436555}

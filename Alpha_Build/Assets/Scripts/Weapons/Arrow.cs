@@ -15,10 +15,10 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-           if (col.GetComponent<EnemyStats>())
+           if (col.GetComponent<_AIStatsController>())
            {
-               EnemyStats stats = col.GetComponent<EnemyStats>();
-               stats.Hit(damage);
+               _AIStatsController stats = col.GetComponent<_AIStatsController>();
+               stats.DetractHealth(damage, true);
            }
     }
 
