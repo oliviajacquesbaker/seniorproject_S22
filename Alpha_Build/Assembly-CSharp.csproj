@@ -38,18 +38,20 @@
   <ItemGroup>
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeSegment.cs" />
      <Compile Include="Assets\Scripts\HUD\PlayerHealth.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-     <Compile Include="Assets\Scripts\Misc\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
      <Compile Include="Assets\Scripts\Player\_LightIntensity.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeCreator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
      <Compile Include="Assets\Scripts\Player\_PlayerStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\RopeClimb.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\Scripts\ShadowDetection\Label.cs" />
      <Compile Include="Assets\Scripts\ShadowSlime\BreatheAnimate.cs" />
@@ -57,6 +59,7 @@
      <Compile Include="Assets\Scripts\Weapons\Durability.cs" />
      <Compile Include="Assets\Scripts\ShadowDetection\FollowCam.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\Hook.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -64,10 +67,8 @@
      <Compile Include="Assets\Scripts\Enemy\_AILightIntensity.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-     <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
      <Compile Include="Assets\Scripts\ShadowDetection\ShadowResponse.cs" />
-     <Compile Include="Assets\Scripts\Enemy\EnemyStats.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\Scripts\Enemy\Light Spider\LightScript.cs" />
@@ -85,6 +86,7 @@
      <Compile Include="Assets\Scripts\Player\Inventory.cs" />
      <Compile Include="Assets\Scripts\Player\_PlayerStatsController.cs" />
      <Compile Include="Assets\Scripts\Weapons\Arrow.cs" />
+     <Compile Include="Assets\Scripts\Items\Rope\Rope.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
      <Compile Include="Assets\Scripts\Player\ThirdPersonMovement.cs" />
@@ -102,11 +104,6 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope\Rope.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope\RopeCreator.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope\RopeSegment.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope\Hook.cs" />
-     <Compile Include="Assets\Scripts\Items\Rope\RopeClimb.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

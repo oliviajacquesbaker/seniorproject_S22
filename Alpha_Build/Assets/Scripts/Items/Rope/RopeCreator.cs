@@ -35,15 +35,12 @@ public class RopeCreator : MonoBehaviour
 
         if (Input.GetKey(keycode))
         {
-            cam.Aim();
-            player.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
+            AimRope();
         }
 
         if (Input.GetKeyUp(keycode))
         {
-            cam.StopAim();
-            float prevY = player.transform.rotation.y * 180;
-            player.transform.rotation = Quaternion.Euler(0f, prevY, 0f);
+            StopAimingRope();
         }
     }
 
@@ -82,6 +79,19 @@ public class RopeCreator : MonoBehaviour
         // crosshair.GetComponent<Image>().color = original;
         // left.GetComponent<Image>().color = original;
         // right.GetComponent<Image>().color = original;
-    }   
+    }
+
+    void AimRope()
+    {
+        cam.Aim();
+        player.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
+    } 
+
+    void StopAimingRope()
+    {
+        cam.StopAim();
+        float prevY = player.transform.rotation.y * 180;
+        player.transform.rotation = Quaternion.Euler(0f, prevY, 0f);
+    }
 }
 

@@ -31,10 +31,10 @@ public class Sword : MonoBehaviour
     {
         if (Input.GetKeyDown(attackButton))
         {
-            if (collider.GetComponent<EnemyStats>())
+            if (collider.GetComponent<_AIStatsController>())
             {
-                EnemyStats stats = collider.GetComponent<EnemyStats>();
-                stats.Hit(damage);
+                _AIStatsController stats = collider.GetComponent<_AIStatsController>();
+                stats.DetractHealth(damage);
             }
         }
     }
@@ -48,10 +48,10 @@ public class Sword : MonoBehaviour
         foreach(Collider enemy in hitEnemies)
         {
             //Debug.Log("Hit enemy " + enemy.name);
-            if (enemy.GetComponent<EnemyStats>())
+            if (enemy.GetComponent<_AIStatsController>())
             {
-                EnemyStats stats = enemy.GetComponent<EnemyStats>();
-                stats.Hit(damage);
+                _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
+                stats.DetractHealth(damage);
             }
         }
     }

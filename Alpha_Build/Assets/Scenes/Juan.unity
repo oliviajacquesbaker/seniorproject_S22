@@ -2161,7 +2161,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883605134}
-  m_LocalRotation: {x: 0.26811406, y: 0.20420186, z: -0.058263097, w: 0.93969244}
+  m_LocalRotation: {x: 0.26812565, y: 0.20401481, z: -0.05820972, w: 0.9397331}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2325,8 +2325,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.24466021, y: 0.20546615, z: -0.05316117, w: 0.9460968}
-  m_LocalPosition: {x: 1.1800189, y: 4.6656575, z: -3.5083566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.618, y: 1.4635, z: -0.33249998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3795,6 +3795,8 @@ GameObject:
   - component: {fileID: 1609650429}
   - component: {fileID: 1609650430}
   - component: {fileID: 1609650427}
+  - component: {fileID: 1609650432}
+  - component: {fileID: 1609650431}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3904,6 +3906,39 @@ CapsuleCollider:
   m_Height: 1.9998139
   m_Direction: 1
   m_Center: {x: 0, y: 0.23020226, z: 0}
+--- !u!114 &1609650431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609650424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dca06a7c1322584f92b4c586b55149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1609650432}
+  lightIntensity: 0
+  debug: 0
+  log: 0
+  healDark: 0
+  currentIntensity: 0
+--- !u!114 &1609650432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609650424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf58dffad05f5a42b94559cc7d5c0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  slimesCollected: 0
+  activeTool: 
 --- !u!1 &1614137776
 GameObject:
   m_ObjectHideFlags: 0
