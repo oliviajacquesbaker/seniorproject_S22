@@ -11,6 +11,8 @@ public class _AIStatsController : MonoBehaviour
     [SerializeField]
     bool debug, log = false;
 
+    private bool multistage = false;
+
     void Start()
     {
         currAi = GetComponent<_AIStats>();
@@ -18,10 +20,21 @@ public class _AIStatsController : MonoBehaviour
 
     void Update()
     {
-        if (currAi.GetHealth() <= 0)
+        if (currAi.GetHealth() <= 0 && !multistage)
         {
+            Debug.Log(currAi.GetHealth());
             Kill();
         }
+    }
+
+    public bool GetMultiStage()
+    {
+        return multistage;
+    }
+
+    public void SetMultiStage(bool setMulti)
+    {
+        multistage = setMulti;
     }
 
     //This controller function deals with damage or healing in regards to light intensity. NOT normal attack damage/healing

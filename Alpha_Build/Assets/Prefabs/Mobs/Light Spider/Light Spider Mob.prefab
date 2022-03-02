@@ -1337,6 +1337,8 @@ GameObject:
   - component: {fileID: 2850172505167242218}
   - component: {fileID: 2850172505167242223}
   - component: {fileID: 2850172505167242220}
+  - component: {fileID: 9055989310019493765}
+  - component: {fileID: 1548641021389835021}
   m_Layer: 0
   m_Name: Light Spider Mob
   m_TagString: Untagged
@@ -1419,6 +1421,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.549988, y: 1.1759319, z: 1}
   m_Center: {x: 0.08351445, y: -0.087965965, z: -2.3735347e-11}
+--- !u!114 &9055989310019493765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850172505167242216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f909019d042b3a458b4a09edd974100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  type: 1
+--- !u!114 &1548641021389835021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850172505167242216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dc00dbb7b18424f8fc25ee358c0022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currAi: {fileID: 0}
+  lightIntensity: 0
+  debug: 0
+  log: 0
 --- !u!1 &3126044698696865450
 GameObject:
   m_ObjectHideFlags: 0

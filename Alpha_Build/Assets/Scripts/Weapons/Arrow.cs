@@ -15,7 +15,7 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-           if (col.GetComponent<_AIStatsController>())
+           if (col.GetComponent<_AIStatsController>() && !col.isTrigger)
            {
                _AIStatsController stats = col.GetComponent<_AIStatsController>();
                stats.DetractHealth(damage, true);
