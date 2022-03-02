@@ -19,7 +19,7 @@ public class ToolDurability : MonoBehaviour
     Image toolDurabilityFiller, toolDurabilityChaser, toolIconFill;
 
     [SerializeField]
-    Sprite plain, bow, sword;
+    Sprite plain, bow, sword, rope;
 
     private bool activeTool;
 
@@ -49,10 +49,10 @@ public class ToolDurability : MonoBehaviour
                 activeTool = false;
                 toolIconFill.sprite = plain;
                 break;
-            case "test":
+            case "rope":
+                durability = GameObject.Find("RopeItem").GetComponent<Durability>();
                 activeTool = true;
-                toolIconFill.sprite = sword;
-                durability = GameObject.Find("Player").GetComponent<Durability>();
+                toolIconFill.sprite = rope;
                 break;
             default:
                 activeTool = false;

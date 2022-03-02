@@ -7,6 +7,8 @@ TagManager:
   - Melee
   - shadow_cam
   - labeler
+  - Rope
+  - Hook
   layers:
   - Default
   - TransparentFX

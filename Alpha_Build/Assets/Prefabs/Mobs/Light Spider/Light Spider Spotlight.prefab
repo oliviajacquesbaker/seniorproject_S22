@@ -1304,6 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  spiderController: {fileID: 5636662801042201860}
 --- !u!1 &3552224012937544010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,6 +2206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spiderStats: {fileID: 5636662801042201867}
+  spiderController: {fileID: 5636662801042201860}
   _animator: {fileID: 5777812868964902872}
   spotlight: {fileID: 5105355853846690036}
   meleePrefab: {fileID: 2850172505167242216, guid: f866a93e6f4115444a208e9acd3784c0, type: 3}

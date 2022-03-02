@@ -27,6 +27,8 @@ public class Inventory : MonoBehaviour
     private GameObject blur;
     private StateHandler state;
 
+    private _PlayerStats playerStats;
+
     void Start()
     {
         bow = GameObject.Find("Bow");
@@ -36,6 +38,8 @@ public class Inventory : MonoBehaviour
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
         InitInventory();
+
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
     }
 
     void Update()
@@ -134,18 +138,21 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("You have been given a bow!");
             GiveBow();
+            playerStats.SetActiveTool("bow");
 
         }
         else if (currMenuItem == 1) // sword
         {
             Debug.Log("You have been given a sword!");
             GiveSword();
+            playerStats.SetActiveTool("sword");
 
         }
         else if (currMenuItem == 2) // rope
         {
             Debug.Log("You have been given a rope!");
             GiveRope();
+            playerStats.SetActiveTool("rope");
         }
         // repeat for all other weapons
 
