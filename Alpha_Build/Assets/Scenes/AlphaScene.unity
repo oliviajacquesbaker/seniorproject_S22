@@ -1887,6 +1887,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1817493039104642109}
     m_Modifications:
+    - target: {fileID: 3534657570070425400, guid: bc1ba55400d19634d865426446d087f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4577
+      objectReference: {fileID: 0}
     - target: {fileID: 3534657570264839217, guid: bc1ba55400d19634d865426446d087f2, type: 3}
       propertyPath: m_Name
       value: Bow
@@ -1895,6 +1899,14 @@ PrefabInstance:
       propertyPath: arrowObj
       value: 
       objectReference: {fileID: 964018137615635252, guid: fcc2da4b590684942bb5462c0ae326a9, type: 3}
+    - target: {fileID: 3534657570264839220, guid: bc1ba55400d19634d865426446d087f2, type: 3}
+      propertyPath: chargeMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534657570264839220, guid: bc1ba55400d19634d865426446d087f2, type: 3}
+      propertyPath: chargeRate
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3534657571160689633, guid: bc1ba55400d19634d865426446d087f2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2928,7 +2940,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883605134}
-  m_LocalRotation: {x: 0.3148771, y: 0.25808635, z: -0.089402586, w: 0.9089835}
+  m_LocalRotation: {x: 0.31487107, y: 0.2581474, z: -0.08942372, w: 0.9089662}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3187,7 +3199,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.29066935, y: 0.26025838, z: -0.08252044, w: 0.91704273}
+  m_LocalRotation: {x: 0.29066414, y: 0.26030684, z: -0.08253892, w: 0.9170289}
   m_LocalPosition: {x: -55.920036, y: 5.6517324, z: -99.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4309,7 +4321,7 @@ GameObject:
   - component: {fileID: 1188487931}
   - component: {fileID: 1188487930}
   - component: {fileID: 1188487929}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Hallway Wall 2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6204,7 +6216,7 @@ MonoBehaviour:
   attackPoint: {fileID: 1871400995}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   damage: 100
 --- !u!65 &1871400994
 BoxCollider:

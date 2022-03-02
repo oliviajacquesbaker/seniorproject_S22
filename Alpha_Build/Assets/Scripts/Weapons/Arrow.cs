@@ -19,6 +19,7 @@ public class Arrow : MonoBehaviour
            {
                _AIStatsController stats = col.GetComponent<_AIStatsController>();
                stats.DetractHealth(damage, true);
+               Destroy(gameObject);
            }
     }
 
