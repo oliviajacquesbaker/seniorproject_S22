@@ -16,6 +16,14 @@ public class StateHandler : MonoBehaviour
         sword = GameObject.Find("Sword");
     }
 
+    void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
+
     public bool InvOpen()
     {
         return inv.IsOpen();

@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class ShadowResponse : MonoBehaviour
 {
-    void OnMouseDown()
-    {
-        Debug.Log("CLICKED ONMOUSEDOWN");
-    }
+    [SerializeField]
+    private ShadowType itemType;
+    private bool readyToCollect = true;
+    private Label connectedLabel;
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("TRIGGER ENTERED, ITEM COLLECTED");
+        if (readyToCollect)
+        {
+            Camera.main.GetComponent<Inventory>().EnableItem(itemType);
+            readyToCollect = false;
+        }
     }
-    private void OnTriggerExit(Collider other)
+
+    private void SetLabel(Label label)
     {
-        //Debug.Log("TRIGGER EXITED");
+        connectedLabel = label;
     }
 }

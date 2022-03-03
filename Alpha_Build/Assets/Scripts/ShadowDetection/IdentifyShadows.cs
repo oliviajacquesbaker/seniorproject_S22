@@ -12,7 +12,7 @@ public class IdentifyShadows : MonoBehaviour
     [SerializeField]
     Camera cam;
     [SerializeField]
-    int resizeAmount = 3;
+    int resizeAmount = 1;
     [SerializeField]
     GameObject[] labels = new GameObject[5];
 
@@ -32,7 +32,7 @@ public class IdentifyShadows : MonoBehaviour
     {
         float dist = Vector3.Distance(this.gameObject.transform.position, pastPos);
         //Debug.Log(dist);
-        if (dist > 4)
+        if (dist > 5)
         {
             Debug.Log("-----------------------------------------------------------------------------------------");
             pastPos = this.gameObject.transform.position;
@@ -54,9 +54,9 @@ public class IdentifyShadows : MonoBehaviour
     public void DetectShadows()
     {
         shadows = new List<Shadow>();
-        RenderTexture inbetween = new RenderTexture(3 * Screen.width / 4, Screen.height, 24);
-        Texture2D image = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGB24, false);
-        Texture2D imageCheck = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGBA32, false);
+        RenderTexture inbetween = new RenderTexture(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, 24);
+        Texture2D image = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGB24, false);
+        Texture2D imageCheck = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGBA32, false);
         //Texture2D imageResized;
 
         //grab what the ortho cam sees and put it on a texture we can read
@@ -69,13 +69,14 @@ public class IdentifyShadows : MonoBehaviour
         RenderTexture.active = null;
 
         int[] pixels = ApplyGreyscaleFilter(image);
+        //int[] pixels = ApplyDynamicGreyscaleFilter(image);
 
         //CreateImage(image.GetPixels(), "BW_ShadowBlobs");
 
-        int maxOutContours = 20;
-        int maxVertsPerContour = 20;
-        CvVertex[] outContours = new CvVertex[400];
-        int[] numVertsPerContour = new int[20];
+        int maxOutContours = 40;
+        int maxVertsPerContour = 40;
+        CvVertex[] outContours = new CvVertex[800];
+        int[] numVertsPerContour = new int[41];
         int numContours = 0;
 
         try
@@ -101,6 +102,7 @@ public class IdentifyShadows : MonoBehaviour
         int startInd = 0;
         for (int i = 0; i < numContours; ++i)
         {
+            if (i > maxOutContours) break;
             if(numVertsPerContour[i] > 0)
             {
                 Vector2[] pointsOrdered = ReorderContourPoints(ref outContours, startInd, numVertsPerContour[i]);
@@ -113,7 +115,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
 
-        Color[] pixelsOut = image.GetPixels();
+        /*Color[] pixelsOut = image.GetPixels();
         for (int i = 0; i < numContours; ++i)
         {
             CvVertex[] pts = outContours;
@@ -144,7 +146,10 @@ public class IdentifyShadows : MonoBehaviour
                 }
             }
         }
-        CreateImage(pixelsOut, "ContourPoints2");
+        CreateImage(pixelsOut, "ContourPoints");
+
+        pixelsOut = GetImageReadyArray(pixels);
+        CreateImage(pixelsOut, "ContourPoints_BW");*/
     }
 
     Vector2[] ReorderContourPoints(ref CvVertex[] contours, int startingInd, int size)
@@ -181,16 +186,13 @@ public class IdentifyShadows : MonoBehaviour
             area = (points[prev].x*points[i].y + points[i].x*points[next].y + points[next].x*points[prev].y - points[prev].y*points[i].x - points[i].y*points[next].x - points[next].y*points[prev].x) / 2.0;
             if (area < minArea)
             {
-                if(points[prev].x+points[i].x+points[next].x < points[prev].y + points[i].y + points[next].y)
-                {
-                    if (Mathf.Abs(points[prev].x - points[i].x) < Mathf.Abs(points[next].x - points[i].x)) outInd = prev;
-                    else outInd = next;
-                }
-                else
-                {
-                    if (Mathf.Abs(points[prev].y - points[i].y) < Mathf.Abs(points[next].y - points[i].y)) outInd = prev;
-                    else outInd = next;
-                }
+                int j = (i + 2) % points.Length;
+                int k = (i - 2) % points.Length;
+                if (k < 0) k += points.Length;
+                double angleNext = Vector2.Angle(points[next] - points[i], points[next] - points[j]);
+                //double angleprev = Vector2.Angle(points[prev] - points[i], points[prev] - points[k]);
+                if (angleNext > 75 && angleNext < 105) outInd = prev;
+                else outInd = next;
             }
         }
 
@@ -240,7 +242,7 @@ public class IdentifyShadows : MonoBehaviour
         int[] toReturn = new int[pixels.Length];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (pixels[i].r + pixels[i].g + pixels[i].b > 1.25)
+            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.8)
             {
                 toReturn[i] = 0;
             }
@@ -252,11 +254,48 @@ public class IdentifyShadows : MonoBehaviour
         return toReturn;
     }
 
+    int[] ApplyDynamicGreyscaleFilter(Texture2D image)
+    {
+        Color[] pixels = image.GetPixels();
+        int[] toReturn = new int[pixels.Length];
+
+        float threshold = 0;
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            threshold += (pixels[i].r + pixels[i].g + pixels[i].b);
+        }
+        threshold /= pixels.Length;
+        threshold = Mathf.Pow(threshold, 1.25f);
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].r + pixels[i].g + pixels[i].b > threshold)
+            {
+                toReturn[i] = 0;
+            }
+            else
+            {
+                toReturn[i] = 255;
+            }
+        }
+        return toReturn;
+    }
+
+    Color[] GetImageReadyArray(int[] inpixels)
+    {
+        Color[] pixels = new Color[inpixels.Length];
+            
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = new Color(inpixels[i], inpixels[i], inpixels[i]);
+        }
+
+        return pixels;
+    }
 
     void CreateImage(Color[] pixels, string fileName)
     {
-        //Texture2D image = new Texture2D(3 * Screen.width / 4 / resizeAmount, Screen.height / resizeAmount, TextureFormat.RGB24, false);
-        Texture2D image = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGB24, false);
+        Texture2D image = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGB24, false);
         image.SetPixels(pixels);
         image.Apply();
         byte[] bytes = image.EncodeToPNG();

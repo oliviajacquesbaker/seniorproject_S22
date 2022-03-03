@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Label : MonoBehaviour
 {
-    public Vector3 pos;
-    Vector3 rot;
     public GameObject labelPrefab;
     public GameObject thisLabel;
-    Camera cam;
+
+    private Vector3 pos;
+    private Vector3 rot;
+    private Camera cam;
+
+    private void Update()
+    {
+        if(thisLabel) thisLabel.transform.LookAt(new Vector3(Camera.main.transform.position.x, thisLabel.transform.position.y, Camera.main.transform.position.z));
+    }
 
     public void SetTransforms(int anchorX, int anchorY)
     {
@@ -28,13 +34,9 @@ public class Label : MonoBehaviour
         thisLabel = Instantiate(labelPrefab, pos, Quaternion.Euler(rot));
     }
 
-    void UpdateInScene()
-    {
-        thisLabel.transform.localRotation = Quaternion.Euler(rot);
-    }
-
     public void RemoveFromScene()
     {
         Destroy(thisLabel);
     }
+    
 }
