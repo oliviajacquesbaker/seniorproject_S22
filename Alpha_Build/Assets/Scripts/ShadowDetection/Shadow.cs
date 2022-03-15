@@ -5,11 +5,10 @@ using UnityEngine;
 
 public enum ShadowType
 {
-    circle,
-    oval,
-    rect,
-    square,
-    line,
+    sword,
+    bow,
+    shield,
+    rope,
     unknown,
     none
 }
@@ -41,7 +40,7 @@ public class Shadow
 
     public void Relabel(GameObject[] labelPrefabs)
     {
-        if (contourPoints.Length == 2) label = ShadowType.line;
+        if (contourPoints.Length == 3) label = ShadowType.bow;
         else if (contourPoints.Length == 4)
         {
             int yPos_0 = (int)contourPoints[0].y;
@@ -64,8 +63,9 @@ public class Shadow
             else
             {
                 float ratio = cross1 / cross2;
-                if (ratio > 0.85 && ratio < 1.15) label = ShadowType.square;
-                else label = ShadowType.rect;
+                if (ratio > 0.7 && ratio < 1.3) label = ShadowType.shield;
+                else if (ratio < 0.2 || ratio > 5) label = ShadowType.sword;
+                else label = ShadowType.unknown;
             }
         }
         else if(contourPoints.Length == 5)
@@ -142,8 +142,8 @@ public class Shadow
                 float cross2 = Mathf.Sqrt(Mathf.Pow(xPos_3 - xPos_1, 2.0f) + Mathf.Pow(yPos_3 - yPos_1, 2.0f));
                 //Debug.Log("cross1: " + cross1 + " cross2: " + cross2 );
                 float ratio = cross1 / cross2;
-                if (ratio > 0.75 && ratio < 1.25) label = ShadowType.circle;
-                else label = ShadowType.oval;
+                if (ratio > 0.60 && ratio < 2) label = ShadowType.rope;
+                else label = ShadowType.unknown;
             }
         }
         //Debug.Log("-----------------------------------------------label for this shadow: " + label);
@@ -154,20 +154,29 @@ public class Shadow
     private void CreateInGameLabel(GameObject[] labelPrefabs)
     {
         GameObject labelPrefab;
-        if (label == ShadowType.circle) labelPrefab = labelPrefabs[0];
-        else if (label == ShadowType.oval) labelPrefab = labelPrefabs[1];
-        else if (label == ShadowType.rect) labelPrefab = labelPrefabs[2];
-        else if (label == ShadowType.square) labelPrefab = labelPrefabs[3];
+        if (label == ShadowType.rope) labelPrefab = labelPrefabs[0];
+        else if (label == ShadowType.bow) labelPrefab = labelPrefabs[1];
+        else if (label == ShadowType.sword) labelPrefab = labelPrefabs[2];
+        else if (label == ShadowType.shield) labelPrefab = labelPrefabs[3];
         else labelPrefab = labelPrefabs[4];
-        int yPos, xPos;
-        yPos = (int)contourPoints[0].y;
-        xPos = (int)contourPoints[0].x;
 
-        GameObject labelList = GameObject.FindWithTag("labeler");
-        labelObj = labelList.AddComponent<Label>();
-        labelObj.SetLabelPrefab(labelPrefab);
-        labelObj.SetTransforms(xPos, yPos);
-        labelObj.SetInScene();
+        if(label != ShadowType.unknown && label != ShadowType.none)
+        {
+            int xCenter = 0, yCenter = 0;
+            for (int i = 0; i < contourPoints.Length; ++i)
+            {
+                xCenter += (int)contourPoints[i].x;
+                yCenter += (int)contourPoints[i].y;
+            }
+            xCenter /= contourPoints.Length;
+            yCenter /= contourPoints.Length;
+
+            GameObject labelList = GameObject.FindWithTag("labeler");
+            labelObj = labelList.AddComponent<Label>();
+            labelObj.SetLabelPrefab(labelPrefab);
+            labelObj.SetTransforms(xCenter, yCenter);
+            labelObj.SetInScene();
+        }
     }
     private void SetGameshadow()
     {

@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
 
     public List<MenuButton> buttons = new List<MenuButton>();
+    public List<GameObject> thumbnails = new List<GameObject>();
     public float timeSlowRatio;
     private Vector2 mousePos;
     private Vector2 from = new Vector2(0.5f, 1.0f);
@@ -27,15 +28,18 @@ public class Inventory : MonoBehaviour
     private GameObject blur;
     private StateHandler state;
 
+    private bool bowEnabled, swordEnabled, ropeEnabled, shieldEnabled;
+
     private _PlayerStats playerStats;
 
     void Start()
     {
+        currMenuItem = -1;
         bow = GameObject.Find("Bow");
         sword = GameObject.Find("Sword");
         rope = GameObject.Find("RopeItem");
         inv = GameObject.Find("Inventory");
-        state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
+        state = Camera.main.GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
         InitInventory();
 
@@ -54,6 +58,7 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyUp(hotkey))
         {
+            if(currMenuItem != -1) GiveItem();
             CloseInventory();
         }
 
@@ -77,7 +82,12 @@ public class Inventory : MonoBehaviour
         
         foreach(MenuButton button in buttons)
         {
-            button.sceneImage.color = button.normal;
+            button.sceneImage.color = button.disabled;
+        }
+
+        foreach (GameObject thumbnail in thumbnails)
+        {
+            thumbnail.SetActive(false);
         }
 
         currWeapon = bow;
@@ -85,6 +95,7 @@ public class Inventory : MonoBehaviour
         currMenuItem = 0;
         prevMenuItem = 0;
         blur.SetActive(false);
+        bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
     }
 
     public void ShowInventory()
@@ -120,9 +131,11 @@ public class Inventory : MonoBehaviour
 
         if (currMenuItem != prevMenuItem)
         {
-            buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].normal;
+            if(GetIntBasedEnabledStatus(prevMenuItem)) buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].normal;
+            else buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].disabled;
             prevMenuItem = currMenuItem;
-            buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].highlighted;
+            if (GetIntBasedEnabledStatus(currMenuItem)) buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].highlighted;
+            else buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].disabledHighlight;
         }
 
     }
@@ -134,21 +147,21 @@ public class Inventory : MonoBehaviour
 
         buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].pressed;
 
-        if (currMenuItem == 0) // bow
+        if (currMenuItem == 0 && bowEnabled) // bow
         {
             Debug.Log("You have been given a bow!");
             GiveBow();
             playerStats.SetActiveTool("bow");
 
         }
-        else if (currMenuItem == 1) // sword
+        else if (currMenuItem == 1 && swordEnabled) // sword
         {
             Debug.Log("You have been given a sword!");
             GiveSword();
             playerStats.SetActiveTool("sword");
 
         }
-        else if (currMenuItem == 2) // rope
+        else if (currMenuItem == 2 && ropeEnabled) // rope
         {
             Debug.Log("You have been given a rope!");
             GiveRope();
@@ -156,6 +169,22 @@ public class Inventory : MonoBehaviour
         }
         // repeat for all other weapons
 
+    }
+
+    public void EnableItem(ShadowType item)
+    {
+        Debug.Log(item + "Collected and enabled!");
+        int updated = -1;
+        if (item == ShadowType.sword) { swordEnabled = true; updated = 1; }
+        else if (item == ShadowType.shield) { shieldEnabled = true; updated = 3; }
+        else if (item == ShadowType.rope) { ropeEnabled = true; updated = 2; }
+        else if (item == ShadowType.bow) { bowEnabled = true; updated = 0; }
+
+        if (updated != -1)
+        {
+            buttons[updated].sceneImage.color = buttons[updated].normal;
+            thumbnails[updated].SetActive(true);
+        }
     }
 
     public bool IsOpen()
@@ -184,6 +213,14 @@ public class Inventory : MonoBehaviour
         currWeapon = rope;
     }
 
+    private bool GetIntBasedEnabledStatus(int item)
+    {
+        if (item == 0) return bowEnabled;
+        else if (item == 1) return swordEnabled;
+        else if (item == 2) return ropeEnabled;
+        else return shieldEnabled;
+    }
+
 }
 
 [System.Serializable]
@@ -194,4 +231,6 @@ public class MenuButton
     public Color normal = Color.white;
     public Color highlighted = Color.grey;
     public Color pressed = Color.gray;
+    public Color disabled = new Color(0.2f, 0.2f, 0.2f);
+    public Color disabledHighlight = new Color(0.25f, 0.25f, 0.25f);
 }

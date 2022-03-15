@@ -6,8 +6,7 @@ public class _AIStats : MonoBehaviour
 {
     [SerializeField]
     private float health = 100f;
-    [SerializeField]
-    private MobType type = MobType.Patrol;
+    
 
     void Start()
     {

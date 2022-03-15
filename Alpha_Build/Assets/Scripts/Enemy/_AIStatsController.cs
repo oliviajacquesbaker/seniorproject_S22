@@ -7,11 +7,14 @@ public class _AIStatsController : MonoBehaviour
     [SerializeField]
     public _AIStats currAi;
     [SerializeField]
+    private MobType type = MobType.Patrol;
+    [SerializeField]
     float lightIntensity = 0;
     [SerializeField]
     bool debug, log = false;
 
     private bool multistage = false;
+    private bool living = true;
 
     void Start()
     {
@@ -20,7 +23,7 @@ public class _AIStatsController : MonoBehaviour
 
     void Update()
     {
-        if (currAi.GetHealth() <= 0 && !multistage)
+        if (living && currAi.GetHealth() <= 0 && !multistage)
         {
             Debug.Log(currAi.GetHealth());
             Kill();
@@ -53,7 +56,7 @@ public class _AIStatsController : MonoBehaviour
         }
         else
         {
-            if (lightIntensity < 0.15) //Damages AI in Dark
+            if (lightIntensity < 0.15 && type != MobType.Booster) //Damages AI in Dark
             {
                 DetractHealth(lightIntensity);
             }
@@ -111,6 +114,17 @@ public class _AIStatsController : MonoBehaviour
 
     public void Kill()
     {
-        Destroy(gameObject);
+        living = false;
+        switch (type)
+        {
+            case MobType.Booster:
+                gameObject.GetComponent<BoosterMob>().OnDeath();
+                break;
+            default:
+                //Debug.Log("set up similar functions in the other mob types :)");
+                Destroy(gameObject);
+                break;
+        }
+
     }
 }
