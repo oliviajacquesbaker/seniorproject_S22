@@ -7,6 +7,8 @@ public class _PlayerStatsController : MonoBehaviour
     [SerializeField]
     public _PlayerStats player;
     [SerializeField]
+    public Shield shield;
+    [SerializeField]
     float lightIntensity = 0;
     [SerializeField]
     bool debug, log, healDark = false;
@@ -16,6 +18,7 @@ public class _PlayerStatsController : MonoBehaviour
     void Start()
     {
         player = GetComponent<_PlayerStats>();
+        shield = shield.GetComponent<Shield>();
     }
     //Updates Health in regard to light intensity
     public void UpdateHealth(float perceivedIntensity)
@@ -29,7 +32,10 @@ public class _PlayerStatsController : MonoBehaviour
             }
             else //Damages Player in Light
             {
-                DetractHealth(perceivedIntensity);
+                if (!shield.isActive())
+                {
+                    DetractHealth(perceivedIntensity);
+                }
             }
         }
         else
