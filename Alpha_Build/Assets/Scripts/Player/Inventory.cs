@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
     private GameObject rope;
     private GameObject weapons;
     private GameObject blur;
+    private GameObject shield;
     private StateHandler state;
 
     private bool bowEnabled, swordEnabled, ropeEnabled, shieldEnabled;
@@ -41,6 +42,7 @@ public class Inventory : MonoBehaviour
         inv = GameObject.Find("Inventory");
         state = Camera.main.GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
+        shield = GameObject.Find("Shield");
         InitInventory();
 
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
@@ -74,6 +76,7 @@ public class Inventory : MonoBehaviour
         bow.SetActive(false);
         sword.SetActive(false);
         rope.SetActive(false);
+        shield.SetActive(false);
     }
 
     void InitInventory()
@@ -167,6 +170,20 @@ public class Inventory : MonoBehaviour
             GiveRope();
             playerStats.SetActiveTool("rope");
         }
+        else if (currMenuItem == 3 && shieldEnabled) // shield
+        {
+            if (shield.activeInHierarchy)
+            {
+                shield.SetActive(false);
+                //shieldEnabled = false;
+            }
+            else
+            {
+                Debug.Log("You have been given a shield!");
+                GiveShield();
+                playerStats.SetActiveTool("shield");
+            }
+        }
         // repeat for all other weapons
 
     }
@@ -211,6 +228,13 @@ public class Inventory : MonoBehaviour
         currWeapon.SetActive(false);
         rope.SetActive(true);
         currWeapon = rope;
+    }
+    public void GiveShield()
+    {
+        //currWeapon.SetActive(false);
+        shield.SetActive(true);
+        shieldEnabled = true;
+        //currWeapon = rope;
     }
 
     private bool GetIntBasedEnabledStatus(int item)

@@ -98,7 +98,11 @@ public class Bow : MonoBehaviour
     void StopAiming()
     {
         camController.StopAim();
-        //transform.rotation = Quaternion.identity;
+    }
+
+    void RotatePlayer()
+    {
+        Player.transform.localEulerAngles = new Vector3(Player.transform.rotation.x, cam.m_XAxis.Value, Player.transform.rotation.z);
     }
 
     // IEnumerator CrosshairDelay(float seconds)
