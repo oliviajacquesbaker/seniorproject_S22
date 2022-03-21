@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
     private int prevMenuItem;
     private int selectedWeapon;
     private float initialDeltaTimeScale;
+    public bool debug;
     public GameObject inv;
     private GameObject currWeapon;
     private GameObject bow;
@@ -32,6 +33,7 @@ public class Inventory : MonoBehaviour
     private bool bowEnabled, swordEnabled, ropeEnabled, shieldEnabled;
 
     private _PlayerStats playerStats;
+    private _PlayerStatsController playerStatsController;
 
     void Start()
     {
@@ -46,12 +48,22 @@ public class Inventory : MonoBehaviour
         InitInventory();
 
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
+        playerStatsController = GameObject.Find("Player").GetComponent<_PlayerStatsController>();
     }
 
     void Update()
     {
         GetCurrMenuItem();
         //Debug.Log(IsOpen());
+
+        if (shield.activeInHierarchy)
+        {
+            playerStatsController.SetPlayerImmune(true);
+        }
+        else
+        {
+            playerStatsController.SetPlayerImmune(false);
+        }
 
         if (Input.GetKeyDown(hotkey))
         {
@@ -98,7 +110,14 @@ public class Inventory : MonoBehaviour
         currMenuItem = 0;
         prevMenuItem = 0;
         blur.SetActive(false);
-        bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
+        if (!debug)
+        {
+            bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
+        }
+        else
+        {
+            bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = true;
+        }
     }
 
     public void ShowInventory()

@@ -11,14 +11,14 @@ public class _PlayerStatsController : MonoBehaviour
     [SerializeField]
     float lightIntensity = 0;
     [SerializeField]
-    bool debug, log, healDark = false;
+    bool debug, log, healDark, isImmune = false;
     [SerializeField]
     float currentIntensity = 0;
 
     void Start()
     {
         player = GetComponent<_PlayerStats>();
-        shield = shield.GetComponent<Shield>();
+        //shield = shield.GetComponent<Shield>();
     }
     //Updates Health in regard to light intensity
     public void UpdateHealth(float perceivedIntensity)
@@ -32,7 +32,7 @@ public class _PlayerStatsController : MonoBehaviour
             }
             else //Damages Player in Light
             {
-                if (!shield.isActive())
+                if (!isImmune)
                 {
                     DetractHealth(perceivedIntensity);
                 }
@@ -130,6 +130,11 @@ public class _PlayerStatsController : MonoBehaviour
             return lightIntensity;
         else
             return currentIntensity;
+    }
+
+    public void SetPlayerImmune(bool immune)
+    {
+        isImmune = immune;
     }
 
 }
