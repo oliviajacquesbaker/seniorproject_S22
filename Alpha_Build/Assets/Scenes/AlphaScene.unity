@@ -4760,7 +4760,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825097330}
-  m_LocalRotation: {x: 0.18101488, y: 0.26773188, z: -0.05128701, w: 0.944946}
+  m_LocalRotation: {x: 0.1810149, y: 0.2677319, z: -0.05128702, w: 0.944946}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5625,7 +5625,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.29066938, y: 0.26025838, z: -0.08252043, w: 0.9170427}
+  m_LocalRotation: {x: 0.29066935, y: 0.26025838, z: -0.08252044, w: 0.91704273}
   m_LocalPosition: {x: -55.920036, y: 5.6517324, z: -99.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5724,6 +5724,7 @@ MonoBehaviour:
   hotkey: 9
   numItems: 5
   currMenuItem: 0
+  debug: 1
   inv: {fileID: 1483622990}
 --- !u!114 &963194231
 MonoBehaviour:
@@ -8545,6 +8546,7 @@ MonoBehaviour:
   hotkey: 9
   numItems: 5
   currMenuItem: 2
+  debug: 0
   inv: {fileID: 1483622990}
 --- !u!1 &1555951512
 GameObject:
@@ -15768,6 +15770,7 @@ MonoBehaviour:
   debug: 0
   log: 0
   healDark: 0
+  isImmune: 0
   currentIntensity: 0
 --- !u!114 &1817493039104642103
 MonoBehaviour:

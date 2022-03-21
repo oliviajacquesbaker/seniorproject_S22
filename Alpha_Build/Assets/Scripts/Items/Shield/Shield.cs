@@ -9,6 +9,7 @@ public class Shield : MonoBehaviour
     public Durability durability;
     public _PlayerStatsController playerStatsController;
     public Color color;
+    
     void Start()
     {
         durability = GetComponent<Durability>();
@@ -18,7 +19,6 @@ public class Shield : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(color.a);
 
         if (playerStatsController.GetPerceivedIntensity() > 0.15)
         {
