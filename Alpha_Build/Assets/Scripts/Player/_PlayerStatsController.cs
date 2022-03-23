@@ -46,7 +46,10 @@ public class _PlayerStatsController : MonoBehaviour
             }
             else //Damages Player in Light
             {
-                DetractHealth(lightIntensity);
+                if (!isImmune)
+                {
+                    DetractHealth(lightIntensity);
+                }
             }
         }
         if (log)

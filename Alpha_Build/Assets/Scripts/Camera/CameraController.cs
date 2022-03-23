@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private GameObject player;
     public ThirdPersonMovement playerSpeed;
     private CinemachineFreeLook cam;
-    public float targetTurnVelocity;
+    public float targetTurnVelocity, rotationSpeed;
     private float initialTurnVelocity;
     private bool hasRotated;
 
@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
 
     void RotatePlayer()
     {
-        player.transform.localEulerAngles = new Vector3(player.transform.rotation.x, cam.m_XAxis.Value, player.transform.rotation.z);
+        player.transform.localEulerAngles = new Vector3(player.transform.rotation.x, Mathf.Lerp(player.transform.rotation.y, cam.m_XAxis.Value, rotationSpeed * Time.deltaTime), player.transform.rotation.z);
         hasRotated = true;
     }
 

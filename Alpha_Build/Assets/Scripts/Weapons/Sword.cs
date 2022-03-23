@@ -10,7 +10,6 @@ public class Sword : MonoBehaviour
     public float attackRange = 0.5f;
     public KeyCode attackButton;
     public Transform attackPoint;
-    public LayerMask enemyLayers;
 
     public int damage;
 
@@ -27,23 +26,23 @@ public class Sword : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (Input.GetKeyDown(attackButton))
-        {
-            if (collider.GetComponent<_AIStatsController>())
-            {
-                _AIStatsController stats = collider.GetComponent<_AIStatsController>();
-                stats.DetractHealth(damage);
-            }
-        }
-    }
+    // void OnTriggerEnter(Collider collider)
+    // {
+    //     if (Input.GetKeyDown(attackButton))
+    //     {
+    //         if (collider.GetComponent<_AIStatsController>())
+    //         {
+    //             _AIStatsController stats = collider.GetComponent<_AIStatsController>();
+    //             stats.DetractHealth(damage);
+    //         }
+    //     }
+    // }
 
     void Attack()
     {
         //add animation here
 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange);
 
         foreach(Collider enemy in hitEnemies)
         {
@@ -51,7 +50,7 @@ public class Sword : MonoBehaviour
             if (enemy.GetComponent<_AIStatsController>())
             {
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
-                stats.DetractHealth(damage);
+                stats.DetractHealth(damage, true);
             }
         }
     }
