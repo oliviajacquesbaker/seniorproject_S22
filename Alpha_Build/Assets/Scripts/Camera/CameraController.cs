@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
 
     void RotatePlayer()
     {
-        player.transform.localEulerAngles = new Vector3(player.transform.rotation.x, Mathf.Lerp(player.transform.rotation.y, cam.m_XAxis.Value, rotationSpeed * Time.deltaTime), player.transform.rotation.z);
+        player.transform.localEulerAngles = new Vector3(player.transform.rotation.x, cam.m_XAxis.Value, player.transform.rotation.z);
         hasRotated = true;
     }
 

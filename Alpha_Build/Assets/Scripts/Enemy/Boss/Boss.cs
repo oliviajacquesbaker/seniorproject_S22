@@ -4,32 +4,57 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    private Collider[] colliders;
+    private _AIStats stats;
+    private MeshRenderer[] renderer;
     public GameObject player, attackTelegraph;
     private Transform telegraphEffect;
-    public bool playerInRange, debug = false;
-    public float rotationSpeed, telegraphTime, attackRadius, smashAttackDamage;
-    public bool coroutineStarted = false;
+    public bool playerInRange, debug, isRecovering = false;
+    public float rotationSpeed, telegraphTime, attackRadius, smashAttackDamage, phaseTwoThreshold, attackCooldown, attackRecoveryTime;
+    private bool coroutineStarted;
+    private int phase = 1;
+    private Color original;
+    private float timeSinceLastAttack;
 
     void Start()
     {
         player = GameObject.Find("Player");
+        //renderer = GameObject.Find("Body").GetComponent<MeshRenderer>();
+        stats = GetComponent<_AIStats>();
+        timeSinceLastAttack = attackCooldown / 2f;
+        colliders = GetComponentsInChildren<Collider>();
+        renderer = GetComponentsInChildren<MeshRenderer>();
+        original = renderer[0].material.color;
     }
 
     void Update()
     {
-        if (!playerInRange) { return; }
-        
+        if (!playerInRange) return; 
+
         LookAtPlayer();
 
-        if (!debug)
-        {   
-            TelegraphAttack();
-            StartCoroutine(TelegraphDelay());
-            //Attack();
-            debug = true;
-            //timePassed += Time.deltaTime;
+        if (stats.GetHealth() <= phaseTwoThreshold)
+        {
+            SetPhase(2);
         }
 
+        switch (phase)
+        {
+            case 1:
+                if (timeSinceLastAttack > attackCooldown)
+                {   
+                    Attack();
+                }
+                break;
+            case 2:
+            {
+                // phase 2 attacks here
+                Debug.Log("Phase 2!");
+                break;
+            }
+        }
+
+        timeSinceLastAttack += Time.deltaTime;
     }
 
     void LookAtPlayer()
@@ -41,14 +66,26 @@ public class Boss : MonoBehaviour
 
     void TelegraphAttack()
     {
+        if (isRecovering) return;
+
         GameObject temp = Instantiate(attackTelegraph, player.transform.position, Quaternion.identity);
         telegraphEffect = temp.transform;
         Debug.Log("Spawned telegraph");
         debug = true;
     }
+
     void Attack()
     {
-        //TelegraphAttack();
+        TelegraphAttack();
+        Invoke("DamageArea", telegraphTime);
+        StartCoroutine(AttackRecover());
+        debug = true;
+        timeSinceLastAttack = 0;
+    }
+    void DamageArea()
+    {
+        if (isRecovering) return;
+
         Debug.Log("Attack!");
         Collider[] colliders = Physics.OverlapSphere(telegraphEffect.position, attackRadius);
 
@@ -60,18 +97,74 @@ public class Boss : MonoBehaviour
                 stats.DetractHealth(smashAttackDamage, true);
             }
         }
+
+        isRecovering = true;
     }
 
-    IEnumerator TelegraphDelay()
+    // void AttackRecover()
+    // {
+    //     float timePassed = 0f;
+
+    //     while (timePassed < attackRecoveryTime)
+    //     {
+    //         yield return null;
+    //     }
+
+    //     timePassed += Time.deltaTime;
+    // }
+
+    IEnumerator AttackRecover()
     {
         if (coroutineStarted)
             yield break;
 
         coroutineStarted = true;
+        //isRecovering = true;
+        yield return new WaitForSeconds(attackRecoveryTime);
+        Debug.Log("Recovered!");
 
-        yield return new WaitForSeconds(telegraphTime);
-        Attack();
+        isRecovering = false;
         coroutineStarted = false;
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        //Debug.Log("Something hit me!!");
+        //if (col.gameObject.tag == "Arrow")
+        //{
+        foreach (Renderer r in renderer)
+        {
+            r.material.color = Color.red;
+        }
+
+        foreach (Collider c in colliders)
+        {
+            if (c.gameObject.name == "Left Hand" || c.gameObject.name == "Right Hand")
+            {
+                _AIStatsController statsController = GetComponent<_AIStatsController>();
+                if (isRecovering)
+                {
+                    statsController.DetractHealth(50, true); // magic number needs to be changed
+                    Debug.Log("Critical strike!");
+                }
+                Debug.Log("Hit " + c.gameObject.name);
+            }
+        }
+        Invoke("ResetColor", 0.1f);
+        Debug.Log("HP:" + stats.GetHealth());
+        //}
+    }
+
+    void ResetColor()
+    {
+        foreach (Renderer r in renderer)
+        {
+            r.material.color = original;
+        }
+    }
+
+    void SetPhase(int phase)
+    {
+        this.phase = phase;
+    }
 }

@@ -9,6 +9,7 @@ TagManager:
   - labeler
   - Rope
   - Hook
+  - Arrow
   layers:
   - Default
   - TransparentFX

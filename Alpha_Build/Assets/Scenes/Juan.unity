@@ -801,6 +801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currAi: {fileID: 226013462}
+  type: 1
   lightIntensity: 0
   debug: 0
   log: 0
@@ -817,7 +818,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  type: 1
 --- !u!136 &226013463
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1896,7 +1896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UsePipelineSettings: 1
 --- !u!1 &825097330
 GameObject:
   m_ObjectHideFlags: 3
@@ -2076,11 +2075,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 3c73b5f594aadfa47865263301f15ca4, type: 2}
 --- !u!4 &862532463
 Transform:
   m_ObjectHideFlags: 0
@@ -2161,7 +2155,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883605134}
-  m_LocalRotation: {x: 0.26812565, y: 0.20401481, z: -0.05820972, w: 0.9397331}
+  m_LocalRotation: {x: 0.2681176, y: 0.20414473, z: -0.05824679, w: 0.9397049}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2325,8 +2319,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.618, y: 1.4635, z: -0.33249998}
+  m_LocalRotation: {x: 0.2446633, y: 0.20542069, z: -0.053146783, w: 0.9461066}
+  m_LocalPosition: {x: 1.1800189, y: 4.6656575, z: -3.5083566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2384,30 +2378,42 @@ MonoBehaviour:
     normal: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
     highlighted: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     pressed: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1798467726}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 825496499}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1242847159}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1050575959}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  thumbnails: []
   timeSlowRatio: 0.2
   hotkey: 9
   numItems: 5
   currMenuItem: 0
+  debug: 0
   inv: {fileID: 1483622990}
 --- !u!114 &963194231
 MonoBehaviour:
@@ -2433,26 +2439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 2
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2470,6 +2456,7 @@ MonoBehaviour:
   crosshair: {fileID: 1614137776}
   playerSpeed: {fileID: 1609650426}
   targetTurnVelocity: 0
+  rotationSpeed: 0
 --- !u!1 &966777128
 GameObject:
   m_ObjectHideFlags: 3
@@ -3109,6 +3096,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130972947}
   m_CullTransparentMesh: 1
+--- !u!1 &1179758456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1179758457}
+  m_Layer: 0
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1179758457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179758456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1609650425}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1242847157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,30 +3587,42 @@ MonoBehaviour:
     normal: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
     highlighted: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     pressed: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1798467726}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 825496499}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1242847159}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   - name: 0
     sceneImage: {fileID: 1050575959}
     normal: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
     highlighted: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
     pressed: {r: 0.1137255, g: 0.1137255, b: 0.1137255, a: 1}
+    disabled: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    disabledHighlight: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  thumbnails: []
   timeSlowRatio: 0.2
   hotkey: 9
   numItems: 5
   currMenuItem: 2
+  debug: 0
   inv: {fileID: 1483622990}
 --- !u!1 &1529708660
 GameObject:
@@ -3820,6 +3849,7 @@ Transform:
   - {fileID: 459170077}
   - {fileID: 423703734}
   - {fileID: 2004013404}
+  - {fileID: 1179758457}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3876,6 +3906,7 @@ MonoBehaviour:
   crosshair: {fileID: 1614137776}
   playerSpeed: {fileID: 1609650426}
   targetTurnVelocity: 1.5
+  rotationSpeed: 0
 --- !u!54 &1609650429
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3919,10 +3950,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1609650432}
+  shield: {fileID: 0}
   lightIntensity: 0
   debug: 0
   log: 0
   healDark: 0
+  isImmune: 0
   currentIntensity: 0
 --- !u!114 &1609650432
 MonoBehaviour:
@@ -4227,6 +4260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currAi: {fileID: 1661976254}
+  type: 1
   lightIntensity: 0
   debug: 0
   log: 0
@@ -4243,7 +4277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  type: 1
 --- !u!1 &1669716126
 GameObject:
   m_ObjectHideFlags: 0
@@ -4699,6 +4732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currAi: {fileID: 1833389996}
+  type: 1
   lightIntensity: 0
   debug: 0
   log: 0
@@ -4715,7 +4749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  type: 1
 --- !u!136 &1833389997
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4829,9 +4862,6 @@ MonoBehaviour:
   attackRange: 1
   attackButton: 323
   attackPoint: {fileID: 1871400995}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 128
   damage: 100
 --- !u!65 &1871400994
 BoxCollider:

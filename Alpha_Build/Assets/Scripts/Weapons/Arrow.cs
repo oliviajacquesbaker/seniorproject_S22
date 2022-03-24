@@ -22,14 +22,14 @@ public class Arrow : MonoBehaviour
             _AIStatsController stats = col.gameObject.GetComponent<_AIStatsController>();
             stats.DetractHealth(damage, true);
             Debug.Log("Hit enemy!");
+
             transform.parent = col.transform;
-            //rigidbody.velocity = Vector3.zero;
-            rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             //Destroy(gameObject);
         }
-        else
+
+        if (!col.isTrigger)
         {
-            //Destroy(gameObject);
+            rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
 
     }
