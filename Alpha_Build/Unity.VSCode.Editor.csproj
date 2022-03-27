@@ -56,8 +56,8 @@
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\VSCodeDiscovery.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\StringUtils.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\GUIDGenerator.cs" />
-    <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\ProjectGeneration.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\AssemblyNameProvider.cs" />
+    <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\ProjectGeneration.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\FileIO.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\ProjectGeneration\ProjectGenerationFlag.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.vscode@1.2.4\Editor\VSCodeScriptEditor.cs" />
@@ -305,9 +305,6 @@
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.11.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.6.0\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.11.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
