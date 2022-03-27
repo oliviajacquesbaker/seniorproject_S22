@@ -120,6 +120,9 @@ public class _AIStatsController : MonoBehaviour
             case MobType.Booster:
                 gameObject.GetComponent<BoosterMob>().OnDeath();
                 break;
+            case MobType.Patrol:
+                gameObject.GetComponent<Patrol_Movement>().OnDeath();
+                break;
             default:
                 //Debug.Log("set up similar functions in the other mob types :)");
                 Destroy(gameObject);

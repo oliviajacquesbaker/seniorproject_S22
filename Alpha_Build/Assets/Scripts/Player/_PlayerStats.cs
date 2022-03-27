@@ -10,15 +10,20 @@ public class _PlayerStats : MonoBehaviour
     private int slimesCollected = 0;
     [SerializeField]
     private string activeTool = "none";
+    public Animator anim;
+    bool alive;
 
     void Start()
     {
+        alive = true;
         health = 100f;
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         health = Mathf.Clamp(health, 0f, 150f);
+        if (health <= 0 && alive) Die();
     }
 
     public void SetHealth(float diffHealth)
@@ -31,6 +36,7 @@ public class _PlayerStats : MonoBehaviour
         {
             health = 150;
         }
+        health = diffHealth;
     }
 
     public float GetHealth()
@@ -56,5 +62,14 @@ public class _PlayerStats : MonoBehaviour
     public string GetActiveTool()
     {
         return activeTool;
+    }
+
+    public void Die()
+    {
+        //anim.ApplyBuiltinRootMotion();
+        anim.SetBool("Dead", true);
+        anim.SetTrigger("Die");
+        GetComponent<ThirdPersonMovement>().enabled = false;
+        alive = false;
     }
 }

@@ -11,12 +11,15 @@ public class Sword : MonoBehaviour
     public KeyCode attackButton;
     public Transform attackPoint;
     public LayerMask enemyLayers;
+    [SerializeField]
+    public Animator anim;
 
     public int damage;
 
     void Start()
     {
         startingPos = transform.rotation.z;
+        anim = GameObject.Find("Player").GetComponent<Animator>();
     }
 
     void Update()
@@ -24,6 +27,7 @@ public class Sword : MonoBehaviour
         if (Input.GetKey(attackButton))
         {
             Attack();
+            //anim.ResetTrigger("SwordAttack");
         }
     }
 
@@ -42,6 +46,7 @@ public class Sword : MonoBehaviour
     void Attack()
     {
         //add animation here
+        anim.SetTrigger("SwordAttack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 

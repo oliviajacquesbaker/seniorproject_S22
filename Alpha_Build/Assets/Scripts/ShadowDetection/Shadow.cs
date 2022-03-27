@@ -116,7 +116,7 @@ public class Shadow
                 dot = Vector2.Dot(dot1, dot2);
                 if (contourPoints.Length == 8) rectCheck.Add(dot1.normalized);
                 else if (dot < 0.5) {
-                    Debug.Log("BAD DOT");
+                    //Debug.Log("BAD DOT");
                     label = ShadowType.unknown; 
                     CreateInGameLabel(labelPrefabs);  
                     return; 
@@ -125,7 +125,7 @@ public class Shadow
                 prevSlope = slope;
                 dot2 = dot1;
             }
-            if (!(dirChange == 3 || dirChange == 4)) { label = ShadowType.unknown; Debug.Log("DIR CHANGE: " + dirChange); }
+            if (!(dirChange == 3 || dirChange == 4)) { label = ShadowType.unknown; /*Debug.Log("DIR CHANGE: " + dirChange)*/; }
             else
             {
                 //now circle vs oval

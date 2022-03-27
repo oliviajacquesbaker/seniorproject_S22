@@ -25,7 +25,7 @@ public class IdentifyShadows : MonoBehaviour
     {
         pastPos = this.gameObject.transform.position;
         DetectShadows();
-        Debug.Log("STARTED");
+        //Debug.Log("STARTED");
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class IdentifyShadows : MonoBehaviour
         //Debug.Log(dist);
         if (dist > 5)
         {
-            Debug.Log("-----------------------------------------------------------------------------------------");
+            //Debug.Log("-----------------------------------------------------------------------------------------");
             pastPos = this.gameObject.transform.position;
             RemoveLabels();
             DetectShadows();
@@ -98,7 +98,7 @@ public class IdentifyShadows : MonoBehaviour
             Debug.Log("EXCEPTION: ");
             Debug.LogException(ex);
         }
-        Debug.Log("FOUND " + numContours + " SHADOWS");
+        //Debug.Log("FOUND " + numContours + " SHADOWS");
         int startInd = 0;
         for (int i = 0; i < numContours; ++i)
         {

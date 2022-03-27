@@ -15,18 +15,12 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.GetComponent<_AIStatsController>() && !col.isTrigger)
-        {
-            _AIStatsController stats = col.GetComponent<_AIStatsController>();
-            stats.DetractHealth(damage, true);
-            Debug.Log("Hit enemy!");
-            Destroy(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+           if (col.GetComponent<_AIStatsController>() && !col.isTrigger)
+           {
+               _AIStatsController stats = col.GetComponent<_AIStatsController>();
+               stats.DetractHealth(damage, true);
+               Destroy(gameObject);
+           }
     }
 
 }

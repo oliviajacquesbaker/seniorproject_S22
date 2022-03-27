@@ -32,11 +32,17 @@ public class Bow : MonoBehaviour
     private StateHandler state;
     private Durability durability;
     private CameraController camController;
-    
+    bool unaimed;
+
+    public Animator anim;
+    public Animator bowAnim;
+
     void Start()
     {
         Player = GameObject.Find("Player");
         playerSpeed = Player.GetComponent<ThirdPersonMovement>();
+        anim = Player.GetComponent<Animator>();
+        bowAnim = GetComponent<Animator>();
         bowRotation = gameObject.transform;
         cam = GameObject.Find("Third Person Camera").GetComponent<CinemachineFreeLook>();
         initialTurnVelocity = playerSpeed.turnSmoothTime;
@@ -47,6 +53,7 @@ public class Bow : MonoBehaviour
         durability = gameObject.GetComponent<Durability>();
         camController = Player.GetComponent<CameraController>();
         playerRB = Player.GetComponent<Rigidbody>();
+        unaimed = true;
     }
 
     void Update()
@@ -80,6 +87,8 @@ public class Bow : MonoBehaviour
 
     void Fire()
     {
+        anim.SetTrigger("ReleaseArrow");
+        bowAnim.SetTrigger("ReleaseArrow");
         Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
@@ -89,20 +98,32 @@ public class Bow : MonoBehaviour
 
     void Aim()
     {
-
+        if (unaimed)
+        {
+            anim.SetBool("PutDownBow", false);
+            anim.SetTrigger("DrawBow");
+            bowAnim.SetTrigger("DrawBow");
+            unaimed = false;
+        }
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
-        bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
+        //bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
     }
 
     void StopAiming()
     {
+        bowAnim.SetTrigger("ReleaseArrow");
+        anim.SetBool("PutDownBow", true);
         camController.StopAim();
-    }
+        unaimed = true;
+        //transform.rotation = Quaternion.identity;
+        /*anim.ResetTrigger("PutDownBow");
+        anim.ResetTrigger("ReleaseArrow");
+        anim.ResetTrigger("DrawBow");
+        bowAnim.ResetTrigger("PutDownBow");
+        bowAnim.ResetTrigger("ReleaseArrow");
+        bowAnim.ResetTrigger("DrawBow");*/
 
-    void RotatePlayer()
-    {
-        Player.transform.localEulerAngles = new Vector3(Player.transform.rotation.x, cam.m_XAxis.Value, Player.transform.rotation.z);
     }
 
     // IEnumerator CrosshairDelay(float seconds)

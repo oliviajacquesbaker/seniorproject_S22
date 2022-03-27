@@ -19,21 +19,20 @@ public class Inventory : MonoBehaviour
     private int prevMenuItem;
     private int selectedWeapon;
     private float initialDeltaTimeScale;
-    public bool debug;
     public GameObject inv;
     private GameObject currWeapon;
     private GameObject bow;
     private GameObject sword;
     private GameObject rope;
+    private GameObject shield;
     private GameObject weapons;
     private GameObject blur;
-    private GameObject shield;
     private StateHandler state;
+    public Animator anim;
 
     private bool bowEnabled, swordEnabled, ropeEnabled, shieldEnabled;
 
     private _PlayerStats playerStats;
-    private _PlayerStatsController playerStatsController;
 
     void Start()
     {
@@ -41,29 +40,21 @@ public class Inventory : MonoBehaviour
         bow = GameObject.Find("Bow");
         sword = GameObject.Find("Sword");
         rope = GameObject.Find("RopeItem");
+        shield = GameObject.Find("Shield");
         inv = GameObject.Find("Inventory");
         state = Camera.main.GetComponent<StateHandler>();
         blur = GameObject.Find("Background Blur");
-        shield = GameObject.Find("Shield");
         InitInventory();
+        anim = GameObject.Find("Player").GetComponent<Animator>();
 
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
-        playerStatsController = GameObject.Find("Player").GetComponent<_PlayerStatsController>();
+        DebugSettings();
     }
 
     void Update()
     {
         GetCurrMenuItem();
         //Debug.Log(IsOpen());
-
-        if (shield.activeInHierarchy)
-        {
-            playerStatsController.SetPlayerImmune(true);
-        }
-        else
-        {
-            playerStatsController.SetPlayerImmune(false);
-        }
 
         if (Input.GetKeyDown(hotkey))
         {
@@ -82,13 +73,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    void DebugSettings()
+    {
+        EnableItem(ShadowType.bow);
+        EnableItem(ShadowType.shield);
+        EnableItem(ShadowType.sword);
+        EnableItem(ShadowType.rope);
+    }
+
     void InitWeapons()
     {
         inv.SetActive(false);
         bow.SetActive(false);
         sword.SetActive(false);
-        rope.SetActive(false);
         shield.SetActive(false);
+        rope.SetActive(false);
     }
 
     void InitInventory()
@@ -110,14 +109,7 @@ public class Inventory : MonoBehaviour
         currMenuItem = 0;
         prevMenuItem = 0;
         blur.SetActive(false);
-        if (!debug)
-        {
-            bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
-        }
-        else
-        {
-            bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = true;
-        }
+        bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
     }
 
     public void ShowInventory()
@@ -191,17 +183,9 @@ public class Inventory : MonoBehaviour
         }
         else if (currMenuItem == 3 && shieldEnabled) // shield
         {
-            if (shield.activeInHierarchy)
-            {
-                shield.SetActive(false);
-                //shieldEnabled = false;
-            }
-            else
-            {
-                Debug.Log("You have been given a shield!");
-                GiveShield();
-                playerStats.SetActiveTool("shield");
-            }
+            Debug.Log("You have been given a shield!");
+            GiveShield();
+            playerStats.SetActiveTool("shield");
         }
         // repeat for all other weapons
 
@@ -233,6 +217,7 @@ public class Inventory : MonoBehaviour
         currWeapon.SetActive(false);
         bow.SetActive(true);
         currWeapon = bow;
+        anim.SetBool("ShieldEnabled", false);
     }
 
     public void GiveSword()
@@ -240,6 +225,7 @@ public class Inventory : MonoBehaviour
         currWeapon.SetActive(false);
         sword.SetActive(true);
         currWeapon = sword;
+        anim.SetBool("ShieldEnabled", false);
     }
 
     public void GiveRope()
@@ -247,13 +233,15 @@ public class Inventory : MonoBehaviour
         currWeapon.SetActive(false);
         rope.SetActive(true);
         currWeapon = rope;
+        anim.SetBool("ShieldEnabled", false);
     }
+
     public void GiveShield()
     {
-        //currWeapon.SetActive(false);
+        currWeapon.SetActive(false);
         shield.SetActive(true);
-        shieldEnabled = true;
-        //currWeapon = rope;
+        currWeapon = shield;
+        anim.SetBool("ShieldEnabled", true);
     }
 
     private bool GetIntBasedEnabledStatus(int item)
