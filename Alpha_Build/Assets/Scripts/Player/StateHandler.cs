@@ -36,10 +36,7 @@ public class StateHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
+        
     }
 
     public bool InvOpen()

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3303263645296800637}
   - component: {fileID: 3303263645296800636}
   - component: {fileID: 3303263645296800639}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Shadow Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 3303263645338641575}
   - component: {fileID: 3303263645338641574}
   - component: {fileID: 3303263645338641577}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Inner Cloth Binder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1053,7 +1053,7 @@ GameObject:
   - component: {fileID: 3303263645419934586}
   - component: {fileID: 3303263645419934584}
   - component: {fileID: 3303263645419934587}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ColliderField
   m_TagString: Untagged
   m_Icon: {fileID: 0}

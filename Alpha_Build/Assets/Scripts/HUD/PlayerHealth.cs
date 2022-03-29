@@ -25,6 +25,9 @@ public class PlayerHealth : MonoBehaviour
 
     _PlayerStats player;
 
+
+    private float time = 0f;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
@@ -37,14 +40,16 @@ public class PlayerHealth : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0, maxHealth);
         superChargedHealth = Mathf.Clamp(superChargedHealth, 0, maxSuperChargedHealth);
+
         UpdateHealthUI();
         HealthController();
         UpdateSuperChargeUI();
+
     }
 
     public void HealthController()
     {
-
+        
         if (player.GetHealth() <= 100f) //Effects healing and damge on the health bar
         {
             if (player.GetHealth() > health)
@@ -54,17 +59,18 @@ public class PlayerHealth : MonoBehaviour
             else if (player.GetHealth() < health)
             {
                 Damage(health - player.GetHealth());
+                SuperDamage(superChargedHealth - (player.GetHealth() - 100f));
             }
         }
         else if (player.GetHealth() > 100f)//Effects healing and damage on the super charge bar
         {
-            if((player.GetHealth() - 100f) > superChargedHealth)
+            if ((player.GetHealth() - 100f) > superChargedHealth)
             {
                 SuperCharge((player.GetHealth() - 100f) - superChargedHealth);
             }
             else if ((player.GetHealth() - 100f) < superChargedHealth)
             {
-                SuperDamage(superChargedHealth - (player.GetHealth() - 100f));
+                    SuperDamage(superChargedHealth - (player.GetHealth() - 100f));
             }
         }
     }
