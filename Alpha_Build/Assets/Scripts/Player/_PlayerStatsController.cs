@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class _PlayerStatsController : MonoBehaviour
 {
@@ -13,10 +16,35 @@ public class _PlayerStatsController : MonoBehaviour
     [SerializeField]
     float currentIntensity = 0;
 
+    private float timeSinceDeath = 0f;
+
+    [SerializeField]
+    GameObject DeathPanel, LivingGroup;
+    bool hudSwitch = false;
+
     void Start()
     {
         player = GetComponent<_PlayerStats>();
     }
+
+    void Update()
+    {
+        if (!player.GetAlive())
+        {
+            if (!hudSwitch)
+            {
+                Dead();
+                hudSwitch = true;
+                InvokeRepeating("HudOpaquer", 0f, 0.1f);
+            }
+            timeSinceDeath += UnityEngine.Time.deltaTime;
+            if(timeSinceDeath > 10)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+    }
+
     //Updates Health in regard to light intensity
     public void UpdateHealth(float perceivedIntensity)
     {
@@ -127,4 +155,20 @@ public class _PlayerStatsController : MonoBehaviour
             return currentIntensity;
     }
 
+    void Dead()
+    {
+        LivingGroup.SetActive(false);
+        DeathPanel.SetActive(true);
+    }
+    void HudOpaquer()
+    {
+        Image image = DeathPanel.GetComponent<Image>();
+        var tempColor = image.color;
+        if(tempColor.a > 1f)
+        {
+            CancelInvoke();
+        }
+        tempColor.a += .01f;
+        image.color = tempColor;
+    }
 }

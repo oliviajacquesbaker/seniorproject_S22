@@ -40,7 +40,7 @@ public class SpiderAttackController : MonoBehaviour
             CancelInvoke();
             playerDetCol.enabled = true;
             _animator.SetBool("AttackRange", false);
-            _animator.SetBool("Cooldown", false);
+            _animator.SetBool("Cooldown", true);
             spiderCon.SetDet();
         }
     }

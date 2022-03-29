@@ -13,6 +13,8 @@ public class _PlayerStats : MonoBehaviour
     public Animator anim;
     bool alive;
 
+   
+
     void Start()
     {
         alive = true;
@@ -24,6 +26,7 @@ public class _PlayerStats : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0f, 150f);
         if (health <= 0 && alive) Die();
+
     }
 
     public void SetHealth(float diffHealth)
@@ -71,5 +74,10 @@ public class _PlayerStats : MonoBehaviour
         anim.SetTrigger("Die");
         GetComponent<ThirdPersonMovement>().enabled = false;
         alive = false;
+    }
+
+    public bool GetAlive()
+    {
+        return alive;
     }
 }

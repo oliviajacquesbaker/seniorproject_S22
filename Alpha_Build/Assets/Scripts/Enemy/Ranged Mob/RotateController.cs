@@ -27,9 +27,6 @@ public class RotateController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inside = false;
-
-            arm.transform.rotation = armDefault.rotation;
-            body.transform.rotation = bodyDefault.rotation;
         }
         
     }

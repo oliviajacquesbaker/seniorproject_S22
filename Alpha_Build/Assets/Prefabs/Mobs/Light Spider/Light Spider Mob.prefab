@@ -1341,7 +1341,7 @@ GameObject:
   - component: {fileID: 1548641021389835021}
   m_Layer: 0
   m_Name: Light Spider Mob
-  m_TagString: Untagged
+  m_TagString: Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1434,7 +1434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  type: 1
 --- !u!114 &1548641021389835021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currAi: {fileID: 0}
+  type: 1
   lightIntensity: 0
   debug: 0
   log: 0
@@ -1461,7 +1461,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3234896255059165313}
   - component: {fileID: 6834081202421011579}
-  - component: {fileID: 6618646666015335512}
   m_Layer: 0
   m_Name: Prong Fangs Model
   m_TagString: Untagged
@@ -1578,23 +1577,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.05141166, y: -0.25263035, z: 0.0008762162}
     m_Extent: {x: 0.039860323, y: 0.046785116, z: 0.031194704}
   m_DirtyAABB: 0
---- !u!114 &6618646666015335512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3126044698696865450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 0
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 4689b557464e6e94baca3ac12a639db7, type: 2}
 --- !u!1 &3538970344197300502
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,7 +2242,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7424497175609633255}
   - component: {fileID: 7581825778679277998}
-  - component: {fileID: 7842020552990771142}
   m_Layer: 0
   m_Name: Light Model
   m_TagString: Untagged
@@ -2377,23 +2358,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.019176487, y: 0.19463806, z: -0.0022043437}
     m_Extent: {x: 0.07513447, y: 0.069911554, z: 0.08982441}
   m_DirtyAABB: 0
---- !u!114 &7842020552990771142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5250630055315849627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 9e29dfeef0422bc42939647b1c8128f4, type: 2}
 --- !u!1 &5260299191375475038
 GameObject:
   m_ObjectHideFlags: 0
