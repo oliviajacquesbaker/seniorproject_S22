@@ -46,7 +46,7 @@ public class StateHandler : MonoBehaviour
 
     public bool BowIsAiming()
     {
-        return GameObject.Find("Bow").GetComponent<Bow>().isAiming;
+        return bow.GetComponent<Bow>().isAiming;
     }
 
     //called by rope climb script when player tries to climb
