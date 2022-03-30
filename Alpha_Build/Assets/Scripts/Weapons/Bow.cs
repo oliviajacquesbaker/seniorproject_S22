@@ -89,8 +89,8 @@ public class Bow : MonoBehaviour
     {
         anim.SetTrigger("ReleaseArrow");
         bowAnim.SetTrigger("ReleaseArrow");
-        Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
-        arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
+        Rigidbody arrow = Instantiate(arrowObj, spawn.position, spawn.rotation) as Rigidbody;
+        arrow.AddForce(Player.transform.forward * _charge, ForceMode.Impulse);
         _charge = 0;
         durability.currDurability -= fireDecay;
         isAiming = false;
