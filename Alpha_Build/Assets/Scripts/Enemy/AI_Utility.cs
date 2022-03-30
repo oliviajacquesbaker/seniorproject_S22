@@ -7,7 +7,8 @@ public enum MobType
     Booster,
     Patrol,
     LongRange,
-    Spider
+    Spider,
+    Boss
 }
 
 public class AI_Utility : MonoBehaviour
