@@ -115,7 +115,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
 
-        /*Color[] pixelsOut = image.GetPixels();
+        Color[] pixelsOut = image.GetPixels();
         for (int i = 0; i < numContours; ++i)
         {
             CvVertex[] pts = outContours;
@@ -149,7 +149,7 @@ public class IdentifyShadows : MonoBehaviour
         CreateImage(pixelsOut, "ContourPoints");
 
         pixelsOut = GetImageReadyArray(pixels);
-        CreateImage(pixelsOut, "ContourPoints_BW");*/
+        CreateImage(pixelsOut, "ContourPoints_BW");
     }
 
     Vector2[] ReorderContourPoints(ref CvVertex[] contours, int startingInd, int size)
@@ -242,7 +242,7 @@ public class IdentifyShadows : MonoBehaviour
         int[] toReturn = new int[pixels.Length];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.7)
+            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.65)
             {
                 toReturn[i] = 0;
             }

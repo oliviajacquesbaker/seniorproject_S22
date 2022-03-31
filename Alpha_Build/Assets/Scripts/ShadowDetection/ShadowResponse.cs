@@ -17,12 +17,13 @@ public class ShadowResponse : MonoBehaviour
             if (readyToCollect)
             {
                 Camera.main.GetComponent<Inventory>().EnableItem(itemType);
+                connectedLabel.CollectShadow();
                 readyToCollect = false;
             }
         }
     }
 
-    private void SetLabel(Label label)
+    public void SetLabel(Label label)
     {
         connectedLabel = label;
     }

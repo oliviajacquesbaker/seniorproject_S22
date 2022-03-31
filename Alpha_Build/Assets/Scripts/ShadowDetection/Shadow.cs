@@ -162,11 +162,15 @@ public class Shadow
 
         if(label != ShadowType.unknown && label != ShadowType.none)
         {
-            int xCenter = 0, yCenter = 0;
+            int xCenter = 0, yCenter = 0, minX = 10000, maxX = 0, minY = 0, maxY = 10000;
             for (int i = 0; i < contourPoints.Length; ++i)
             {
                 xCenter += (int)contourPoints[i].x;
                 yCenter += (int)contourPoints[i].y;
+                if (contourPoints[i].x < minX) minX = (int)contourPoints[i].x;
+                if (contourPoints[i].y < minY) minY = (int)contourPoints[i].y;
+                if (contourPoints[i].x > maxX) maxX = (int)contourPoints[i].x;
+                if (contourPoints[i].y > maxY) maxY = (int)contourPoints[i].y;
             }
             xCenter /= contourPoints.Length;
             yCenter /= contourPoints.Length;
@@ -174,6 +178,7 @@ public class Shadow
             GameObject labelList = GameObject.FindWithTag("labeler");
             labelObj = labelList.AddComponent<Label>();
             labelObj.SetLabelPrefab(labelPrefab);
+            labelObj.SetArea(minX, maxX, minY, maxY);
             labelObj.SetTransforms(xCenter, yCenter);
             labelObj.SetInScene();
         }
