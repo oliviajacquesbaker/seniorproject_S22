@@ -13,6 +13,10 @@ public class Sword : MonoBehaviour
     public LayerMask enemyLayers;
     [SerializeField]
     public Animator anim;
+    [SerializeField]
+    Boss boss;
+    bool attacking = false;
+    int attacked = 0;
 
     public int damage;
 
@@ -33,18 +37,21 @@ public class Sword : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (Input.GetKeyDown(attackButton))
+        /*if (!attacking && Input.GetKeyDown(attackButton))
         {
             if (collider.GetComponent<_AIStatsController>())
             {
                 _AIStatsController stats = collider.GetComponent<_AIStatsController>();
                 stats.DetractHealth(damage);
             }
-        }
+        }*/
     }
 
     void Attack()
     {
+        if (attacking) return;
+        attacked++;
+        attacking = true;
         //add animation here
         anim.SetTrigger("SwordAttack");
 
@@ -52,13 +59,38 @@ public class Sword : MonoBehaviour
 
         foreach(Collider enemy in hitEnemies)
         {
-            //Debug.Log("Hit enemy " + enemy.name);
+            
             if (enemy.GetComponent<_AIStatsController>())
             {
+                Debug.Log(attacked + ": Hit enemy " + enemy.name);
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
-                stats.DetractHealth(damage);
+                int additionalDmg = 0;
+                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                {
+                    if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
+                }
+                stats.DetractHealth(damage + additionalDmg, true);
+            }
+            else if (enemy.GetComponent<StatsLinker>())
+            {
+                Debug.Log(attacked + ": Hit enemy " + enemy.name);
+                StatsLinker stats = enemy.GetComponent<StatsLinker>();
+                int additionalDmg = 0;
+                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                {
+                    if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
+                }
+                stats.statsController.DetractHealth(damage + additionalDmg, true);
             }
         }
+        StartCoroutine(AllowAttack());
+    }
+
+    IEnumerator AllowAttack()
+    {
+        
+        yield return new WaitForSeconds(0.5f);
+        attacking = false;
     }
 
     void OnDrawGizmosSelected()

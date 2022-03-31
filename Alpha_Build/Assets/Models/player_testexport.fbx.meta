@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 3855960849892701214
-    second: rig|Attack_sword
+    second: Attack_sword
   - first:
       74: 4644821527553014623
     second: rig|Draw_bow
@@ -322,7 +322,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: rig|Attack_sword
+      name: Attack_sword
       takeName: rig|Attack_sword
       internalID: 0
       firstFrame: 0
