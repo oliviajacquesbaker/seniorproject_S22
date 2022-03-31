@@ -11,11 +11,14 @@ public class ShadowResponse : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TRIGGER ENTERED, ITEM COLLECTED");
-        if (readyToCollect)
+        if(other.gameObject.tag == "Player")
         {
-            Camera.main.GetComponent<Inventory>().EnableItem(itemType);
-            readyToCollect = false;
+            Debug.Log("TRIGGER ENTERED, ITEM COLLECTED, TYPE: " + itemType + " at " + gameObject.transform.position);
+            if (readyToCollect)
+            {
+                Camera.main.GetComponent<Inventory>().EnableItem(itemType);
+                readyToCollect = false;
+            }
         }
     }
 

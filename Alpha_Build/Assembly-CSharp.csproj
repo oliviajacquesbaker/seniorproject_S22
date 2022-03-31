@@ -53,6 +53,7 @@
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy\Boss\SwapMaterial.cs" />
     <Compile Include="Assets\Scripts\ShadowDetection\ShadowResponse.cs" />
     <Compile Include="Assets\Scripts\Enemy\Boss\Hand Damage.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
@@ -138,12 +139,11 @@
     <Compile Include="Assets\Scripts\Enemy\_AILightIntensity.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\StatsLinker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\Enemy\AI_Utility.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Boss\SwapMaterial.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Boss\StatsLinker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
