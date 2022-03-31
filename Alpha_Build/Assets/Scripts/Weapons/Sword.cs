@@ -17,6 +17,7 @@ public class Sword : MonoBehaviour
     Boss boss;
     bool attacking = false;
     int attacked = 0;
+    bool coroutineStarted = false;
 
     public int damage;
 
@@ -33,6 +34,7 @@ public class Sword : MonoBehaviour
             Attack();
             //anim.ResetTrigger("SwordAttack");
         }
+        if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
     }
 
     void OnTriggerEnter(Collider collider)
@@ -88,8 +90,9 @@ public class Sword : MonoBehaviour
 
     IEnumerator AllowAttack()
     {
-        
+        coroutineStarted = true;
         yield return new WaitForSeconds(0.5f);
+        coroutineStarted = false;
         attacking = false;
     }
 

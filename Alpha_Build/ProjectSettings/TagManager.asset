@@ -11,6 +11,7 @@ TagManager:
   - Hook
   - Weapon
   - Boss
+  - ShadowCaster
   layers:
   - Default
   - TransparentFX
