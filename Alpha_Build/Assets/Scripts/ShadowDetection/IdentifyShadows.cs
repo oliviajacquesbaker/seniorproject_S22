@@ -34,7 +34,7 @@ public class IdentifyShadows : MonoBehaviour
         //Debug.Log(dist);
         if (dist > 5)
         {
-            //Debug.Log("-----------------------------------------------------------------------------------------");
+            Debug.Log("-----------------------------------------------------------------------------------------");
             pastPos = this.gameObject.transform.position;
             RemoveLabels();
             DetectShadows();
@@ -98,7 +98,7 @@ public class IdentifyShadows : MonoBehaviour
             Debug.Log("EXCEPTION: ");
             Debug.LogException(ex);
         }
-        //Debug.Log("FOUND " + numContours + " SHADOWS");
+        Debug.Log("FOUND " + numContours + " SHADOWS");
         int startInd = 0;
         for (int i = 0; i < numContours; ++i)
         {
@@ -242,7 +242,7 @@ public class IdentifyShadows : MonoBehaviour
         int[] toReturn = new int[pixels.Length];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.8)
+            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.55)
             {
                 toReturn[i] = 0;
             }
@@ -258,14 +258,17 @@ public class IdentifyShadows : MonoBehaviour
     {
         Color[] pixels = image.GetPixels();
         int[] toReturn = new int[pixels.Length];
+        float[] tempSort = new float[pixels.Length];
 
         float threshold = 0;
         for (int i = 0; i < pixels.Length; i++)
         {
-            threshold += (pixels[i].r + pixels[i].g + pixels[i].b);
+            tempSort[i] = (pixels[i].r + pixels[i].g + pixels[i].b);
         }
-        threshold /= pixels.Length;
-        threshold = Mathf.Pow(threshold, 1.25f);
+
+        Array.Sort(tempSort);
+        threshold = tempSort[(toReturn.Length -1)/2] * 0.75f;
+        Debug.Log("threshold: " + threshold);
 
         for (int i = 0; i < pixels.Length; i++)
         {
