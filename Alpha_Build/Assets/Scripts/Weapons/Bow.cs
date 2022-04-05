@@ -32,6 +32,16 @@ public class Bow : MonoBehaviour
     private StateHandler state;
     private Durability durability;
     private CameraController camController;
+
+
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip drawn, release;
+
+    bool draw = false;
+
     
     void Start()
     {
@@ -80,6 +90,11 @@ public class Bow : MonoBehaviour
 
     void Fire()
     {
+
+        source.clip = release;
+        source.Play();
+        draw = false;
+
         Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
@@ -89,6 +104,13 @@ public class Bow : MonoBehaviour
 
     void Aim()
     {
+        if (!draw)
+        {
+            source.clip = drawn;
+            source.Play();
+            draw = true;
+        }
+        
 
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);

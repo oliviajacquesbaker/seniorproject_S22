@@ -11,6 +11,12 @@ public class PausedController : MonoBehaviour
     [SerializeField]
     Button optionsBtn;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip click, error;
+
     private bool paused = false;
 
     private void Start()
@@ -69,6 +75,16 @@ public class PausedController : MonoBehaviour
     public void SaveExitBtn()
     {
         PlayerPrefs.SetInt("savedLevel", SceneManager.GetActiveScene().buildIndex);
+        source.clip = click;
+        source.Play();
         Application.Quit();
     }
+
+    public void OptionsBtn()
+    {
+        source.clip = error;
+        source.Play();
+    }
+
+
 }

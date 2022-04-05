@@ -20,7 +20,12 @@ public class Sword : MonoBehaviour
     bool coroutineStarted = false;
 
     public int damage;
+    [SerializeField]
+    private AudioSource source;
 
+    [SerializeField]
+    private AudioClip sword1, sword2, sword3;
+    private int clipCounter = 1;
     void Start()
     {
         startingPos = transform.rotation.z;
@@ -33,8 +38,31 @@ public class Sword : MonoBehaviour
         {
             Attack();
             //anim.ResetTrigger("SwordAttack");
+
+            PlaySoundClip();
         }
         if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
+    }
+
+    void PlaySoundClip()
+    {
+        switch (clipCounter){
+            case 1:
+                source.clip = sword1;
+                break;
+            case 2:
+                source.clip = sword2;
+                break;
+            case 3:
+                source.clip = sword3;
+                break;
+        }
+        clipCounter++;
+        if(clipCounter == 4)
+        {
+            clipCounter = 1;
+        }
+        source.Play();
     }
 
     void OnTriggerEnter(Collider collider)
