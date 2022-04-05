@@ -7,7 +7,7 @@ public class BoosterMob : MonoBehaviour
     [SerializeField]
     private Light boostedLight;
     [SerializeField]
-    private float maxBoostAmount = 2f;
+    private float maxBoostAmount = 1f;
     [SerializeField]
     private Material deadMat;
     private Material[] materials;
@@ -26,8 +26,8 @@ public class BoosterMob : MonoBehaviour
         materials = gameObject.GetComponent<Renderer>().materials;
         initIntensity = boostedLight.intensity;
         initRange = boostedLight.range;
-        minBoostAmount = initIntensity + maxBoostAmount / 2.5f;
-        increment = (maxBoostAmount - minBoostAmount) / 200;
+        minBoostAmount = initIntensity + (maxBoostAmount / 2.5f);
+        increment = maxBoostAmount / (initIntensity *30);
         downMod = -0.6f;
         BoostLight(maxBoostAmount);
     }
@@ -40,8 +40,8 @@ public class BoosterMob : MonoBehaviour
             if (up) BoostLight(increment);
             else BoostLight(downMod * increment);
 
-            if (boostedLight.intensity > maxBoostAmount) up = false;
-            else if (boostedLight.intensity < minBoostAmount)
+            if (boostedLight.intensity > maxBoostAmount + initIntensity) up = false;
+            else if (boostedLight.intensity < minBoostAmount )
             {
                 up = true;
                 if (flare) active = false;

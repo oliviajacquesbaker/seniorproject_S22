@@ -18,8 +18,9 @@ public class Sword : MonoBehaviour
     bool attacking = false;
     int attacked = 0;
     bool coroutineStarted = false;
+    private int frameStarted;
 
-    public int damage;
+    private int damage=20;
 
     void Start()
     {
@@ -32,21 +33,9 @@ public class Sword : MonoBehaviour
         if (Input.GetKey(attackButton))
         {
             Attack();
-            //anim.ResetTrigger("SwordAttack");
         }
-        if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        /*if (!attacking && Input.GetKeyDown(attackButton))
-        {
-            if (collider.GetComponent<_AIStatsController>())
-            {
-                _AIStatsController stats = collider.GetComponent<_AIStatsController>();
-                stats.DetractHealth(damage);
-            }
-        }*/
+        if (!coroutineStarted && attacking) StartCoroutine(AllowAttack());
+        else if (coroutineStarted && Time.frameCount - frameStarted > 60) StartCoroutine(AllowAttack()); //the above section gets disturbed when players use menus
     }
 
     void Attack()
@@ -59,10 +48,9 @@ public class Sword : MonoBehaviour
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
-        foreach(Collider enemy in hitEnemies)
+        foreach (Collider enemy in hitEnemies)
         {
-            
-            if (enemy.GetComponent<_AIStatsController>())
+            if (enemy.GetComponent<_AIStatsController>() )
             {
                 Debug.Log(attacked + ": Hit enemy " + enemy.name);
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
@@ -84,6 +72,7 @@ public class Sword : MonoBehaviour
                 }
                 stats.statsController.DetractHealth(damage + additionalDmg, true);
             }
+            
         }
         StartCoroutine(AllowAttack());
     }
@@ -91,6 +80,7 @@ public class Sword : MonoBehaviour
     IEnumerator AllowAttack()
     {
         coroutineStarted = true;
+        frameStarted = Time.frameCount;
         yield return new WaitForSeconds(0.5f);
         coroutineStarted = false;
         attacking = false;
