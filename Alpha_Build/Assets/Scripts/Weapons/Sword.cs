@@ -13,9 +13,19 @@ public class Sword : MonoBehaviour
     public LayerMask enemyLayers;
     [SerializeField]
     public Animator anim;
+    [SerializeField]
+    Boss boss;
+    bool attacking = false;
+    int attacked = 0;
+    bool coroutineStarted = false;
 
     public int damage;
+    [SerializeField]
+    private AudioSource source;
 
+    [SerializeField]
+    private AudioClip sword1, sword2, sword3;
+    private int clipCounter = 1;
     void Start()
     {
         startingPos = transform.rotation.z;
@@ -28,23 +38,50 @@ public class Sword : MonoBehaviour
         {
             Attack();
             //anim.ResetTrigger("SwordAttack");
+
+            PlaySoundClip();
         }
+        if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
+    }
+
+    void PlaySoundClip()
+    {
+        switch (clipCounter){
+            case 1:
+                source.clip = sword1;
+                break;
+            case 2:
+                source.clip = sword2;
+                break;
+            case 3:
+                source.clip = sword3;
+                break;
+        }
+        clipCounter++;
+        if(clipCounter == 4)
+        {
+            clipCounter = 1;
+        }
+        source.Play();
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (Input.GetKeyDown(attackButton))
+        /*if (!attacking && Input.GetKeyDown(attackButton))
         {
             if (collider.GetComponent<_AIStatsController>())
             {
                 _AIStatsController stats = collider.GetComponent<_AIStatsController>();
                 stats.DetractHealth(damage);
             }
-        }
+        }*/
     }
 
     void Attack()
     {
+        if (attacking) return;
+        attacked++;
+        attacking = true;
         //add animation here
         anim.SetTrigger("SwordAttack");
 
@@ -52,13 +89,39 @@ public class Sword : MonoBehaviour
 
         foreach(Collider enemy in hitEnemies)
         {
-            //Debug.Log("Hit enemy " + enemy.name);
+            
             if (enemy.GetComponent<_AIStatsController>())
             {
+                Debug.Log(attacked + ": Hit enemy " + enemy.name);
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
-                stats.DetractHealth(damage);
+                int additionalDmg = 0;
+                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                {
+                    if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
+                }
+                stats.DetractHealth(damage + additionalDmg, true);
+            }
+            else if (enemy.GetComponent<StatsLinker>())
+            {
+                Debug.Log(attacked + ": Hit enemy " + enemy.name);
+                StatsLinker stats = enemy.GetComponent<StatsLinker>();
+                int additionalDmg = 0;
+                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                {
+                    if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
+                }
+                stats.statsController.DetractHealth(damage + additionalDmg, true);
             }
         }
+        StartCoroutine(AllowAttack());
+    }
+
+    IEnumerator AllowAttack()
+    {
+        coroutineStarted = true;
+        yield return new WaitForSeconds(0.5f);
+        coroutineStarted = false;
+        attacking = false;
     }
 
     void OnDrawGizmosSelected()

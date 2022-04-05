@@ -24,8 +24,11 @@ public class CollectScript : MonoBehaviour
     //Function Bool
     private int repeatSendCounter;
     private int repeatShrinkCounter;
-    
 
+    [SerializeField]
+    private AudioSource source;
+    [SerializeField]
+    private AudioClip slime1, slime2, slime3;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,12 +46,34 @@ public class CollectScript : MonoBehaviour
     {
         if (!collected && other.gameObject.tag == "Player")
         {
+            PlaySound();
             playerController.AddSlime();
             InvokeRepeating("SendSlimeHealth", 0f, .05f);
             InvokeRepeating("ShrinkSlime", 0f, .05f);
             collected = true;
         }
     }
+
+    private void PlaySound()
+    {
+        int randChoice = Random.Range(1, 4);
+
+        switch (randChoice)
+        {
+            case 1:
+                source.clip = slime1;
+                break;
+            case 2:
+                source.clip = slime2;
+                break;
+            case 3:
+                source.clip = slime3;
+                break;
+        }
+
+        source.Play();
+    }
+
     //Takes two seconds to fully do 50 health.
     private void SendSlimeHealth()
     {

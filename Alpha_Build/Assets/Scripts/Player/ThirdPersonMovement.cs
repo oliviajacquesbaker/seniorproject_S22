@@ -14,6 +14,14 @@ public class ThirdPersonMovement : MonoBehaviour
     public Animator anim;
     public KeyCode runkey;
 
+
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip step1,step2,step3,step4,step5;
+
+
     void Start()
     {
         Player = GameObject.Find("Player");
@@ -61,5 +69,51 @@ public class ThirdPersonMovement : MonoBehaviour
             anim.SetBool("Running", false);
         }
 
+        //MovementSound();
     }
+
+
+    /*private void MovementSound()
+    {
+        AnimatorStateInfo animInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        if (anim.GetBool("Walking"))
+        {
+            Debug.Log(animInfo.normalizedTime);
+            if(animInfo.normalizedTime == 0 || (animInfo.normalizedTime > .5 && animInfo.normalizedTime < .6))
+            {
+                source.Stop();
+                Debug.Log("Walking");
+                source.clip = step1;
+                source.Play();
+            }
+        }
+
+    }*/
+
+    public void FootStep()
+    {
+        int randChoice = Random.Range(1, 6);
+        switch (randChoice)
+        {
+            case 1:
+                source.clip = step1;
+                break;
+            case 2:
+                source.clip = step2;
+                break;
+            case 3:
+                source.clip = step3;
+                break;
+            case 4:
+                source.clip = step4;
+                break;
+            case 5:
+                source.clip = step5;
+                break;
+        }
+
+        source.Play();
+    }
+
 }

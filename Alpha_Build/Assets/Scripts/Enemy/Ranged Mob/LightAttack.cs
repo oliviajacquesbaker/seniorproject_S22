@@ -21,6 +21,9 @@ public class LightAttack : MonoBehaviour
     [SerializeField]
     private GameObject spawnPoint;
 
+    [SerializeField]
+    private AudioSource source;
+
     private int counter = 0;
 
     private void OnTriggerEnter(Collider other)
@@ -76,6 +79,8 @@ public class LightAttack : MonoBehaviour
 
     private void FireProj()
     {
+        source.Play();
+
         var position = spawnPoint.transform.position + spawnPoint.transform.forward;
        
         var rotation = spawnPoint.transform.rotation;

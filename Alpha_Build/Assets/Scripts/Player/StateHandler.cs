@@ -34,19 +34,14 @@ public class StateHandler : MonoBehaviour
         sword = GameObject.Find("Sword");
     }
 
-    void Update()
-    {
-        
-    }
-
     public bool InvOpen()
     {
-        return inv.IsOpen();
+        return GameObject.Find("Inventory");
     }
 
     public bool BowIsAiming()
     {
-        return GameObject.Find("Bow").GetComponent<Bow>().isAiming;
+        return bow.GetComponent<Bow>().isAiming;
     }
 
     //called by rope climb script when player tries to climb

@@ -22,6 +22,14 @@ public class _PlayerStatsController : MonoBehaviour
     GameObject DeathPanel, LivingGroup;
     bool hudSwitch = false;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip death, lightBurn;
+
+    bool inLight = false;
+
     void Start()
     {
         player = GetComponent<_PlayerStats>();
@@ -45,6 +53,20 @@ public class _PlayerStatsController : MonoBehaviour
         }
     }
 
+    private void PhaseBurnSound()
+    {
+        if(source.volume > 0)
+        {
+            source.volume -= 0.01f;
+        }
+        else
+        {
+            source.Stop();
+            source.volume = 1f;
+            CancelInvoke("PhaseBurnSound");
+        }
+    }
+
     //Updates Health in regard to light intensity
     public void UpdateHealth(float perceivedIntensity)
     {
@@ -54,9 +76,24 @@ public class _PlayerStatsController : MonoBehaviour
             if (perceivedIntensity < 0.15) //Heals Player in Dark
             {
                 AddHealth(perceivedIntensity);
+                if (inLight)
+                {
+                    inLight = false;
+                    if (player.GetAlive())
+                    {
+                        InvokeRepeating("PhaseBurnSound", 0f, 0.05f);
+                    }
+                }
             }
             else //Damages Player in Light
             {
+                if (!inLight)
+                {
+                    source.clip = lightBurn;
+                    source.volume = 0.1f;
+                    source.Play();
+                }
+                inLight = true;
                 DetractHealth(perceivedIntensity);
             }
         }
@@ -158,6 +195,8 @@ public class _PlayerStatsController : MonoBehaviour
     void Dead()
     {
         LivingGroup.SetActive(false);
+        source.clip = death;
+        source.Play();
         DeathPanel.SetActive(true);
     }
     void HudOpaquer()

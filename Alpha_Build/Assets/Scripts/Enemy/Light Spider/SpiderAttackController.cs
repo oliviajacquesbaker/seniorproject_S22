@@ -19,6 +19,12 @@ public class SpiderAttackController : MonoBehaviour
 
     private bool attackBool = true;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip attack1, attack2, attack3, attack4, attack5;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStatsController>();
@@ -47,6 +53,7 @@ public class SpiderAttackController : MonoBehaviour
 
     private void AnimateController()
     {
+        AttackSound();
         _animator.SetBool("AttackRange", true);
         _animator.SetBool("Cooldown", false);
         InvokeRepeating("Cooldown", 1, 2);
@@ -60,6 +67,7 @@ public class SpiderAttackController : MonoBehaviour
             attackBool = false;
             CancelInvoke();
             InvokeRepeating("Cooldown", 3, 1);
+            
             player.DetractHealth(10f, true);
         }
         else if (!attackBool)
@@ -67,5 +75,33 @@ public class SpiderAttackController : MonoBehaviour
             _animator.SetBool("Cooldown", false);
             attackBool = true;
         }
+    }
+
+    private void AttackSound()
+    {
+        int randChoice = Random.Range(1, 6);
+
+        
+
+        switch (randChoice)
+        {
+            case 1:
+                source.clip = attack1;
+                break;
+            case 2:
+                source.clip = attack2;
+                break;
+            case 3:
+                source.clip = attack3;
+                break;
+            case 4:
+                source.clip = attack4;
+                break;
+            case 5:
+                source.clip = attack5;
+                break;
+        }
+
+        source.Play();
     }
 }

@@ -19,6 +19,12 @@ public class Patrol_Movement : MonoBehaviour
     private GameObject player;
     private IEnumerator coroutine;
 
+    [SerializeField]
+    AudioSource source;
+    [SerializeField]
+    AudioClip step1, step2, step3, step4, step5, attack;
+
+    private int choice = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -160,6 +166,43 @@ public class Patrol_Movement : MonoBehaviour
         dead = true;
         patrolMob.ResetPath();
         patrolMob.isStopped = true;
+    }
+
+    public void FootStep()
+    {
+        int randChoice = Random.Range(1, 4);
+
+        choice++;
+
+        if (choice > 5)
+            choice = 1;
+
+        switch (choice)
+        {
+            case 1:
+                source.clip = step1;
+                break;
+            case 2:
+                source.clip = step2;
+                break;
+            case 3:
+                source.clip = step3;
+                break;
+            case 4:
+                source.clip = step4;
+                break;
+            case 5:
+                source.clip = step5;
+                break;
+        }
+
+        source.Play();
+    }
+
+    public void AttackSound()
+    {
+        source.clip = attack;
+        source.Play();
     }
 
 }

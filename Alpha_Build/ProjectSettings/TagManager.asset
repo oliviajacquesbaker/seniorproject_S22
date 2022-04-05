@@ -9,6 +9,9 @@ TagManager:
   - labeler
   - Rope
   - Hook
+  - Weapon
+  - Boss
+  - ShadowCaster
   layers:
   - Default
   - TransparentFX

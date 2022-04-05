@@ -10,6 +10,12 @@ public class StartMenu : MonoBehaviour
     [SerializeField]
     Button continueBtn, optionsBtn;
 
+    [SerializeField]
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip click, error;
+
     private void Start()
     {
         if (!PlayerPrefs.HasKey("savedLevel"))
@@ -24,17 +30,22 @@ public class StartMenu : MonoBehaviour
     }
     public void NewGame()
     {
+        source.clip = click;
+        source.Play();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void ContinueGame()
     {
+        source.clip = click;
+        source.Play();
         SceneManager.LoadScene(PlayerPrefs.GetInt("savedLevel"));
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit");
+        source.clip = click;
+        source.Play();
         Application.Quit();
     }
 
