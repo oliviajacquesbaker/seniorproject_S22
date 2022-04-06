@@ -32,7 +32,10 @@ public class Bow : MonoBehaviour
     private StateHandler state;
     private Durability durability;
     private CameraController camController;
+    bool unaimed;
 
+    public Animator anim;
+    public Animator bowAnim;
 
     [SerializeField]
     AudioSource source;
@@ -47,6 +50,8 @@ public class Bow : MonoBehaviour
     {
         Player = GameObject.Find("Player");
         playerSpeed = Player.GetComponent<ThirdPersonMovement>();
+        anim = Player.GetComponent<Animator>();
+        bowAnim = GetComponent<Animator>();
         bowRotation = gameObject.transform;
         cam = GameObject.Find("Third Person Camera").GetComponent<CinemachineFreeLook>();
         initialTurnVelocity = playerSpeed.turnSmoothTime;
@@ -57,6 +62,7 @@ public class Bow : MonoBehaviour
         durability = gameObject.GetComponent<Durability>();
         camController = Player.GetComponent<CameraController>();
         playerRB = Player.GetComponent<Rigidbody>();
+        unaimed = true;
     }
 
     void Update()
@@ -95,6 +101,8 @@ public class Bow : MonoBehaviour
         source.Play();
         draw = false;
 
+        anim.SetTrigger("ReleaseArrow");
+        bowAnim.SetTrigger("ReleaseArrow");
         Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
@@ -110,7 +118,13 @@ public class Bow : MonoBehaviour
             source.Play();
             draw = true;
         }
-        
+        if (unaimed)
+        {
+            anim.SetBool("PutDownBow", false);
+            anim.SetTrigger("DrawBow");
+            bowAnim.SetTrigger("DrawBow");
+            unaimed = false;
+        }
 
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
@@ -119,7 +133,10 @@ public class Bow : MonoBehaviour
 
     void StopAiming()
     {
+        bowAnim.SetTrigger("ReleaseArrow");
+        anim.SetBool("PutDownBow", true);
         camController.StopAim();
+        unaimed = true;
     }
 
     void RotatePlayer()
