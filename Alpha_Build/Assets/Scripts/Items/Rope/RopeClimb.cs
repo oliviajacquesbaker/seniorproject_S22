@@ -30,7 +30,7 @@ public class RopeClimb : MonoBehaviour
 
         if (IsNextToRope())
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 ToggleClimb(); // grabs rope
             }

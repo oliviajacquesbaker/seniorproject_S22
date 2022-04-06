@@ -31,7 +31,7 @@ public class Rope : MonoBehaviour
 
     public void Spawn()
     {
-         if (hook.hasRope) { return; }
+        if (hook.hasRope) { return; }
 
         DistanceToFloor();
         int count = (int) ((ropeLength*lengthModifier) / partDistance);
