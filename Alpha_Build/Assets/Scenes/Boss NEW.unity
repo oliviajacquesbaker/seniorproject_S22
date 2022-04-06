@@ -2803,21 +2803,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cde01d2bb03874eb2ebec456549456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   ropeObj: {fileID: 130474348045292499, guid: 1cd337c6db9facd49a4e0cdbc4bebcb6, type: 3}
   player: {fileID: 1817493039104642101}
   camTransf: {fileID: 963194228}
+  rope: {fileID: 0}
   keycode: 323
   turnSmoothTime: 0
   turnSmoothVelocity: 0
   ropeRange: 40
   controller: {fileID: 1817493039104642106}
   crosshair: {fileID: 1614137776}
-  original:
-    serializedVersion: 2
-    rgba: 16777215
-  highlighted:
-    serializedVersion: 2
-    rgba: 233
+  aimPoint: {fileID: 0}
+  highlighted: {r: 0, g: 0, b: 0, a: 0}
+  isAimingHook: 0
 --- !u!4 &424526551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2850172505167242219, guid: f866a93e6f4115444a208e9acd3784c0, type: 3}
@@ -6299,8 +6298,10 @@ MonoBehaviour:
   mainCamera: {fileID: 1829880669}
   aimCamera: {fileID: 1338624449}
   crosshair: {fileID: 1614137776}
+  targetCrosshair: {fileID: 1614137776}
   playerSpeed: {fileID: 173330894695286432}
   targetTurnVelocity: 0
+  rope: {fileID: 0}
 --- !u!1 &966777128
 GameObject:
   m_ObjectHideFlags: 3
@@ -9576,7 +9577,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655587799}
-  m_LocalRotation: {x: 0.26811692, y: 0.20362704, z: -0.058091395, w: 0.939827}
+  m_LocalRotation: {x: 0.26811695, y: 0.20362706, z: -0.058091413, w: 0.93982697}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10692,6 +10693,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   boss: {fileID: 0}
   damage: 100
+  source: {fileID: 0}
+  sword1: {fileID: 0}
+  sword2: {fileID: 0}
+  sword3: {fileID: 0}
 --- !u!65 &1871400994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14510,6 +14515,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c703ba658e52b4cbe84e947f10ef0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  slime1: {fileID: 0}
+  slime2: {fileID: 0}
+  slime3: {fileID: 0}
 --- !u!135 &961760381796379182
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15298,6 +15307,9 @@ MonoBehaviour:
   currentIntensity: 0
   DeathPanel: {fileID: 0}
   LivingGroup: {fileID: 0}
+  source: {fileID: 0}
+  death: {fileID: 0}
+  lightBurn: {fileID: 0}
 --- !u!114 &1817493039104642103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15351,8 +15363,10 @@ MonoBehaviour:
   mainCamera: {fileID: 1829880669}
   aimCamera: {fileID: 1338624449}
   crosshair: {fileID: 1614137776}
+  targetCrosshair: {fileID: 0}
   playerSpeed: {fileID: 1817493039104642106}
   targetTurnVelocity: 1.5
+  rope: {fileID: 0}
 --- !u!114 &1817493039104642106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15372,6 +15386,12 @@ MonoBehaviour:
   enabled: 0
   anim: {fileID: 0}
   runkey: 0
+  source: {fileID: 0}
+  step1: {fileID: 0}
+  step2: {fileID: 0}
+  step3: {fileID: 0}
+  step4: {fileID: 0}
+  step5: {fileID: 0}
 --- !u!33 &1817493039104642108
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17569,6 +17589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c703ba658e52b4cbe84e947f10ef0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  slime1: {fileID: 0}
+  slime2: {fileID: 0}
+  slime3: {fileID: 0}
 --- !u!4 &3009001440434264833
 Transform:
   m_ObjectHideFlags: 0
@@ -18998,6 +19022,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c703ba658e52b4cbe84e947f10ef0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  slime1: {fileID: 0}
+  slime2: {fileID: 0}
+  slime3: {fileID: 0}
 --- !u!4 &3303263646134254125
 Transform:
   m_ObjectHideFlags: 0
@@ -27025,6 +27053,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c703ba658e52b4cbe84e947f10ef0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  slime1: {fileID: 0}
+  slime2: {fileID: 0}
+  slime3: {fileID: 0}
 --- !u!1 &7369252244834137101
 GameObject:
   m_ObjectHideFlags: 0

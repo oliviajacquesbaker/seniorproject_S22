@@ -334,6 +334,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsBlob
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -547697280400438834}
   m_Solo: 0
@@ -431,7 +434,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 340, y: 140, z: 0}
+  m_AnyStatePosition: {x: 360, y: 200, z: 0}
   m_EntryPosition: {x: -170, y: 130, z: 0}
   m_ExitPosition: {x: 770, y: 500, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -628,9 +631,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 0.70000005
+  m_TransitionDuration: 0.13538057
+  m_TransitionOffset: 1.3045778
+  m_ExitTime: 0.895686
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1097,6 +1100,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: ShieldUp
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7643265693137487615}
   m_Solo: 0
@@ -1524,6 +1530,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: DrawBow
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5926958603890821281}
   m_Solo: 0
@@ -1658,6 +1667,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: ShieldUp
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2709391823211967716}
   m_Solo: 0
@@ -1691,6 +1703,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Running
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5846350184992242495}
@@ -1994,6 +2009,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: SwordAttack
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3067849734881837044}
@@ -2477,6 +2495,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: ShieldUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Dead
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -9145518191886218006}
