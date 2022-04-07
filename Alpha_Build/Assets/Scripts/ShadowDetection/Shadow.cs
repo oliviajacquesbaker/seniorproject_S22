@@ -20,6 +20,7 @@ public class Shadow
     public ShadowType label;
     public int imgWidth;
     public int imgHeight;
+    public float largestSpannedDist;
     Label labelObj;
 
     public Shadow(ShadowType label_, int width, int height)
@@ -36,6 +37,16 @@ public class Shadow
         imgWidth = width;
         imgHeight = height;
         contourPoints = contour;
+        largestSpannedDist = 0;
+        int x1 = width, x2 = 0, y1 = height, y2 = 0;
+        for(int i=0; i < contour.Length; ++i)
+        {
+            x1 = (int)Mathf.Min(x1, contour[i].x);
+            y1 = (int)Mathf.Min(y1, contour[i].y);
+            x2 = (int)Mathf.Max(x2, contour[i].x);
+            y2 = (int)Mathf.Max(y2, contour[i].y);
+        }
+        largestSpannedDist = Vector2.Distance(new Vector2(x1,y1), new Vector2(x2, y2));
     }
 
     public void Relabel(GameObject[] labelPrefabs)
@@ -63,7 +74,7 @@ public class Shadow
             else
             {
                 float ratio = cross1 / cross2;
-                if (ratio > 0.7 && ratio < 1.3) label = ShadowType.shield;
+                if (ratio > 0.65 && ratio < 1.35) label = ShadowType.shield;
                 else if (ratio < 0.2 || ratio > 5) label = ShadowType.sword;
                 else label = ShadowType.unknown;
             }

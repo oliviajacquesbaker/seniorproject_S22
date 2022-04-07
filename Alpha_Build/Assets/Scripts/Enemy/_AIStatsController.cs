@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class _AIStatsController : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class _AIStatsController : MonoBehaviour
     float lightIntensity = 0;
     [SerializeField]
     bool debug, log = false;
+    [SerializeField]
+    Image healthbar;
+    GameObject player;
 
     private bool multistage = false;
     private bool living = true;
@@ -19,6 +23,7 @@ public class _AIStatsController : MonoBehaviour
     void Start()
     {
         currAi = GetComponent<_AIStats>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -27,6 +32,15 @@ public class _AIStatsController : MonoBehaviour
         {
             Debug.Log(currAi.GetHealth());
             Kill();
+        }
+        if (healthbar)
+        {
+            if (Vector3.Distance(healthbar.transform.parent.transform.position, player.transform.position) > 50) healthbar.transform.parent.gameObject.SetActive(false);
+            else
+            {
+                healthbar.transform.parent.gameObject.SetActive(true);
+                healthbar.transform.parent.transform.LookAt(new Vector3(Camera.main.transform.position.x, healthbar.transform.parent.transform.position.y, Camera.main.transform.position.z));
+            }
         }
     }
 
@@ -84,11 +98,13 @@ public class _AIStatsController : MonoBehaviour
         {
             currAi.SetHealth((currAi.GetHealth() - 1f * Time.deltaTime * 2f));
         }
+        UpdateHealthbar();
     }
 
     public void DetractHealth(float damage, bool hit) // for hit purposes
     {
         currAi.SetHealth(currAi.GetHealth() - damage);
+        UpdateHealthbar();
     }
 
     public void AddHealth(float perceivedIntensity) //Heals in light
@@ -110,11 +126,14 @@ public class _AIStatsController : MonoBehaviour
         {
             currAi.SetHealth(100f);
         }
+
+        UpdateHealthbar();
     }
 
     public void Kill()
     {
         living = false;
+        if (healthbar) DestroyHealthbar();
         switch (type)
         {
             case MobType.Booster:
@@ -132,5 +151,19 @@ public class _AIStatsController : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void UpdateHealthbar()
+    {
+        healthbar.fillAmount = Mathf.Clamp(currAi.GetHealth() / currAi.GetMaxHealth(), 0, 1f);
+        if (healthbar.fillAmount <= 0)
+        {
+            DestroyHealthbar();
+        }
+    }
+
+    public void DestroyHealthbar()
+    {
+        Destroy(healthbar.transform.parent.gameObject);
     }
 }
