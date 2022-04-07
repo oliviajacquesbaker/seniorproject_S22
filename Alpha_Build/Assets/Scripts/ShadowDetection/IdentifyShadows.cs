@@ -34,7 +34,7 @@ public class IdentifyShadows : MonoBehaviour
         //Debug.Log(dist);
         if (dist > 5)
         {
-            Debug.Log("-----------------------------------------------------------------------------------------");
+            //Debug.Log("-----------------------------------------------------------------------------------------");
             pastPos = this.gameObject.transform.position;
             RemoveLabels();
             DetectShadows();
@@ -70,6 +70,7 @@ public class IdentifyShadows : MonoBehaviour
 
         int[] pixels = ApplyGreyscaleFilter(image);
         //int[] pixels = ApplyDynamicGreyscaleFilter(image);
+        //int[] pixels = ApplyAdaptiveGreyscaleFilter(image, 500, 0.83f);
 
         //CreateImage(image.GetPixels(), "BW_ShadowBlobs");
 
@@ -98,18 +99,22 @@ public class IdentifyShadows : MonoBehaviour
             Debug.Log("EXCEPTION: ");
             Debug.LogException(ex);
         }
-        Debug.Log("FOUND " + numContours + " SHADOWS");
+        //Debug.Log("FOUND " + numContours + " SHADOWS");
         int startInd = 0;
         for (int i = 0; i < numContours; ++i)
         {
             if (i > maxOutContours) break;
-            if(numVertsPerContour[i] > 0)
+            if(numVertsPerContour[i] > 0 && numVertsPerContour[i] > 2)
             {
                 Vector2[] pointsOrdered = ReorderContourPoints(ref outContours, startInd, numVertsPerContour[i]);
                 Vector2[] points = RemoveOutliers(ref pointsOrdered);
                 Shadow thisShadow = new Shadow(ShadowType.unknown, image.width, image.height, points);
-                thisShadow.Relabel(labels);
-                shadows.Add(thisShadow);
+                if (thisShadow.largestSpannedDist < 100)
+                {
+                    thisShadow.Relabel(labels);
+                    shadows.Add(thisShadow);
+                }
+                //else Debug.Log("too large, " + thisShadow.largestSpannedDist);
                 startInd += numVertsPerContour[i];
             }
         }
@@ -267,7 +272,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
         Array.Sort(tempSort);
-        threshold = tempSort[(toReturn.Length -1)/2] * 0.75f;
+        threshold = tempSort[(toReturn.Length -1)/2] * 0.85f;
         Debug.Log("threshold: " + threshold);
 
         for (int i = 0; i < pixels.Length; i++)
@@ -281,6 +286,48 @@ public class IdentifyShadows : MonoBehaviour
                 toReturn[i] = 255;
             }
         }
+        return toReturn;
+    }
+
+    int[] ApplyAdaptiveGreyscaleFilter(Texture2D image, int windowSize, float thresholdConst)
+    {
+        Color[] pixels = image.GetPixels();
+        int[] toReturn = new int[pixels.Length];
+        float[,] integralImage = new float[image.width, image.height];
+
+        float sum;
+        for(int i = 0; i < image.width; ++i)
+        {
+            sum = 0;
+            for(int j = 0; j < image.height; ++j)
+            {
+                sum += (image.GetPixel(i, j).r + image.GetPixel(i, j).g + image.GetPixel(i, j).b);
+                if (i == 0) integralImage[i, j] = sum;
+                else integralImage[i, j] = integralImage[i - 1, j] + sum;
+            }
+        }
+
+        int x1, y1, x2, y2;
+        float curr;
+        for (int i = 0; i < image.width; ++i)
+        {
+            for (int j = 0; j < image.height; ++j)
+            {
+                x1 = Mathf.Max(0, i - windowSize / 2);
+                y1 = Mathf.Max(0, j - windowSize / 2);
+                x2 = Mathf.Min(image.width - 1, i + windowSize / 2);
+                y2 = Mathf.Min(image.height - 1, j + windowSize / 2);
+                sum = integralImage[x2, y2];
+                curr = (image.GetPixel(i, j).r + image.GetPixel(i, j).g + image.GetPixel(i, j).b);
+                if (y1 > 0) sum -= integralImage[x2, y1 - 1];
+                if (x1 > 0) sum -= integralImage[x1 - 1, y2];
+                if (x1 > 0 && y1 > 0) sum += integralImage[x1 - 1, y1 - 1];
+                if (curr <= (sum / ((x2 - x1) * (y2 - y1)) ) * thresholdConst) toReturn[image.width * j + i] = 255;
+                else toReturn[image.width * j + i] = 0;
+
+            }
+        }
+
         return toReturn;
     }
 

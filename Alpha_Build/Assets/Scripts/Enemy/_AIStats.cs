@@ -6,17 +6,22 @@ public class _AIStats : MonoBehaviour
 {
     [SerializeField]
     private float health = 100f;
-    
+    private float maxHealth;
+
 
     void Start()
     {
-       // health = 100f; 
-       // ^ swapped this to be up where you declare it, so that it shows as a default val in the serializable field area
+        maxHealth = health;
     }
 
     public float GetHealth()
     {
         return health;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public void SetHealth(float diffHealth)
