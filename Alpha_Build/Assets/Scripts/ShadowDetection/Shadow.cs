@@ -51,7 +51,8 @@ public class Shadow
 
     public void Relabel(GameObject[] labelPrefabs)
     {
-        if (contourPoints.Length == 3) label = ShadowType.bow;
+        if (contourPoints.Length == 2) label = ShadowType.sword;
+        else if (contourPoints.Length == 3) label = ShadowType.bow;
         else if (contourPoints.Length == 4)
         {
             int yPos_0 = (int)contourPoints[0].y;
@@ -157,7 +158,7 @@ public class Shadow
                 else label = ShadowType.unknown;
             }
         }
-        //Debug.Log("-----------------------------------------------label for this shadow: " + label);
+        Debug.Log("-----------------------------------------------label for this shadow: " + label);
 
         CreateInGameLabel(labelPrefabs);
     }
