@@ -48,7 +48,7 @@ public class Inventory : MonoBehaviour
         anim = GameObject.Find("Player").GetComponent<Animator>();
 
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
-        DebugSettings();
+        //DebugSettings();
     }
 
     void Update()
