@@ -194,11 +194,32 @@ public class Inventory : MonoBehaviour
     public void EnableItem(ShadowType item)
     {
         Debug.Log(item + "Collected and enabled!");
+        Durability dur;
         int updated = -1;
-        if (item == ShadowType.sword) { swordEnabled = true; updated = 1; }
-        else if (item == ShadowType.shield) { shieldEnabled = true; updated = 3; }
-        else if (item == ShadowType.rope) { ropeEnabled = true; updated = 2; }
-        else if (item == ShadowType.bow) { bowEnabled = true; updated = 0; }
+        if (item == ShadowType.sword) { 
+            swordEnabled = true;
+            dur = sword.GetComponent<Durability>();
+            if(dur) dur.currDurability = dur.maxDurability;
+            updated = 1; 
+        }
+        else if (item == ShadowType.shield) { 
+            shieldEnabled = true;
+            dur = shield.GetComponent<Durability>();
+            if(dur) dur.currDurability = dur.maxDurability;
+            updated = 3; 
+        }
+        else if (item == ShadowType.rope) { 
+            ropeEnabled = true; 
+            dur = rope.GetComponent<Durability>();
+            if(dur) dur.currDurability = dur.maxDurability;
+            updated = 2; 
+        }
+        else if (item == ShadowType.bow) { 
+            bowEnabled = true; 
+            dur = bow.GetComponent<Durability>();
+            if(dur) dur.currDurability = dur.maxDurability;
+            updated = 0; 
+        }
 
         if (updated != -1)
         {

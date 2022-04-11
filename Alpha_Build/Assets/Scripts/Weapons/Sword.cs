@@ -18,6 +18,8 @@ public class Sword : MonoBehaviour
     bool attacking = false;
     int attacked = 0;
     bool coroutineStarted = false;
+    private int frameStarted;
+    Durability durability;
 
     public int damage;
     [SerializeField]
@@ -30,6 +32,7 @@ public class Sword : MonoBehaviour
     {
         startingPos = transform.rotation.z;
         anim = GameObject.Find("Player").GetComponent<Animator>();
+        durability = gameObject.GetComponent<Durability>();
     }
 
     void Update()
@@ -42,6 +45,7 @@ public class Sword : MonoBehaviour
             PlaySoundClip();
         }
         if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
+        else if (coroutineStarted && Time.frameCount - frameStarted > 60) StartCoroutine(AllowAttack()); //the above section gets disturbed when players use menus
     }
 
     void PlaySoundClip()
@@ -81,6 +85,7 @@ public class Sword : MonoBehaviour
     {
         if (attacking) return;
         attacked++;
+        durability.currDurability -= 8;
         attacking = true;
         //add animation here
         anim.SetTrigger("SwordAttack");
@@ -119,6 +124,7 @@ public class Sword : MonoBehaviour
     IEnumerator AllowAttack()
     {
         coroutineStarted = true;
+        frameStarted = Time.frameCount;
         yield return new WaitForSeconds(0.5f);
         coroutineStarted = false;
         attacking = false;

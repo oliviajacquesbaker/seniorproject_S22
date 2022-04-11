@@ -23,7 +23,7 @@ public class Label : MonoBehaviour
 
     public void SetTransforms(int anchorX, int anchorY)
     {
-        Vector3 test = cam.ScreenToWorldPoint(new Vector3(anchorX, anchorY, 0.01f));
+        Vector3 test = cam.ScreenToWorldPoint(new Vector3(anchorX * 4, anchorY * 4, 0.01f));
         pos = new Vector3(test.x, 0.5f, test.z);
         rot = new Vector3(0, 90, 0);
         FindNearestShadowCaster();
@@ -33,19 +33,20 @@ public class Label : MonoBehaviour
     {
         cam = GameObject.FindWithTag("shadow_cam").GetComponent<Camera>();
         float across = (cam.ScreenToWorldPoint(new Vector3(minX, minY, 0.01f)) - cam.ScreenToWorldPoint(new Vector3(maxX, maxY, 0.01f))).magnitude;
-        roughShadowArea = across*across;
+        roughShadowArea = across * across;
     }
 
     public void FindNearestShadowCaster()
     {
         float minDist = 100000;
-        Collider[] hitColliders = Physics.OverlapSphere(pos, roughShadowArea*1.2f);
+        Collider[] hitColliders = Physics.OverlapSphere(pos, roughShadowArea * 1.2f);
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.gameObject.tag == "ShadowCaster")
+            if (hitCollider.gameObject.tag == "ShadowCaster")
             {
-                float dist = (hitCollider.gameObject.transform.position - pos).magnitude;
-                if(dist < minDist)
+                float dist = (new Vector3(hitCollider.gameObject.transform.position.x, 0, hitCollider.gameObject.transform.position.z) - pos).magnitude;
+                //Debug.Log(dist);
+                if (dist < minDist)
                 {
                     minDist = dist;
                     objectCastingShadow = hitCollider.gameObject;
@@ -63,12 +64,12 @@ public class Label : MonoBehaviour
     public void SetInScene()
     {
         thisLabel = Instantiate(labelPrefab, pos, Quaternion.Euler(rot));
-        thisLabel.GetComponentInChildren<ShadowResponse>().SetLabel(this);
+        if (thisLabel.GetComponentInChildren<ShadowResponse>()) thisLabel.GetComponentInChildren<ShadowResponse>().SetLabel(this);
     }
 
     public void CollectShadow()
     {
-        if(objectCastingShadow) objectCastingShadow.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        if (objectCastingShadow) objectCastingShadow.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         RemoveFromScene();
     }
 
@@ -76,5 +77,5 @@ public class Label : MonoBehaviour
     {
         Destroy(thisLabel);
     }
-    
+
 }
