@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         playerSpeed = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
         initialTurnVelocity = playerSpeed.turnSmoothTime;
         GameObject.Find("Crosshair").SetActive(false);
-        GameObject.Find("Target Crosshair").SetActive(false);
+        if(GameObject.Find("Target Crosshair")) GameObject.Find("Target Crosshair").SetActive(false);
         aimPoint = GameObject.Find("AimPoint");
     }
 

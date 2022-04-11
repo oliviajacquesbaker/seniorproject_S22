@@ -54,10 +54,10 @@ public class IdentifyShadows : MonoBehaviour
     public void DetectShadows()
     {
         shadows = new List<Shadow>();
-        RenderTexture inbetween = new RenderTexture(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, 24);
-        Texture2D image = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGB24, false);
-        Texture2D imageCheck = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGBA32, false);
-        //Texture2D imageResized;
+        RenderTexture inbetween = new RenderTexture(3 * Screen.width / 4, Screen.height, 24);
+        Texture2D image = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGB24, false);
+        Texture2D imageCheck = new Texture2D(3 * Screen.width / 4 / resizeAmount, Screen.height / resizeAmount, TextureFormat.RGBA32, false);
+        Texture2D imageResized;
 
         //grab what the ortho cam sees and put it on a texture we can read
         if (cam.targetTexture != null) cam.targetTexture.Release();
@@ -68,9 +68,13 @@ public class IdentifyShadows : MonoBehaviour
         image.Apply();
         RenderTexture.active = null;
 
-        int[] pixels = ApplyGreyscaleFilter(image);
-        //int[] pixels = ApplyDynamicGreyscaleFilter(image);
-        //int[] pixels = ApplyAdaptiveGreyscaleFilter(image, 80, 0.83f);
+        imageResized = ResizeTexture(image, 3 * Screen.width / 4 / resizeAmount, Screen.height / resizeAmount);
+
+        //int[] pixels = ApplyGreyscaleFilter(imageResized);
+        //int[] pixels = ApplyDynamicGreyscaleFilter(imageResized);
+        //int[] pixels = ApplyAdaptiveGreyscaleFilter(imageResized, 80, 0.83f);
+        int[] pixels = ApplyContrastBasedGreyscaleFilter(imageResized, 0.75f);
+        //Debug.Log(pixels.Length);
 
         //CreateImage(image.GetPixels(), "BW_ShadowBlobs");
 
@@ -89,7 +93,7 @@ public class IdentifyShadows : MonoBehaviour
                     fixed (CvVertex* _outContours = outContours)
                     {
                         //Debug.Log("stand in");
-                        OpenCVInterop.DetectContours(_outContours, _numVertsPerContour, ref numContours, _pixels, image.height, image.width, maxOutContours, maxVertsPerContour);
+                        OpenCVInterop.DetectContours(_outContours, _numVertsPerContour, ref numContours, _pixels, imageResized.height, imageResized.width, maxOutContours, maxVertsPerContour);
                     }
                 }
             }
@@ -104,24 +108,28 @@ public class IdentifyShadows : MonoBehaviour
         for (int i = 0; i < numContours; ++i)
         {
             if (i > maxOutContours) break;
-            if(numVertsPerContour[i] > 0 && numVertsPerContour[i] >= 2)
+
+            //Debug.Log("num points: " + numVertsPerContour[i]);
+            if (numVertsPerContour[i] > 0 && numVertsPerContour[i] >= 2)
             {
-                Debug.Log("num points: " + numVertsPerContour[i]);
                 Vector2[] pointsOrdered = ReorderContourPoints(ref outContours, startInd, numVertsPerContour[i]);
                 Vector2[] points = RemoveOutliers(ref pointsOrdered);
-                Shadow thisShadow = new Shadow(ShadowType.unknown, image.width, image.height, points);
-                if (thisShadow.largestSpannedDist < 100 || numVertsPerContour[i] == 2 )
+                if (numVertsPerContour[i] == 2 || IsConvex(ref points))
                 {
-                    thisShadow.Relabel(labels);
-                    shadows.Add(thisShadow);
+                    Shadow thisShadow = new Shadow(ShadowType.unknown, image.width, image.height, points);
+                    if (thisShadow.largestSpannedDist < 150 || numVertsPerContour[i] == 2)
+                    {
+                        thisShadow.Relabel(labels);
+                        shadows.Add(thisShadow);
+                    }
+                    //else Debug.Log("too large, " + thisShadow.largestSpannedDist);
                 }
-                else Debug.Log("too large, " + thisShadow.largestSpannedDist);
                 startInd += numVertsPerContour[i];
             }
         }
 
 
-        /*Color[] pixelsOut = image.GetPixels();
+        /*Color[] pixelsOut = imageResized.GetPixels();
         for (int i = 0; i < numContours; ++i)
         {
             CvVertex[] pts = outContours;
@@ -155,6 +163,36 @@ public class IdentifyShadows : MonoBehaviour
         CreateImage(pixelsOut, "ContourPoints");
 
         pixelsOut = GetImageReadyArray(pixels);
+        for (int i = 0; i < numContours; ++i)
+        {
+            CvVertex[] pts = outContours;
+            for (int j = 0; j < pts.Length; ++j)
+            {
+                CvVertex pt = pts[j];
+                int ind = (int)pt.X + ((int)pt.Y) * imageCheck.width;
+                if (ind < pixelsOut.Length)
+                {
+                    pixelsOut[ind].r = 1f;
+                    pixelsOut[ind].g = 0.5f;
+                    pixelsOut[ind].b = 0f;
+                }
+            }
+        }
+
+        for (int i = 0; i < shadows.Count; ++i)
+        {
+            for (int j = 0; j < shadows[i].contourPoints.Length; ++j)
+            {
+                Vector2 pt = shadows[i].contourPoints[j];
+                int ind = (int)pt.x + ((int)pt.y) * imageCheck.width;
+                if (ind < pixelsOut.Length)
+                {
+                    pixelsOut[ind].r = 0f;
+                    pixelsOut[ind].g = 1f;
+                    pixelsOut[ind].b = 1f;
+                }
+            }
+        }
         CreateImage(pixelsOut, "ContourPoints_BW");*/
     }
 
@@ -184,12 +222,12 @@ public class IdentifyShadows : MonoBehaviour
         int prev, next;
         double area, minArea;
         minArea = GetPolygonalArea(ref points) / 20;
-        for(int i=0; i<points.Length; ++i)
+        for (int i = 0; i < points.Length; ++i)
         {
             prev = (i - 1) % points.Length;
             if (prev < 0) prev += points.Length;
             next = (i + 1) % points.Length;
-            area = (points[prev].x*points[i].y + points[i].x*points[next].y + points[next].x*points[prev].y - points[prev].y*points[i].x - points[i].y*points[next].x - points[next].y*points[prev].x) / 2.0;
+            area = (points[prev].x * points[i].y + points[i].x * points[next].y + points[next].x * points[prev].y - points[prev].y * points[i].x - points[i].y * points[next].x - points[next].y * points[prev].x) / 2.0;
             if (area < minArea)
             {
                 int j = (i + 2) % points.Length;
@@ -202,7 +240,7 @@ public class IdentifyShadows : MonoBehaviour
             }
         }
 
-        if(outInd == -1) return points;
+        if (outInd == -1) return points;
         else
         {
             Vector2[] updatedPoints = new Vector2[points.Length - 1];
@@ -214,6 +252,27 @@ public class IdentifyShadows : MonoBehaviour
             }
             return updatedPoints;
         }
+    }
+
+    bool IsConvex(ref Vector2[] points)
+    {
+        //Debug.Log("SHADOW WITH " + points.Length + " POINTS, point0: " + points[0].x + ", " + points[0].y);
+        int prev, next;
+        float curr, last = 0f;
+        for (int i = 0; i < points.Length; ++i)
+        {
+            //Debug.Log(points[i].x + ", " + points[i].y);
+            prev = (i - 1) % points.Length;
+            if (prev < 0) prev += points.Length;
+            next = (i + 1) % points.Length;
+
+            curr = ((points[i].x-points[prev].x)*(points[next].y-points[i].y)) - ((points[i].y-points[prev].y)*(points[next].x-points[i].x));
+            //Debug.Log(curr + ", " + curr*last);
+            if (curr * last < 0)  return false;
+            last = curr;
+        }
+        //Debug.Log("THIS ONE IS CONVEX!");
+        return true;
     }
 
     float GetPolygonalArea(ref Vector2[] points)
@@ -273,7 +332,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
         Array.Sort(tempSort);
-        threshold = tempSort[(toReturn.Length -1)/2] * 0.85f;
+        threshold = tempSort[(toReturn.Length - 1) / 2] * 0.85f;
         Debug.Log("threshold: " + threshold);
 
         for (int i = 0; i < pixels.Length; i++)
@@ -297,10 +356,10 @@ public class IdentifyShadows : MonoBehaviour
         float[,] integralImage = new float[image.width, image.height];
 
         float sum;
-        for(int i = 0; i < image.width; ++i)
+        for (int i = 0; i < image.width; ++i)
         {
             sum = 0;
-            for(int j = 0; j < image.height; ++j)
+            for (int j = 0; j < image.height; ++j)
             {
                 sum += (image.GetPixel(i, j).r + image.GetPixel(i, j).g + image.GetPixel(i, j).b);
                 if (i == 0) integralImage[i, j] = sum;
@@ -323,7 +382,7 @@ public class IdentifyShadows : MonoBehaviour
                 if (y1 > 0) sum -= integralImage[x2, y1 - 1];
                 if (x1 > 0) sum -= integralImage[x1 - 1, y2];
                 if (x1 > 0 && y1 > 0) sum += integralImage[x1 - 1, y1 - 1];
-                if (curr <= (sum / ((x2 - x1) * (y2 - y1)) ) * thresholdConst) toReturn[image.width * j + i] = 255;
+                if (curr <= (sum / ((x2 - x1) * (y2 - y1))) * thresholdConst) toReturn[image.width * j + i] = 255;
                 else toReturn[image.width * j + i] = 0;
 
             }
@@ -332,10 +391,100 @@ public class IdentifyShadows : MonoBehaviour
         return toReturn;
     }
 
+    int[] ApplyContrastBasedGreyscaleFilter(Texture2D image, float baseline)
+    {
+        Color[] pixels = image.GetPixels();
+        int[] toReturn = new int[pixels.Length];
+        int[] lastRow = new int[image.width];
+        float[] lastVals = new float[image.width];
+        float brightThreshold = baseline * 1.75f;
+
+        for (int i = 0; i < image.width; ++i)
+        {
+            lastRow[i] = 0;
+            toReturn[i] = 0;
+            lastVals[i] = pixels[i].r + pixels[i].g + pixels[i].b;
+        }
+
+        float curr, last, last2;
+        int count = 0;
+        for (int i = image.width; i < pixels.Length; ++i)
+        {
+            curr = pixels[i].r + pixels[i].g + pixels[i].b;
+            last = lastVals[count];
+            last2 = (count > 0) ? lastVals[count - 1] : 0;
+
+            if (pixels[i].r > 0.98 && pixels[i].g < 0.02 && pixels[i].b > 0.9) //ANTISHADOW FLAG
+            {
+                toReturn[i] = 0;
+                lastVals[count] = -1;
+            }
+            else if (curr / brightThreshold > 0.95)
+            {
+                toReturn[i] = 0;
+                lastVals[count] = curr;
+            }
+            else if (count > 0 && lastRow[count - 1] == 1 && Mathf.Abs(curr - last2) < 0.1)
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+            }
+            else if (lastVals[count] != -1 && curr / last < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (lastVals[count] != -1 && last / brightThreshold > 0.8)))
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+            }
+            else if (lastVals[count] != -1 && curr / last < 0.7 && (Mathf.Abs(curr - baseline) > 0.6 || (lastVals[count] != -1 && last / brightThreshold > 0.6)))
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+            }
+            else if (last / curr < .35 && (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
+            {
+                toReturn[i] = 0;
+                lastVals[count] = curr;
+            }
+            else if (last / curr < .7 && (Mathf.Abs(last - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            {
+                toReturn[i] = 0;
+                lastVals[count] = curr;
+            } //
+            else if (lastVals[count] != -1 && count > 0 && curr / last2 < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (lastVals[count] != -1 && last2 / brightThreshold > 0.8)))
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+            }
+            else if (lastVals[count] != -1 && count > 0 && curr / last2 < 0.7 && (Mathf.Abs(curr - baseline) > 0.6 || (lastVals[count] != -1 && last2 / brightThreshold > 0.6)))
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+            }
+            else if (count > 0 && last2 / curr < .35 && (Mathf.Abs(last2 - baseline) > 0.4 || curr / brightThreshold > 0.8))
+            {
+                toReturn[i] = 0;
+                lastVals[count] = curr;
+            }
+            else if (count > 0 && last2 / curr < .7 && (Mathf.Abs(last2 - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            {
+                toReturn[i] = 0;
+                lastVals[count] = curr;
+            } //
+            else
+            {
+                toReturn[i] = lastRow[count];
+                lastVals[count] = curr;
+            }
+            lastRow[count] = toReturn[i];
+            if (++count >= image.width) count = 0;
+        }
+
+        return toReturn;
+    }
+
     Color[] GetImageReadyArray(int[] inpixels)
     {
         Color[] pixels = new Color[inpixels.Length];
-            
+
         for (int i = 0; i < pixels.Length; i++)
         {
             pixels[i] = new Color(inpixels[i], inpixels[i], inpixels[i]);
@@ -346,7 +495,7 @@ public class IdentifyShadows : MonoBehaviour
 
     void CreateImage(Color[] pixels, string fileName)
     {
-        Texture2D image = new Texture2D(resizeAmount * 3 * Screen.width / 4, resizeAmount * Screen.height, TextureFormat.RGB24, false);
+        Texture2D image = new Texture2D(3 * Screen.width / 4 / resizeAmount, Screen.height / resizeAmount);
         image.SetPixels(pixels);
         image.Apply();
         byte[] bytes = image.EncodeToPNG();

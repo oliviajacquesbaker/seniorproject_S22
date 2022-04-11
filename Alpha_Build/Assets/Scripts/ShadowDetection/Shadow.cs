@@ -52,7 +52,28 @@ public class Shadow
     public void Relabel(GameObject[] labelPrefabs)
     {
         if (contourPoints.Length == 2) label = ShadowType.sword;
-        else if (contourPoints.Length == 3) label = ShadowType.bow;
+        else if (contourPoints.Length == 3)
+        {
+            int yPos_0 = (int)contourPoints[0].y;
+            int xPos_0 = (int)contourPoints[0].x;
+            int yPos_1 = (int)contourPoints[1].y;
+            int xPos_1 = (int)contourPoints[1].x;
+            int yPos_2 = (int)contourPoints[2].y;
+            int xPos_2 = (int)contourPoints[2].x;
+
+            float side0 = Mathf.Sqrt(Mathf.Pow(xPos_1 - xPos_0, 2.0f) + Mathf.Pow(yPos_1 - yPos_0, 2.0f));
+            float side1 = Mathf.Sqrt(Mathf.Pow(xPos_2 - xPos_1, 2.0f) + Mathf.Pow(yPos_2 - yPos_1, 2.0f));
+            float side2 = Mathf.Sqrt(Mathf.Pow(xPos_0 - xPos_2, 2.0f) + Mathf.Pow(yPos_0 - yPos_2, 2.0f));
+
+            float largest = side0, smallest = side0;
+            if (side1 > largest) largest = side1;
+            if (side2 > largest) largest = side2;
+            if (side1 < smallest) smallest = side1;
+            if (side2 < smallest) smallest = side2;
+
+            if (smallest / largest < 0.15) label = ShadowType.sword;
+            else label = ShadowType.bow;
+        }
         else if (contourPoints.Length == 4)
         {
             int yPos_0 = (int)contourPoints[0].y;
@@ -71,16 +92,16 @@ public class Shadow
             float cross1 = (side0 + side2) / 2;
             float cross2 = (side1 + side3) / 2;
 
-            if (side0 / side2 > Mathf.Max(1.5f, 1.5f * 10 / cross1) || side2 / side0 > Mathf.Max(1.5f, 1.5f * 10 / cross1) || side1 / side3 > Mathf.Max(1.5f, 1.5f * 10 / cross2) || side3 / side1 > Mathf.Max(1.5f, 1.5f * 10 / cross2)) label = ShadowType.unknown;
+            if (side0 / side2 > Mathf.Max(1.5f, 1.5f * 15 / cross1) || side2 / side0 > Mathf.Max(1.5f, 1.5f * 15 / cross1) || side1 / side3 > Mathf.Max(1.5f, 1.5f * 15 / cross2) || side3 / side1 > Mathf.Max(1.5f, 1.5f * 15 / cross2)) label = ShadowType.unknown;
             else
             {
                 float ratio = cross1 / cross2;
-                if (ratio > 0.65 && ratio < 1.35) label = ShadowType.shield;
-                else if (ratio < 0.2 || ratio > 5) label = ShadowType.sword;
-                else label = ShadowType.unknown;
+                if (ratio > 0.5 && ratio < 1.55) label = ShadowType.shield;
+                else if (ratio < 0.15 || ratio >= 6) label = ShadowType.sword;
+                else { Debug.Log("bad ratio: " + ratio); label = ShadowType.unknown; }
             }
         }
-        else if(contourPoints.Length == 5)
+        else if (contourPoints.Length == 5)
         {
             int yPos_0 = (int)contourPoints[0].y;
             int xPos_0 = (int)contourPoints[0].x;
@@ -127,11 +148,12 @@ public class Shadow
                 dot1 = new Vector2(x1 - x0, y1 - y0);
                 dot = Vector2.Dot(dot1, dot2);
                 if (contourPoints.Length == 8) rectCheck.Add(dot1.normalized);
-                else if (dot < 0.5) {
+                else if (dot < 0.5)
+                {
                     //Debug.Log("BAD DOT");
-                    label = ShadowType.unknown; 
-                    CreateInGameLabel(labelPrefabs);  
-                    return; 
+                    label = ShadowType.unknown;
+                    CreateInGameLabel(labelPrefabs);
+                    return;
                 }
                 if (Mathf.Sign(slope) != Mathf.Sign(prevSlope)) dirChange++;
                 prevSlope = slope;

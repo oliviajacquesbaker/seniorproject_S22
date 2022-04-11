@@ -9,6 +9,8 @@ public class Manipulate : MonoBehaviour
 
     private GameObject heldObj;
     private GameObject tempObj;
+    [SerializeField]
+    IdentifyShadows shadowScript;
 
 
     private void OnTriggerEnter(Collider other)
@@ -83,6 +85,7 @@ public class Manipulate : MonoBehaviour
         heldRig.transform.parent = holdParent;
 
         heldObj.GetComponent<Collider>().enabled = false;
+        UpdateShadows();
     }
 
     void DropObject()
@@ -95,5 +98,12 @@ public class Manipulate : MonoBehaviour
 
         heldObj.transform.parent = null;
         heldObj = null;
+        UpdateShadows();
+    }
+
+    void UpdateShadows()
+    {
+        shadowScript.RemoveLabels();
+        shadowScript.DetectShadows();
     }
 }
