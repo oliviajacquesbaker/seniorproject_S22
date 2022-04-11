@@ -70,7 +70,7 @@ public class IdentifyShadows : MonoBehaviour
 
         int[] pixels = ApplyGreyscaleFilter(image);
         //int[] pixels = ApplyDynamicGreyscaleFilter(image);
-        //int[] pixels = ApplyAdaptiveGreyscaleFilter(image, 500, 0.83f);
+        //int[] pixels = ApplyAdaptiveGreyscaleFilter(image, 80, 0.83f);
 
         //CreateImage(image.GetPixels(), "BW_ShadowBlobs");
 
@@ -99,22 +99,23 @@ public class IdentifyShadows : MonoBehaviour
             Debug.Log("EXCEPTION: ");
             Debug.LogException(ex);
         }
-        //Debug.Log("FOUND " + numContours + " SHADOWS");
+        Debug.Log("FOUND " + numContours + " SHADOWS");
         int startInd = 0;
         for (int i = 0; i < numContours; ++i)
         {
             if (i > maxOutContours) break;
-            if(numVertsPerContour[i] > 0 && numVertsPerContour[i] > 2)
+            if(numVertsPerContour[i] > 0 && numVertsPerContour[i] >= 2)
             {
+                Debug.Log("num points: " + numVertsPerContour[i]);
                 Vector2[] pointsOrdered = ReorderContourPoints(ref outContours, startInd, numVertsPerContour[i]);
                 Vector2[] points = RemoveOutliers(ref pointsOrdered);
                 Shadow thisShadow = new Shadow(ShadowType.unknown, image.width, image.height, points);
-                if (thisShadow.largestSpannedDist < 100)
+                if (thisShadow.largestSpannedDist < 100 || numVertsPerContour[i] == 2 )
                 {
                     thisShadow.Relabel(labels);
                     shadows.Add(thisShadow);
                 }
-                //else Debug.Log("too large, " + thisShadow.largestSpannedDist);
+                else Debug.Log("too large, " + thisShadow.largestSpannedDist);
                 startInd += numVertsPerContour[i];
             }
         }
@@ -247,13 +248,13 @@ public class IdentifyShadows : MonoBehaviour
         int[] toReturn = new int[pixels.Length];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (pixels[i].r + pixels[i].g + pixels[i].b > 0.55)
+            if (pixels[i].r + pixels[i].g + pixels[i].b > .85)
             {
-                toReturn[i] = 0;
+                toReturn[i] = 255;
             }
             else
             {
-                toReturn[i] = 255;
+                toReturn[i] = 0;
             }
         }
         return toReturn;

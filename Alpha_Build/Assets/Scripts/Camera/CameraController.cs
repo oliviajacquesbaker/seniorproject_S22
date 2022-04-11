@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     public GameObject mainCamera;
     public GameObject aimCamera;
     public GameObject crosshair, targetCrosshair;
+    [SerializeField]
     private GameObject aimPoint;
     public ThirdPersonMovement playerSpeed;
     public float targetTurnVelocity;
@@ -31,7 +32,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (rope.isAimingHook)
+        if (rope && rope.isAimingHook)
         {
             activeCrosshair = targetCrosshair;
         }

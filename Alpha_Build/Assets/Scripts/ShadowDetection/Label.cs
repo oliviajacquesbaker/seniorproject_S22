@@ -68,7 +68,7 @@ public class Label : MonoBehaviour
 
     public void CollectShadow()
     {
-        objectCastingShadow.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        if(objectCastingShadow) objectCastingShadow.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         RemoveFromScene();
     }
 
