@@ -26,12 +26,12 @@ public class RopeCreator : MonoBehaviour
         //cam = player.GetComponent<CameraController>();
         controller = player.GetComponent<ThirdPersonMovement>();
         state = GameObject.Find("Main Camera").GetComponent<StateHandler>();
-        original = crosshair.GetComponent<Image>().color;
+        //        original = crosshair.GetComponent<Image>().color;
     }
 
     void Update()
     {
-        if (GameObject.Find("Inventory")) {return;}
+        if (GameObject.Find("Inventory")) { return; }
 
         CastRopeRaycast();
 
@@ -56,7 +56,7 @@ public class RopeCreator : MonoBehaviour
             //Debug.Log("Hitting" + hit.transform.gameObject.name);
             var selection = hit.transform;
             if (selection.gameObject.tag == "Hook")
-            {  
+            {
                 isAimingHook = true;
                 rope.snapFirst = true;
                 //ShowCrosshairIndicator();
@@ -97,7 +97,7 @@ public class RopeCreator : MonoBehaviour
     {
         cam.Aim();
         //player.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
-    } 
+    }
 
     void StopAimingRope()
     {

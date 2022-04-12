@@ -126,6 +126,7 @@ public class Bow : MonoBehaviour
             unaimed = false;
         }
 
+        RotatePlayer();
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
         //bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
