@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     private GameObject rope;
     private GameObject shield;
     private GameObject weapons;
-    private GameObject blur;
+    //private GameObject blur;
     private StateHandler state;
     public Animator anim;
 
@@ -43,12 +43,12 @@ public class Inventory : MonoBehaviour
         shield = GameObject.Find("Shield");
         inv = GameObject.Find("Inventory");
         state = Camera.main.GetComponent<StateHandler>();
-        blur = GameObject.Find("Background Blur");
+        //blur = GameObject.Find("Background Blur");
         InitInventory();
         anim = GameObject.Find("Player").GetComponent<Animator>();
 
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
-        //DebugSettings();
+        DebugSettings();
     }
 
     void Update()
@@ -63,7 +63,7 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyUp(hotkey))
         {
-            if(currMenuItem != -1) GiveItem();
+            if (currMenuItem != -1) GiveItem();
             CloseInventory();
         }
 
@@ -93,8 +93,8 @@ public class Inventory : MonoBehaviour
     void InitInventory()
     {
         InitWeapons();
-        
-        foreach(MenuButton button in buttons)
+
+        foreach (MenuButton button in buttons)
         {
             button.sceneImage.color = button.disabled;
         }
@@ -108,14 +108,14 @@ public class Inventory : MonoBehaviour
         numItems = buttons.Count;
         currMenuItem = 0;
         prevMenuItem = 0;
-        blur.SetActive(false);
+        //        blur.SetActive(false);
         bowEnabled = swordEnabled = ropeEnabled = shieldEnabled = false;
     }
 
     public void ShowInventory()
     {
         inv.SetActive(true);
-        blur.SetActive(true);
+        //        blur.SetActive(true);
         Time.timeScale = timeSlowRatio;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -123,7 +123,7 @@ public class Inventory : MonoBehaviour
     public void CloseInventory()
     {
         inv.SetActive(false);
-        blur.SetActive(false);
+        //        blur.SetActive(false);
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -141,11 +141,11 @@ public class Inventory : MonoBehaviour
 
         //Debug.Log(numItems);
         if (numItems > 0)
-            currMenuItem = (int) (angle / (360 / numItems));
+            currMenuItem = (int)(angle / (360 / numItems));
 
         if (currMenuItem != prevMenuItem)
         {
-            if(GetIntBasedEnabledStatus(prevMenuItem)) buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].normal;
+            if (GetIntBasedEnabledStatus(prevMenuItem)) buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].normal;
             else buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].disabled;
             prevMenuItem = currMenuItem;
             if (GetIntBasedEnabledStatus(currMenuItem)) buttons[currMenuItem].sceneImage.color = buttons[currMenuItem].highlighted;
@@ -196,29 +196,33 @@ public class Inventory : MonoBehaviour
         Debug.Log(item + "Collected and enabled!");
         Durability dur;
         int updated = -1;
-        if (item == ShadowType.sword) { 
+        if (item == ShadowType.sword)
+        {
             swordEnabled = true;
             dur = sword.GetComponent<Durability>();
-            if(dur) dur.currDurability = dur.maxDurability;
-            updated = 1; 
+            if (dur) dur.currDurability = dur.maxDurability;
+            updated = 1;
         }
-        else if (item == ShadowType.shield) { 
+        else if (item == ShadowType.shield)
+        {
             shieldEnabled = true;
             dur = shield.GetComponent<Durability>();
-            if(dur) dur.currDurability = dur.maxDurability;
-            updated = 3; 
+            if (dur) dur.currDurability = dur.maxDurability;
+            updated = 3;
         }
-        else if (item == ShadowType.rope) { 
-            ropeEnabled = true; 
+        else if (item == ShadowType.rope)
+        {
+            ropeEnabled = true;
             dur = rope.GetComponent<Durability>();
-            if(dur) dur.currDurability = dur.maxDurability;
-            updated = 2; 
+            if (dur) dur.currDurability = dur.maxDurability;
+            updated = 2;
         }
-        else if (item == ShadowType.bow) { 
-            bowEnabled = true; 
+        else if (item == ShadowType.bow)
+        {
+            bowEnabled = true;
             dur = bow.GetComponent<Durability>();
-            if(dur) dur.currDurability = dur.maxDurability;
-            updated = 0; 
+            if (dur) dur.currDurability = dur.maxDurability;
+            updated = 0;
         }
 
         if (updated != -1)
