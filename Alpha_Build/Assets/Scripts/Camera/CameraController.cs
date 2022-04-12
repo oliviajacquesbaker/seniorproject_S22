@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private RopeCreator rope;
     private GameObject activeCrosshair;
+    //private Quaternion originalRotation;
 
 
     void Start()
@@ -26,8 +27,9 @@ public class CameraController : MonoBehaviour
         playerSpeed = GameObject.Find("Player").GetComponent<ThirdPersonMovement>();
         initialTurnVelocity = playerSpeed.turnSmoothTime;
         GameObject.Find("Crosshair").SetActive(false);
-        if(GameObject.Find("Target Crosshair")) GameObject.Find("Target Crosshair").SetActive(false);
+        if (GameObject.Find("Target Crosshair")) GameObject.Find("Target Crosshair").SetActive(false);
         aimPoint = GameObject.Find("AimPoint");
+        //originalRotation = aimPoint.gameObject.transform.rotation;
     }
 
     void Update()
@@ -44,7 +46,7 @@ public class CameraController : MonoBehaviour
 
     public void Aim()
     {
-        playerSpeed.speed = 2f;
+        playerSpeed.enabled = false;
         playerSpeed.turnSmoothTime = targetTurnVelocity;
         //transform.LookAt(aimPoint.transform);
         aimPoint.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
@@ -56,8 +58,8 @@ public class CameraController : MonoBehaviour
     }
 
     public void StopAim()
-    {  
-        playerSpeed.speed = 10f;
+    {
+        playerSpeed.enabled = true;
         playerSpeed.turnSmoothTime = initialTurnVelocity;
         mainCamera.SetActive(true);
         aimCamera.SetActive(false);
@@ -65,6 +67,7 @@ public class CameraController : MonoBehaviour
         crosshair.SetActive(false);
         targetCrosshair.SetActive(false);
         activeCrosshair.SetActive(false);
+        aimPoint.transform.rotation = GameObject.Find("Follow Target").transform.rotation;
     }
 
     IEnumerator CamDelay(float seconds)

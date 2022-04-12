@@ -19,7 +19,7 @@ public class ThirdPersonMovement : MonoBehaviour
     AudioSource source;
 
     [SerializeField]
-    AudioClip step1,step2,step3,step4,step5;
+    AudioClip step1, step2, step3, step4, step5;
 
 
     void Start()
@@ -40,7 +40,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (direction.magnitude >= 0.1f)
         {
             float multiply = 1;
-            if (Input.GetKey(runkey) && !anim.GetBool("ShieldEnabled"))
+            if (Input.GetKey(runkey) && !anim.GetBool("ShieldEnabled") && enabled)
             {
                 multiply = 2.5f;
                 anim.SetBool("Running", true);
@@ -56,12 +56,12 @@ public class ThirdPersonMovement : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             if (enabled)
             {
                 transform.Translate(multiply * moveDirection * speed * Time.deltaTime, Space.World);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {

@@ -681,6 +681,36 @@ Transform:
   m_Father: {fileID: 379421933091018723}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &993020958073789602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1343254361027057371}
+  m_Layer: 0
+  m_Name: RopeSpherecast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1343254361027057371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993020958073789602}
+  m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8567615173557579950}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
 --- !u!1 &1106939719116390957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4810,21 +4840,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cde01d2bb03874eb2ebec456549456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   ropeObj: {fileID: 0}
   player: {fileID: 8802040602003360900}
   camTransf: {fileID: 0}
+  rope: {fileID: 0}
   keycode: 323
   turnSmoothTime: 0
   turnSmoothVelocity: 0
   ropeRange: 40
+  ropeRayRadius: 0
   controller: {fileID: 8567615172497437146}
   crosshair: {fileID: 0}
-  original:
-    serializedVersion: 2
-    rgba: 16777215
-  highlighted:
-    serializedVersion: 2
-    rgba: 233
+  aimPoint: {fileID: 0}
+  highlighted: {r: 0, g: 0, b: 0, a: 0}
+  isAimingHook: 0
 --- !u!1 &7621585711635307635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5681,6 +5711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 250
   holdParent: {fileID: 8395135340643542833}
+  shadowScript: {fileID: 0}
 --- !u!1 &8395135340546106914
 GameObject:
   m_ObjectHideFlags: 0
@@ -6147,7 +6178,8 @@ Transform:
   m_LocalRotation: {x: -0.000000029802315, y: 0.08032784, z: -0.00000001117587, w: -0.9967685}
   m_LocalPosition: {x: 0.51852566, y: 1.6391789, z: 0.8079443}
   m_LocalScale: {x: 1.1194026, y: 1.1194031, z: 1.1194029}
-  m_Children: []
+  m_Children:
+  - {fileID: 1343254361027057371}
   m_Father: {fileID: 8173173395228825150}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6406,6 +6438,8 @@ MonoBehaviour:
   spawn: {fileID: 8567615172322894593}
   arrowObj: {fileID: 964018137615635252, guid: fcc2da4b590684942bb5462c0ae326a9, type: 3}
   isAiming: 0
+  anim: {fileID: 0}
+  bowAnim: {fileID: 0}
   source: {fileID: 1072299222219545805}
   drawn: {fileID: 8300000, guid: 52e88c7ed2a29944ea799eaab374a611, type: 3}
   release: {fileID: 8300000, guid: d5a2c459bb3b5e74c86e9f809b579fb6, type: 3}
@@ -6806,8 +6840,11 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   aimCamera: {fileID: 0}
   crosshair: {fileID: 0}
+  targetCrosshair: {fileID: 0}
+  aimPoint: {fileID: 0}
   playerSpeed: {fileID: 8567615172497437146}
   targetTurnVelocity: 1.5
+  rope: {fileID: 0}
 --- !u!114 &8567615172497437146
 MonoBehaviour:
   m_ObjectHideFlags: 0
