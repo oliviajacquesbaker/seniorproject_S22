@@ -168,6 +168,11 @@ public class Patrol_Movement : MonoBehaviour
         patrolMob.isStopped = true;
     }
 
+    public bool IsDead()
+    {
+        return dead;
+    }
+
     public void FootStep()
     {
         int randChoice = Random.Range(1, 4);

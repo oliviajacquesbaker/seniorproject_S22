@@ -143,7 +143,7 @@ public class Inventory : MonoBehaviour
         if (numItems > 0)
             currMenuItem = (int)(angle / (360 / numItems));
 
-        if (currMenuItem != prevMenuItem)
+        if (currMenuItem != prevMenuItem && (prevMenuItem >= 0 && prevMenuItem <= 3) && (currMenuItem >= 0 && currMenuItem <= 3))
         {
             if (GetIntBasedEnabledStatus(prevMenuItem)) buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].normal;
             else buttons[prevMenuItem].sceneImage.color = buttons[prevMenuItem].disabled;
@@ -222,6 +222,51 @@ public class Inventory : MonoBehaviour
             bowEnabled = true;
             dur = bow.GetComponent<Durability>();
             if (dur) dur.currDurability = dur.maxDurability;
+            updated = 0;
+        }
+
+        if (updated != -1)
+        {
+            buttons[updated].sceneImage.color = buttons[updated].normal;
+            thumbnails[updated].SetActive(true);
+        }
+    }
+
+    public void DisableItem(ShadowType item)
+    {
+        Debug.Log(item + "Collected and enabled!");
+        Durability dur;
+        int updated = -1;
+        if (item == ShadowType.sword)
+        {
+            Debug.Log("Destroying sword");
+            swordEnabled = false;
+            playerStats.SetActiveTool("none");
+            sword.SetActive(false);
+            updated = 1;
+        }
+        else if (item == ShadowType.shield)
+        {
+            Debug.Log("Destroying shield");
+            shieldEnabled = false;
+            playerStats.SetActiveTool("none");
+            shield.SetActive(false);
+            updated = 3;
+        }
+        else if (item == ShadowType.rope)
+        {
+            Debug.Log("Destroying rope");
+            ropeEnabled = false;
+            playerStats.SetActiveTool("none");
+            rope.SetActive(false);
+            updated = 2;
+        }
+        else if (item == ShadowType.bow)
+        {
+            Debug.Log("Destroying bow");
+            bowEnabled = false;
+            playerStats.SetActiveTool("none");
+            bow.SetActive(false);
             updated = 0;
         }
 
