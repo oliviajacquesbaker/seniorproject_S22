@@ -140,7 +140,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
 
-        Color[] pixelsOut = imageResized.GetPixels();
+        /*Color[] pixelsOut = imageResized.GetPixels();
         for (int i = 0; i < numContours; ++i)
         {
             CvVertex[] pts = outContours;
@@ -204,7 +204,7 @@ public class IdentifyShadows : MonoBehaviour
                 }
             }
         }
-        CreateImage(pixelsOut, "ContourPoints_BW");
+        CreateImage(pixelsOut, "ContourPoints_BW");*/
     }
 
     Vector2[] ReorderContourPoints(ref CvVertex[] contours, int startingInd, int size)

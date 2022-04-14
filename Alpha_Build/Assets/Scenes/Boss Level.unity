@@ -5441,7 +5441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostedLight: {fileID: 950995231}
-  maxBoostAmount: 0.2
+  maxBoostAmount: 0.4
   deadMat: {fileID: 2100000, guid: ca41b36c5eed1f642b3097ef2810a2d9, type: 2}
   animator: {fileID: 723578160}
 --- !u!1 &1971067932
@@ -11017,7 +11017,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832149484872183967}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43f7d1a7aa3d5184282e9e54bd9f6799, type: 3}
   m_Name: 
