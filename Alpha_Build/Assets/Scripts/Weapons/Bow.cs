@@ -20,7 +20,7 @@ public class Bow : MonoBehaviour
     private GameObject Player;
     private GameObject bullet;
     private ThirdPersonMovement playerSpeed;
-    private CinemachineFreeLook cam; 
+    private CinemachineFreeLook cam;
     //public float maxRotation;
     //public float minRotation;
     private float currentBowRotation;
@@ -44,8 +44,10 @@ public class Bow : MonoBehaviour
     AudioClip drawn, release;
 
     bool draw = false;
+    public Transform aimPoint;
+    float currentHitDistance;
+    public LayerMask layerMask;
 
-    
     void Start()
     {
         Player = GameObject.Find("Player");
@@ -63,16 +65,17 @@ public class Bow : MonoBehaviour
         camController = Player.GetComponent<CameraController>();
         playerRB = Player.GetComponent<Rigidbody>();
         unaimed = true;
+        currentHitDistance = 100f;
     }
 
     void Update()
     {
         if (!state.InvOpen()) // check if inventory is not open
-        {         
+        {
             if (Input.GetKey(fireButton))
             {
                 Aim();
-                
+
                 if (_charge < chargeMax)
                 {
                     ChargeBow();
@@ -103,7 +106,7 @@ public class Bow : MonoBehaviour
 
         anim.SetTrigger("ReleaseArrow");
         bowAnim.SetTrigger("ReleaseArrow");
-        Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
+        Rigidbody arrow = Instantiate(arrowObj, spawn.transform.position, spawn.transform.rotation * Quaternion.Euler(270f, 0f, 0f)) as Rigidbody;
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
         durability.currDurability -= fireDecay;
@@ -128,6 +131,8 @@ public class Bow : MonoBehaviour
 
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
+        spawn.transform.Rotate(Input.GetAxis("Mouse Y") * -1f, 0.0f, 0.0f);
+        CastAimRay();
         //bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
     }
 
@@ -135,6 +140,7 @@ public class Bow : MonoBehaviour
     {
         bowAnim.SetTrigger("ReleaseArrow");
         anim.SetBool("PutDownBow", true);
+        spawn.transform.rotation = GameObject.Find("Follow Target").transform.rotation;
         camController.StopAim();
         unaimed = true;
     }
@@ -144,6 +150,39 @@ public class Bow : MonoBehaviour
         Player.transform.localEulerAngles = new Vector3(Player.transform.rotation.x, cam.m_XAxis.Value, Player.transform.rotation.z);
     }
 
+    void CastAimRay()
+    {
+        RaycastHit hit;
+        //float range = 100f;
+
+        if (Physics.SphereCast(aimPoint.transform.position, 0.5f, aimPoint.transform.forward, out hit, 50f, layerMask))
+        {
+            Debug.Log("Aiming at " + hit.transform.gameObject.name);
+            var objectHit = hit.transform.gameObject;
+            currentHitDistance = hit.distance;
+            if (hit.transform.gameObject.GetComponent<_AIStats>())
+            {
+                camController.ToggleTargetCrosshair();
+                Debug.Log("Aiming at enemy");
+                Player.transform.LookAt(objectHit.transform);
+            }
+            else
+            {
+                camController.ToggleNormalCrosshair();
+            }
+        }
+        else
+        {
+            currentHitDistance = 100;
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Debug.DrawLine(aimPoint.transform.position, aimPoint.transform.position + aimPoint.transform.forward * currentHitDistance, Color.green);
+        Gizmos.DrawWireSphere(aimPoint.transform.position + aimPoint.transform.forward * currentHitDistance, 0.5f);
+    }
     // IEnumerator CrosshairDelay(float seconds)
     // {
     //     yield return new WaitForSeconds(seconds);

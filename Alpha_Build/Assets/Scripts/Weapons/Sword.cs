@@ -44,13 +44,14 @@ public class Sword : MonoBehaviour
 
             PlaySoundClip();
         }
-        if(!coroutineStarted && attacking) StartCoroutine(AllowAttack());
+        if (!coroutineStarted && attacking) StartCoroutine(AllowAttack());
         else if (coroutineStarted && Time.frameCount - frameStarted > 60) StartCoroutine(AllowAttack()); //the above section gets disturbed when players use menus
     }
 
     void PlaySoundClip()
     {
-        switch (clipCounter){
+        switch (clipCounter)
+        {
             case 1:
                 source.clip = sword1;
                 break;
@@ -62,7 +63,7 @@ public class Sword : MonoBehaviour
                 break;
         }
         clipCounter++;
-        if(clipCounter == 4)
+        if (clipCounter == 4)
         {
             clipCounter = 1;
         }
@@ -85,19 +86,19 @@ public class Sword : MonoBehaviour
     {
         if (attacking) return;
         attacked++;
-        durability.currDurability -= 8;
+        //durability.currDurability -= 8;
         attacking = true;
         //add animation here
         anim.SetTrigger("SwordAttack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
-        foreach(Collider enemy in hitEnemies)
+        foreach (Collider enemy in hitEnemies)
         {
-            
+
             if (enemy.GetComponent<_AIStatsController>())
             {
-                Debug.Log(attacked + ": Hit enemy " + enemy.name);
+                Debug.Log(attacked + ": Hit enemy stats" + enemy.name);
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
                 int additionalDmg = 0;
                 if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")

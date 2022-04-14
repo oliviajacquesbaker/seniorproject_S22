@@ -43,7 +43,7 @@ public class RopeClimb : MonoBehaviour
     {
         Collider[] hit = Physics.OverlapSphere(player.transform.position, checkRadius, ropeLayers);
 
-        foreach(Collider rope in hit)
+        foreach (Collider rope in hit)
         {
             if (rope.GetComponent<CharacterJoint>())
             {
@@ -62,7 +62,7 @@ public class RopeClimb : MonoBehaviour
 
         isClimbing = !isClimbing;
         controller.enabled = !controller.enabled;
-        player.GetComponent<Rigidbody>().useGravity = !player.GetComponent<Rigidbody>().useGravity;
+        //        player.GetComponent<Rigidbody>().useGravity = !player.GetComponent<Rigidbody>().useGravity;
     }
 
     void ClimbRope()
@@ -84,7 +84,7 @@ public class RopeClimb : MonoBehaviour
                 triggered = true;
             }
 
-            if(!triggered) blobAnim.SetBool("Climbing", false);
+            if (!triggered) blobAnim.SetBool("Climbing", false);
         }
     }
 

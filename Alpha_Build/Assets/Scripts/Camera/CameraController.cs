@@ -36,19 +36,29 @@ public class CameraController : MonoBehaviour
     {
         if (rope && rope.isAimingHook)
         {
-            activeCrosshair = targetCrosshair;
+            ToggleTargetCrosshair();
         }
         else
         {
-            activeCrosshair = crosshair;
+            ToggleNormalCrosshair();
         }
+    }
+
+    public void ToggleTargetCrosshair()
+    {
+        activeCrosshair = targetCrosshair;
+    }
+
+    public void ToggleNormalCrosshair()
+    {
+        activeCrosshair = crosshair;
     }
 
     public void Aim()
     {
         playerSpeed.enabled = false;
         playerSpeed.turnSmoothTime = targetTurnVelocity;
-        //transform.LookAt(aimPoint.transform);
+        //transform.LookAt(GameObject.Find("ArrowSpawnPoint").transform);
         aimPoint.transform.Rotate(Input.GetAxis("Mouse Y") * -1, Input.GetAxis("Mouse X"), 0.0f, Space.Self);
         mainCamera.SetActive(false);
         aimCamera.SetActive(true);
