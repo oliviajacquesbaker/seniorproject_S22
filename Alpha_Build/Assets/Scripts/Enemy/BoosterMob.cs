@@ -18,16 +18,16 @@ public class BoosterMob : MonoBehaviour
     private float downMod;
     private bool up = false, flare = false;
     private bool active = true;
-    private Animator animator;
+    public Animator animator;
 
     void Start()
     {
-        animator = gameObject.GetComponentInParent<Animator>();
+        if(!animator) animator = gameObject.GetComponentInParent<Animator>();
         materials = gameObject.GetComponent<Renderer>().materials;
         initIntensity = boostedLight.intensity;
         initRange = boostedLight.range;
         minBoostAmount = initIntensity + (maxBoostAmount / 2.5f);
-        increment = maxBoostAmount / (initIntensity * 70);
+        increment = maxBoostAmount / (initIntensity * 700);
         downMod = -0.6f;
         BoostLight(maxBoostAmount);
     }

@@ -71,7 +71,8 @@ public class Shadow
             if (side1 < smallest) smallest = side1;
             if (side2 < smallest) smallest = side2;
 
-            if (smallest / largest < 0.15) label = ShadowType.sword;
+            if (smallest / largest < 0.25) label = ShadowType.sword;
+            else if(Vector3.Angle(contourPoints[1]-contourPoints[0], contourPoints[2] - contourPoints[0]) < 15 || Vector3.Angle(contourPoints[0] - contourPoints[1], contourPoints[2] - contourPoints[1]) < 15 || Vector3.Angle(contourPoints[1] - contourPoints[2], contourPoints[0] - contourPoints[2]) < 15) label = ShadowType.sword;
             else label = ShadowType.bow;
         }
         else if (contourPoints.Length == 4)
@@ -96,8 +97,8 @@ public class Shadow
             else
             {
                 float ratio = cross1 / cross2;
-                if (ratio > 0.5 && ratio < 1.55) label = ShadowType.shield;
-                else if (ratio < 0.15 || ratio >= 6) label = ShadowType.sword;
+                if (ratio >= 0.35 && ratio < 2) label = ShadowType.shield;
+                else if (ratio < 0.35 || ratio >= 2) label = ShadowType.sword;
                 else { Debug.Log("bad ratio: " + ratio); label = ShadowType.unknown; }
             }
         }
