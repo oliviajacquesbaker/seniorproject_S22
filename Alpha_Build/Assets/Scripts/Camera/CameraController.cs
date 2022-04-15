@@ -46,11 +46,15 @@ public class CameraController : MonoBehaviour
 
     public void ToggleTargetCrosshair()
     {
+        crosshair.SetActive(false);
+        targetCrosshair.SetActive(true);
         activeCrosshair = targetCrosshair;
     }
 
     public void ToggleNormalCrosshair()
     {
+        //crosshair.SetActive(true);
+        targetCrosshair.SetActive(false);
         activeCrosshair = crosshair;
     }
 

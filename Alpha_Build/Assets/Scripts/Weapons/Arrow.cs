@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    
+
     public int damage;
     public float destroyTimer;
     private Rigidbody rigidbody;
+    private bool hit = false;
 
     void Start()
     {
@@ -17,6 +18,8 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
+        if (hit) return;
+
         if (col.gameObject.GetComponent<_AIStatsController>())
         {
             int additionalDmg = 0;
@@ -30,6 +33,7 @@ public class Arrow : MonoBehaviour
             Debug.Log("Hit enemy!");
 
             transform.parent = col.transform;
+            hit = true;
             //Destroy(gameObject);
         }
 
@@ -42,6 +46,7 @@ public class Arrow : MonoBehaviour
                 if (GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>().isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
             }
             stats.statsController.DetractHealth(damage + additionalDmg, true);
+            hit = true;
         }
 
         if (!col.isTrigger)
@@ -49,6 +54,12 @@ public class Arrow : MonoBehaviour
             rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
 
+        Invoke("Destroy", 1f);
+    }
+
+    void Destroy()
+    {
+        Destroy(gameObject);
     }
 
 }
