@@ -15,7 +15,7 @@ public class Manipulate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Rigidbody>())
+        if (other.GetComponent<Rigidbody>() && other.gameObject.layer != 5) //dont pick up the shadow labels on the UI layer lol
         {
             tempObj = other.transform.gameObject;
         }
@@ -23,7 +23,7 @@ public class Manipulate : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        tempObj = null;
+        if(other != null && other.name == tempObj.name) tempObj = null;
     }
 
 
@@ -86,6 +86,7 @@ public class Manipulate : MonoBehaviour
 
         heldObj.GetComponent<Collider>().enabled = false;
         UpdateShadows();
+        shadowScript.holdingItem = true;
     }
 
     void DropObject()
@@ -99,6 +100,7 @@ public class Manipulate : MonoBehaviour
         heldObj.transform.parent = null;
         heldObj = null;
         UpdateShadows();
+        shadowScript.holdingItem = false;
     }
 
     void UpdateShadows()

@@ -24,10 +24,16 @@ public class Boss : MonoBehaviour
     [SerializeField]
     SwapMaterial swapMat;
     [SerializeField]
+
+    Light pointInner;
+    [SerializeField]
+    Light pointOut;
+
     private float projSpeed;
     [SerializeField]
     private Projectile projectilePrefab;
     public GameObject spawnPoint;
+
 
     void Start()
     {
@@ -37,7 +43,11 @@ public class Boss : MonoBehaviour
         timeSinceLastAttack = attackCooldown / 2f;
         colliders = GetComponentsInChildren<Collider>();
         renderer = GetComponentsInChildren<MeshRenderer>();
+
+        //original = renderer[0].material.color;
+
         //        original = renderer[0].material.color;
+
         rightHand = true;
         //spawnPoint = GameObject.Find("ProjectileSpawn");
     }
@@ -98,13 +108,13 @@ public class Boss : MonoBehaviour
         isAttacking = true;
 
         Vector3 dist = player.transform.position - transform.position;
-        if (dist.magnitude < 11) anim.SetBool("BH_Close", true);
-        else if (dist.magnitude < 18)
+        if (dist.magnitude < 6) anim.SetBool("BH_Close", true);
+        else if(dist.magnitude < 9)
         {
             if (rightHand) anim.SetBool("RH_Mid", true);
             else anim.SetBool("LH_Mid", true);
         }
-        else if (dist.magnitude < 23)
+        else if (dist.magnitude < 13)
         {
             if (rightHand) anim.SetBool("RH_Far", true);
             else anim.SetBool("LH_Far", true);
@@ -271,6 +281,8 @@ public class Boss : MonoBehaviour
     public void OnDeath()
     {
         dead = true;
+        pointInner.gameObject.SetActive(false);
+        pointOut.gameObject.SetActive(false);
         anim.SetTrigger("Die");
     }
 }

@@ -16,20 +16,31 @@ public class IdentifyShadows : MonoBehaviour
     [SerializeField]
     GameObject[] labels = new GameObject[5];
 
+    [SerializeField]
+    int level = 0;
+    public float lenient;
+    public float basenum;
+    public bool holdingItem;
+
     List<Shadow> shadows;
-    //Pixel[] BW;
     ShadowType currAvailShadow;
     Vector3 pastPos;
 
     void Start()
     {
         pastPos = this.gameObject.transform.position;
+        lenient = (level == 2) ? 0.8f : 0.7f;
+        basenum = (level == 2) ? 1.2f : 0.75f;
+        basenum = 0.75f;
+
+        holdingItem = false;
         DetectShadows();
         //Debug.Log("STARTED");
     }
 
     void Update()
     {
+        if (holdingItem) return;
         float dist = Vector3.Distance(this.gameObject.transform.position, pastPos);
         //Debug.Log(dist);
         if (dist > 5)
@@ -73,7 +84,7 @@ public class IdentifyShadows : MonoBehaviour
         //int[] pixels = ApplyGreyscaleFilter(imageResized);
         //int[] pixels = ApplyDynamicGreyscaleFilter(imageResized);
         //int[] pixels = ApplyAdaptiveGreyscaleFilter(imageResized, 80, 0.83f);
-        int[] pixels = ApplyContrastBasedGreyscaleFilter(imageResized, 0.75f);
+        int[] pixels = ApplyContrastBasedGreyscaleFilter(imageResized, basenum);
         //Debug.Log(pixels.Length);
 
         //CreateImage(image.GetPixels(), "BW_ShadowBlobs");
@@ -397,12 +408,14 @@ public class IdentifyShadows : MonoBehaviour
         int[] toReturn = new int[pixels.Length];
         int[] lastRow = new int[image.width];
         float[] lastVals = new float[image.width];
+        int[] flags = new int[image.width];
         float brightThreshold = baseline * 1.75f;
 
         for (int i = 0; i < image.width; ++i)
         {
             lastRow[i] = 0;
             toReturn[i] = 0;
+            flags[i] = 0;
             lastVals[i] = pixels[i].r + pixels[i].g + pixels[i].b;
         }
 
@@ -413,67 +426,91 @@ public class IdentifyShadows : MonoBehaviour
             curr = pixels[i].r + pixels[i].g + pixels[i].b;
             last = lastVals[count];
             last2 = (count > 0) ? lastVals[count - 1] : 0;
+            //Debug.Log(curr);
+            //if(curr/last < 1 || curr/last2 < 1) Debug.Log(curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
 
             if (pixels[i].r > 0.98 && pixels[i].g < 0.02 && pixels[i].b > 0.9) //ANTISHADOW FLAG
             {
                 toReturn[i] = 0;
-                lastVals[count] = -1;
+                flags[count] = 1;
             }
             else if (curr / brightThreshold > 0.95)
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
+                flags[count] = 0;
+            }
+            else if ((flags[count] == 1 || (count > 0 && flags[count-1] == 1)) && curr/lastVals[count] < lenient)
+            {
+                toReturn[i] = 1;
+                lastVals[count] = curr;
+                flags[count] = 0;
             }
             else if (count > 0 && lastRow[count - 1] == 1 && Mathf.Abs(curr - last2) < 0.1)
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
-            else if (lastVals[count] != -1 && curr / last < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (lastVals[count] != -1 && last / brightThreshold > 0.8)))
+            else if (flags[count] != 1 && curr / last < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (last / brightThreshold > 0.8)))
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
-            else if (lastVals[count] != -1 && curr / last < 0.7 && (Mathf.Abs(curr - baseline) > 0.6 || (lastVals[count] != -1 && last / brightThreshold > 0.6)))
+            else if (flags[count] != 1 && curr / last < lenient && (Mathf.Abs(curr - baseline) > 0.6 || (last / brightThreshold > 0.6)))
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
             else if (last / curr < .35 && (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
-            else if (last / curr < .7 && (Mathf.Abs(last - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            else if (last / curr < lenient && (Mathf.Abs(last - baseline) > 0.6 || curr / brightThreshold > 0.6))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
+                flags[count] = 0;
             } //
-            else if (lastVals[count] != -1 && count > 0 && curr / last2 < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (lastVals[count] != -1 && last2 / brightThreshold > 0.8)))
+            else if (count > 0 && flags[count-1] != 1 && curr / last2 < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (last2 / brightThreshold > 0.8)))
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
-            else if (lastVals[count] != -1 && count > 0 && curr / last2 < 0.7 && (Mathf.Abs(curr - baseline) > 0.6 || (lastVals[count] != -1 && last2 / brightThreshold > 0.6)))
+            else if (count > 0 && flags[count - 1] != 1 && curr / last2 < lenient && (Mathf.Abs(curr - baseline) > 0.6 || (last2 / brightThreshold > 0.6)))
             {
+                //Debug.Log("THIS ONE: " + curr/last2 + " , " + (curr-baseline) + " , " + (last2 / brightThreshold));
                 toReturn[i] = 1;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
             else if (count > 0 && last2 / curr < .35 && (Mathf.Abs(last2 - baseline) > 0.4 || curr / brightThreshold > 0.8))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
-            else if (count > 0 && last2 / curr < .7 && (Mathf.Abs(last2 - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            else if (count > 0 && last2 / curr < lenient && (Mathf.Abs(last2 - baseline) > 0.6 || curr / brightThreshold > 0.6))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
+                flags[count] = 0;
             } //
             else
             {
                 toReturn[i] = lastRow[count];
                 lastVals[count] = curr;
+                flags[count] = 0;
             }
+
+            //if(toReturn[i] == 1) Debug.Log(last / curr + " , " + last2 / curr + " , " + (last - baseline) + " , " + (curr / brightThreshold) );
+
+
             lastRow[count] = toReturn[i];
             if (++count >= image.width) count = 0;
         }
