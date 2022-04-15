@@ -12,6 +12,7 @@ public class Shield : MonoBehaviour
     public Animator anim;
     public KeyCode shieldButton;
     bool currentlyRaised;
+    public GameObject shieldAura;
 
     void Start()
     {
@@ -28,12 +29,14 @@ public class Shield : MonoBehaviour
         {
             RaiseShield();
             playerStatsController.dmgModifier = damageReduction;
+            shieldAura.SetActive(true);
         }
 
         if (Input.GetKeyUp(shieldButton))
         {
             LowerShield();
             playerStatsController.dmgModifier = 1.0f;
+            shieldAura.SetActive(false);
         }
         if (currentlyRaised && playerStatsController.GetPerceivedIntensity() > 0.15)
         {

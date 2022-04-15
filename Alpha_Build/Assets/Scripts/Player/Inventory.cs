@@ -33,6 +33,7 @@ public class Inventory : MonoBehaviour
     private bool bowEnabled, swordEnabled, ropeEnabled, shieldEnabled;
 
     private _PlayerStats playerStats;
+    private _PlayerStatsController playerStatsController;
 
     void Start()
     {
@@ -46,7 +47,7 @@ public class Inventory : MonoBehaviour
         //blur = GameObject.Find("Background Blur");
         InitInventory();
         anim = GameObject.Find("Player").GetComponent<Animator>();
-
+        playerStatsController = GameObject.Find("Player").GetComponent<_PlayerStatsController>();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
         DebugSettings();
     }
@@ -251,6 +252,7 @@ public class Inventory : MonoBehaviour
             shieldEnabled = false;
             playerStats.SetActiveTool("none");
             shield.SetActive(false);
+            playerStatsController.dmgModifier = 1f; // reset dmg modifier if shield was up when it was destroyed
             updated = 3;
         }
         else if (item == ShadowType.rope)
@@ -308,6 +310,7 @@ public class Inventory : MonoBehaviour
 
     public void GiveShield()
     {
+        //if (currWeapon.gameObject.name != "Sword")
         currWeapon.SetActive(false);
         shield.SetActive(true);
         currWeapon = shield;
