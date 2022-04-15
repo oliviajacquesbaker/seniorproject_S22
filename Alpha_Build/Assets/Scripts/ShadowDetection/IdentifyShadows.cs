@@ -18,8 +18,9 @@ public class IdentifyShadows : MonoBehaviour
 
     [SerializeField]
     int level = 0;
-    public float lenient;
-    public float basenum;
+    float lenient;
+    float basenum;
+    float strictness;
     public bool holdingItem;
 
     List<Shadow> shadows;
@@ -30,7 +31,8 @@ public class IdentifyShadows : MonoBehaviour
     {
         pastPos = this.gameObject.transform.position;
         lenient = (level == 2) ? 0.8f : 0.7f;
-        basenum = (level == 2) ? 1.2f : 0.75f;
+        basenum = (level == 0) ? 0.7f : 0.75f;
+        strictness = (level == 2) ? 0.04f : 0.03f;
         basenum = 0.75f;
 
         holdingItem = false;
@@ -104,7 +106,7 @@ public class IdentifyShadows : MonoBehaviour
                     fixed (CvVertex* _outContours = outContours)
                     {
                         //Debug.Log("stand in");
-                        OpenCVInterop.DetectContours(_outContours, _numVertsPerContour, ref numContours, _pixels, imageResized.height, imageResized.width, maxOutContours, maxVertsPerContour);
+                        OpenCVInterop.DetectContours(_outContours, _numVertsPerContour, ref numContours, _pixels, imageResized.height, imageResized.width, maxOutContours, maxVertsPerContour, strictness);
                     }
                 }
             }
@@ -140,7 +142,7 @@ public class IdentifyShadows : MonoBehaviour
         }
 
 
-        /*Color[] pixelsOut = imageResized.GetPixels();
+        Color[] pixelsOut = imageResized.GetPixels();
         for (int i = 0; i < numContours; ++i)
         {
             CvVertex[] pts = outContours;
@@ -204,7 +206,7 @@ public class IdentifyShadows : MonoBehaviour
                 }
             }
         }
-        CreateImage(pixelsOut, "ContourPoints_BW");*/
+        CreateImage(pixelsOut, "ContourPoints_BW");
     }
 
     Vector2[] ReorderContourPoints(ref CvVertex[] contours, int startingInd, int size)
@@ -228,19 +230,24 @@ public class IdentifyShadows : MonoBehaviour
 
     Vector2[] RemoveOutliers(ref Vector2[] points)
     {
-        if (points.Length != 5) return points;
+        if (points.Length != 5 && points.Length != 6) return points;
         int outInd = -1;
+        int closeInd = -1;
         int prev, next;
-        double area, minArea;
-        minArea = GetPolygonalArea(ref points) / 20;
+        double area, minArea, dist;
+        minArea = GetPolygonalArea(ref points) / 30;
         for (int i = 0; i < points.Length; ++i)
         {
             prev = (i - 1) % points.Length;
             if (prev < 0) prev += points.Length;
             next = (i + 1) % points.Length;
+            dist = Vector2.Distance(points[i], points[prev]);
+            Debug.Log(dist);
+            if (dist < 3) closeInd = i;
             area = (points[prev].x * points[i].y + points[i].x * points[next].y + points[next].x * points[prev].y - points[prev].y * points[i].x - points[i].y * points[next].x - points[next].y * points[prev].x) / 2.0;
             if (area < minArea)
             {
+                Debug.Log(area + " and min " + minArea);
                 int j = (i + 2) % points.Length;
                 int k = (i - 2) % points.Length;
                 if (k < 0) k += points.Length;
@@ -251,14 +258,14 @@ public class IdentifyShadows : MonoBehaviour
             }
         }
 
-        if (outInd == -1) return points;
+        if (outInd == -1 && closeInd == -1) return points;
         else
         {
             Vector2[] updatedPoints = new Vector2[points.Length - 1];
             int j = 0;
             for (int i = 0; i < points.Length; ++i)
             {
-                if (i != outInd) { updatedPoints[j] = points[i]; ++j; }
+                if (i != outInd && i != closeInd) { updatedPoints[j] = points[i]; ++j; }
 
             }
             return updatedPoints;
@@ -427,7 +434,13 @@ public class IdentifyShadows : MonoBehaviour
             last = lastVals[count];
             last2 = (count > 0) ? lastVals[count - 1] : 0;
             //Debug.Log(curr);
-            //if(curr/last < 1 || curr/last2 < 1) Debug.Log(curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
+            //if(curr/last < 1 || curr/last2 < 1) 
+            //Debug.Log(curr + ", " + last + ", " + curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
+
+            if(curr/last < 0.7)
+            {
+                Debug.Log(i);
+            }
 
             if (pixels[i].r > 0.98 && pixels[i].g < 0.02 && pixels[i].b > 0.9) //ANTISHADOW FLAG
             {
@@ -464,13 +477,13 @@ public class IdentifyShadows : MonoBehaviour
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if (last / curr < .35 && (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
+            else if (last / curr < .35 )//&& (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if (last / curr < lenient && (Mathf.Abs(last - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            else if (last / curr < lenient)// && (Mathf.Abs(last - baseline) > 0.6 || curr / brightThreshold > 0.6))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
@@ -489,13 +502,13 @@ public class IdentifyShadows : MonoBehaviour
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if (count > 0 && last2 / curr < .35 && (Mathf.Abs(last2 - baseline) > 0.4 || curr / brightThreshold > 0.8))
+            else if (count > 0 && last2 / curr < .35)// && (Mathf.Abs(last2 - baseline) > 0.4 || curr / brightThreshold > 0.8))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if (count > 0 && last2 / curr < lenient && (Mathf.Abs(last2 - baseline) > 0.6 || curr / brightThreshold > 0.6))
+            else if (count > 0 && last2 / curr < lenient)// && (Mathf.Abs(last2 - baseline) > 0.6 || curr / brightThreshold > 0.6))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
@@ -544,7 +557,7 @@ public class IdentifyShadows : MonoBehaviour
 internal static class OpenCVInterop
 {
     [DllImport("openCVPlugin", EntryPoint = "DetectContours")]
-    internal unsafe static extern void DetectContours(CvVertex* outContours, int* numVertsPerContour, ref int numContours, int* pixelsIn, int imageHeight, int imageWidth, int maxOutContours, int maxVertsPerContour);
+    internal unsafe static extern void DetectContours(CvVertex* outContours, int* numVertsPerContour, ref int numContours, int* pixelsIn, int imageHeight, int imageWidth, int maxOutContours, int maxVertsPerContour, float strictness);
 }
 
 // Size =  byte size (2 ints = 4 bytes * 2 = 8 bytes)
