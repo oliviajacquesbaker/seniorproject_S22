@@ -97,8 +97,8 @@ public class Shadow
             else
             {
                 float ratio = cross1 / cross2;
-                if (ratio >= 0.35 && ratio < 2) label = ShadowType.shield;
-                else if (ratio < 0.35 || ratio >= 2) label = ShadowType.sword;
+                if (ratio >= 0.5 && ratio < 2) label = ShadowType.shield;
+                else if (ratio < 0.5 || ratio >= 2) label = ShadowType.sword;
                 else { Debug.Log("bad ratio: " + ratio); label = ShadowType.unknown; }
             }
         }

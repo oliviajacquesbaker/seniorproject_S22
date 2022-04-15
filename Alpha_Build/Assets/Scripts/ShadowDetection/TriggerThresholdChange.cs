@@ -12,6 +12,8 @@ public class TriggerThresholdChange : MonoBehaviour
     float adjusted;
 
     [SerializeField]
+    List<GameObject> originalAntiShadow;
+    [SerializeField]
     List<GameObject> adjustedAntiShadow;
 
     bool originalActive;
@@ -32,6 +34,13 @@ public class TriggerThresholdChange : MonoBehaviour
                 if (originalActive) anti.SetActive(true);
                 else anti.SetActive(false);
             }
+
+            foreach (GameObject anti in originalAntiShadow)
+            {
+                if (originalActive) anti.SetActive(false);
+                else anti.SetActive(true);
+            }
+
             originalActive = !originalActive;
         }
     }
