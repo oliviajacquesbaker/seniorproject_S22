@@ -4883,6 +4883,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   isAimingHook: 0
+  isAimingRope: 0
 --- !u!1 &7621585711635307635
 GameObject:
   m_ObjectHideFlags: 0
@@ -6434,7 +6435,7 @@ MonoBehaviour:
   targetTurnVelocity: 1.5
   fireDecay: 5
   fireButton: 323
-  spawn: {fileID: 0}
+  spawn: {fileID: 7218879144666247994}
   arrowObj: {fileID: 964018137615635252, guid: fcc2da4b590684942bb5462c0ae326a9, type: 3}
   isAiming: 0
   anim: {fileID: 0}
@@ -6442,10 +6443,10 @@ MonoBehaviour:
   source: {fileID: 1072299222219545805}
   drawn: {fileID: 8300000, guid: 52e88c7ed2a29944ea799eaab374a611, type: 3}
   release: {fileID: 8300000, guid: d5a2c459bb3b5e74c86e9f809b579fb6, type: 3}
-  aimPoint: {fileID: 0}
+  aimPoint: {fileID: 8567615173557579950}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
 --- !u!114 &8567615173382013382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6704,7 +6705,6 @@ GameObject:
   - component: {fileID: 8567615172497437148}
   - component: {fileID: 8567615172497437149}
   - component: {fileID: 8567615172497437146}
-  - component: {fileID: 8802040602003360901}
   - component: {fileID: 9084057245164831938}
   - component: {fileID: 1571651342170300658}
   m_Layer: 0
@@ -6871,26 +6871,13 @@ MonoBehaviour:
   anim: {fileID: 2849895874445986884}
   runkey: 304
   isGrounded: 0
+  gravityEnabled: 0
   source: {fileID: 3706303666803157597}
   step1: {fileID: 8300000, guid: a4c0047691c884344be62af7eac26604, type: 3}
   step2: {fileID: 8300000, guid: 2f6fea7c9e30f8b4fb9e9307514cd4c0, type: 3}
   step3: {fileID: 8300000, guid: 81edc85ab988b48429b355836a7fa4c0, type: 3}
   step4: {fileID: 8300000, guid: ebf7f469444cd7b4f8bdd64847ec100d, type: 3}
   step5: {fileID: 8300000, guid: 809e48b4dfca43c4981ee28acd926433, type: 3}
---- !u!136 &8802040602003360901
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8802040602003360900}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.38
-  m_Height: 2.24
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.03, z: 0}
 --- !u!82 &9084057245164831938
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7718,13 +7705,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09295bb74df37934789fe11b9c5ad088, type: 3}
---- !u!1 &1452423318259146241 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 09295bb74df37934789fe11b9c5ad088, type: 3}
-  m_PrefabInstance: {fileID: 1795074236572345168}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2261893315779937467 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 09295bb74df37934789fe11b9c5ad088, type: 3}
+  m_PrefabInstance: {fileID: 1795074236572345168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1452423318259146241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 09295bb74df37934789fe11b9c5ad088, type: 3}
   m_PrefabInstance: {fileID: 1795074236572345168}
   m_PrefabAsset: {fileID: 0}

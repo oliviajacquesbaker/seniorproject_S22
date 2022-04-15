@@ -57,6 +57,7 @@ public class Boss : MonoBehaviour
 
         rightHand = true;
         //spawnPoint = GameObject.Find("ProjectileSpawn");
+        projSpeed = 15f;
     }
 
     void Update()
@@ -116,7 +117,7 @@ public class Boss : MonoBehaviour
 
         Vector3 dist = player.transform.position - transform.position;
         if (dist.magnitude < 6) anim.SetBool("BH_Close", true);
-        else if(dist.magnitude < 9)
+        else if (dist.magnitude < 9)
         {
             if (rightHand) anim.SetBool("RH_Mid", true);
             else anim.SetBool("LH_Mid", true);
@@ -298,7 +299,7 @@ public class Boss : MonoBehaviour
     IEnumerator ShutOffLights()
     {
         yield return new WaitForSeconds(1);
-        RenderSettings.ambientLight = new Color(0.15f,0.1f,0.1f);
+        RenderSettings.ambientLight = new Color(0.15f, 0.1f, 0.1f);
         yield return new WaitForSeconds(1);
         RenderSettings.ambientLight = Color.black;
         yield return new WaitForSeconds(1);
