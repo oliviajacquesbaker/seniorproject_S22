@@ -11,7 +11,7 @@ public class Boss : MonoBehaviour
     private MeshRenderer[] renderer;
     public GameObject player, attackTelegraph;
     private Transform telegraphEffect;
-    public bool playerInRange, debug, isRecovering = false, isAttacking=false;
+    public bool playerInRange, debug, isRecovering = false, isAttacking = false;
     public float rotationSpeed, telegraphTime, attackRadius, smashAttackDamage, phaseTwoThreshold, attackCooldown, attackRecoveryTime;
     private bool coroutineStarted;
     private int phase = 1;
@@ -26,12 +26,21 @@ public class Boss : MonoBehaviour
     [SerializeField]
     SwapMaterial swapMat;
     [SerializeField]
+
     Light pointInner;
     [SerializeField]
     Light pointOut;
 
+
     [SerializeField]
     GameObject winscreen;
+
+    private float projSpeed;
+    [SerializeField]
+    private Projectile projectilePrefab;
+    public GameObject spawnPoint;
+
+
 
     void Start()
     {
@@ -41,15 +50,20 @@ public class Boss : MonoBehaviour
         timeSinceLastAttack = attackCooldown / 2f;
         colliders = GetComponentsInChildren<Collider>();
         renderer = GetComponentsInChildren<MeshRenderer>();
+
         //original = renderer[0].material.color;
+
+        //        original = renderer[0].material.color;
+
         rightHand = true;
+        //spawnPoint = GameObject.Find("ProjectileSpawn");
     }
 
     void Update()
     {
-        if (!playerInRange) return; 
+        if (!playerInRange || dead) return;
 
-        if(!dead && !isAttacking && !isRecovering) LookAtPlayer();
+        if (!dead && !isAttacking && !isRecovering) LookAtPlayer();
 
         if (phase == 1 && stats.GetHealth() <= phaseTwoThreshold)
         {
@@ -60,19 +74,20 @@ public class Boss : MonoBehaviour
         {
             case 1:
                 if (timeSinceLastAttack > attackCooldown)
-                {   
+                {
                     Attack();
                 }
                 break;
             case 2:
-            {
-                // phase 2 attacks here
-                if (timeSinceLastAttack > attackCooldown)
                 {
-                    StartCoroutine(ChargeUpBeam());
+                    // phase 2 attacks here
+                    attackCooldown = 2f;
+                    if (timeSinceLastAttack > attackCooldown)
+                    {
+                        StartCoroutine(ChargeUpBeam());
+                    }
+                    break;
                 }
-                break;
-            }
         }
 
         timeSinceLastAttack += Time.deltaTime;
@@ -97,7 +112,7 @@ public class Boss : MonoBehaviour
 
     void Attack()
     {
-        isAttacking = true; 
+        isAttacking = true;
 
         Vector3 dist = player.transform.position - transform.position;
         if (dist.magnitude < 6) anim.SetBool("BH_Close", true);
@@ -176,7 +191,7 @@ public class Boss : MonoBehaviour
         if (coroutineStarted)
             yield break;
 
-        isAttacking = true;        
+        isAttacking = true;
         coroutineStarted = true;
         anim.SetBool("LongRangeAttack", true);
         yield return new WaitForSeconds(attackRecoveryTime);
@@ -191,10 +206,31 @@ public class Boss : MonoBehaviour
         anim.SetBool("LongRangeAttack", false);
 
         // FIRE AT PLAYER HERE !!! 
-        // animations already set up! 
+        // animations already set up!
+        FireProj();
 
         timeSinceLastAttack = 0;
         isAttacking = false;
+    }
+
+
+    private void FireProj() // copied from ranged mob attack
+    {
+        //source.Play();
+
+        var position = spawnPoint.transform.position + spawnPoint.transform.forward;
+
+        var rotation = spawnPoint.transform.rotation;
+
+        var projectile = Instantiate(projectilePrefab, position, rotation);
+        var projectile1 = Instantiate(projectilePrefab, position, rotation);
+        var projectile2 = Instantiate(projectilePrefab, position, rotation);
+
+        Vector3 lookAtPos = player.transform.position;
+
+        projectile.Fire(projSpeed, Vector3.Normalize(spawnPoint.transform.forward));
+        projectile1.Fire(projSpeed, Vector3.Normalize(GameObject.Find("Spawn1").transform.forward));
+        projectile2.Fire(projSpeed, Vector3.Normalize(GameObject.Find("Spawn2").transform.forward));
     }
 
     void OnTriggerEnter(Collider col)
@@ -226,7 +262,7 @@ public class Boss : MonoBehaviour
                 }
                 Debug.Log("Hit " + c.gameObject.name);
             }*/
-            
+
             //Debug.Log("HP:" + stats.GetHealth());
         }
     }
@@ -242,7 +278,7 @@ public class Boss : MonoBehaviour
     void SetPhase(int phase)
     {
         this.phase = phase;
-        if(phase == 2)
+        if (phase == 2)
         {
             anim.SetTrigger("DisableArms");
             anim.SetBool("ArmsDisabled", true);

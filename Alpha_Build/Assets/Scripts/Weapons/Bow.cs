@@ -20,7 +20,7 @@ public class Bow : MonoBehaviour
     private GameObject Player;
     private GameObject bullet;
     private ThirdPersonMovement playerSpeed;
-    private CinemachineFreeLook cam; 
+    private CinemachineFreeLook cam;
     //public float maxRotation;
     //public float minRotation;
     private float currentBowRotation;
@@ -44,8 +44,12 @@ public class Bow : MonoBehaviour
     AudioClip drawn, release;
 
     bool draw = false;
-
-    
+    public Transform aimPoint;
+    float currentHitDistance;
+    public LayerMask layerMask;
+    bool rotated = false;
+    bool lockedOn = false;
+    GameObject target;
     void Start()
     {
         Player = GameObject.Find("Player");
@@ -63,16 +67,17 @@ public class Bow : MonoBehaviour
         camController = Player.GetComponent<CameraController>();
         playerRB = Player.GetComponent<Rigidbody>();
         unaimed = true;
+        currentHitDistance = 100f;
     }
 
     void Update()
     {
         if (!state.InvOpen()) // check if inventory is not open
-        {         
+        {
             if (Input.GetKey(fireButton))
             {
                 Aim();
-                
+
                 if (_charge < chargeMax)
                 {
                     ChargeBow();
@@ -103,7 +108,11 @@ public class Bow : MonoBehaviour
 
         anim.SetTrigger("ReleaseArrow");
         bowAnim.SetTrigger("ReleaseArrow");
-        Rigidbody arrow = Instantiate(arrowObj, spawn.position, transform.rotation * Quaternion.Euler(270f,0f,0f)) as Rigidbody;
+        Rigidbody arrow = Instantiate(arrowObj, spawn.transform.position, spawn.transform.rotation * Quaternion.Euler(270f, 0f, 0f)) as Rigidbody;
+        if (lockedOn)
+        {
+            spawn.LookAt(target.transform);
+        }
         arrow.AddForce(spawn.forward * _charge, ForceMode.Impulse);
         _charge = 0;
         durability.currDurability -= fireDecay;
@@ -126,24 +135,79 @@ public class Bow : MonoBehaviour
             unaimed = false;
         }
 
+        RotatePlayer();
+        rotated = true;
         camController.Aim();
         Player.transform.Rotate(0.0f, Input.GetAxis("Mouse X"), 0.0f);
-        //bowRotation.Rotate(Input.GetAxis("Mouse Y") * -1, 0.0f, 0.0f, Space.Self);
+        //spawn.transform.Rotate(Input.GetAxis("Mouse Y") * -1f, 0.0f, 0.0f);
+        spawn.transform.rotation = aimPoint.transform.rotation;
+        CastAimRay();
     }
 
     void StopAiming()
     {
         bowAnim.SetTrigger("ReleaseArrow");
         anim.SetBool("PutDownBow", true);
+        spawn.transform.rotation = GameObject.Find("Follow Target").transform.rotation;
         camController.StopAim();
         unaimed = true;
+        rotated = false;
     }
 
     void RotatePlayer()
     {
-        Player.transform.localEulerAngles = new Vector3(Player.transform.rotation.x, cam.m_XAxis.Value, Player.transform.rotation.z);
+        if (!rotated)
+        {
+            Player.transform.localEulerAngles = new Vector3(Player.transform.rotation.x, cam.m_XAxis.Value, Player.transform.rotation.z);
+        }
     }
 
+    void CastAimRay()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+        //float range = 100f;
+
+        if (Physics.SphereCast(ray, 2f, out hit, 100f, layerMask))
+        {
+            target = hit.transform.gameObject;
+            Debug.Log("Aiming at " + hit.transform.gameObject.name);
+            var objectHit = hit.transform.gameObject;
+            currentHitDistance = hit.distance;
+            if (hit.transform.gameObject.GetComponent<_AIStats>() || hit.transform.gameObject.GetComponent<StatsLinker>())
+            {
+                camController.ToggleTargetCrosshair();
+                Debug.Log("Aiming at enemy");
+                lockedOn = true;
+                //Player.transform.LookAt(objectHit.transform);
+                //RotateTowardsEnemy(hit.transform);
+            }
+            else
+            {
+                camController.ToggleNormalCrosshair();
+            }
+        }
+        else
+        {
+            currentHitDistance = 100;
+        }
+    }
+
+    void RotateTowardsEnemy(Transform target)
+    {
+        Vector3 targetDirection = target.position - Player.transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(Player.transform.forward, targetDirection, rotationSpeed * Time.deltaTime, 0.0f);
+        Player.transform.rotation = Quaternion.LookRotation(newDirection);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        Gizmos.color = Color.red;
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * currentHitDistance, Color.green);
+        Gizmos.DrawWireSphere(ray.origin + ray.direction * currentHitDistance, 2f);
+    }
     // IEnumerator CrosshairDelay(float seconds)
     // {
     //     yield return new WaitForSeconds(seconds);

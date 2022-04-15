@@ -119,7 +119,7 @@ public class _PlayerStatsController : MonoBehaviour
     //NOTE** DetractHealth may be unintended behaviour that may eventually be turned off.
     public void DetractHealth(float perceivedIntensity) //Damages in shadow
     {
-        lightIntensity = perceivedIntensity;
+        lightIntensity = perceivedIntensity * dmgModifier;
 
         if (lightIntensity > 0)
         {
