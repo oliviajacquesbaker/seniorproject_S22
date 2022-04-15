@@ -93,7 +93,7 @@ public class Shadow
             float cross1 = (side0 + side2) / 2;
             float cross2 = (side1 + side3) / 2;
 
-            if (side0 / side2 > Mathf.Max(1.5f, 1.5f * 15 / cross1) || side2 / side0 > Mathf.Max(1.5f, 1.5f * 15 / cross1) || side1 / side3 > Mathf.Max(1.5f, 1.5f * 15 / cross2) || side3 / side1 > Mathf.Max(1.5f, 1.5f * 15 / cross2)) label = ShadowType.unknown;
+            if (side0 / side2 > Mathf.Max(2f, 2f * 15 / cross1) || side2 / side0 > Mathf.Max(2f, 2f * 15 / cross1) || side1 / side3 > Mathf.Max(2f, 2f * 15 / cross2) || side3 / side1 > Mathf.Max(2f, 2f * 15 / cross2)) label = ShadowType.unknown;
             else
             {
                 float ratio = cross1 / cross2;
@@ -102,7 +102,7 @@ public class Shadow
                 else { Debug.Log("bad ratio: " + ratio); label = ShadowType.unknown; }
             }
         }
-        else if (contourPoints.Length == 5)
+        /*else if (contourPoints.Length == 5)
         {
             int yPos_0 = (int)contourPoints[0].y;
             int xPos_0 = (int)contourPoints[0].x;
@@ -122,7 +122,7 @@ public class Shadow
             float side4 = Mathf.Sqrt(Mathf.Pow(xPos_4 - xPos_0, 2.0f) + Mathf.Pow(yPos_4 - yPos_0, 2.0f));
 
 
-        }
+        }*/
         else
         {
             //first check if its actually round

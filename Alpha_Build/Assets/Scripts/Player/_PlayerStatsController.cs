@@ -48,7 +48,7 @@ public class _PlayerStatsController : MonoBehaviour
                 InvokeRepeating("HudOpaquer", 0f, 0.1f);
             }
             timeSinceDeath += UnityEngine.Time.deltaTime;
-            if (timeSinceDeath > 10)
+            if (timeSinceDeath > 7)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -172,6 +172,7 @@ public class _PlayerStatsController : MonoBehaviour
     //If the player is physically hit?
     public void DetractHealth(float damage, bool hit)
     {
+        Debug.Log("LOSING " + damage + " HEALTH");
         player.SetHealth(player.GetHealth() - (damage * dmgModifier));
         //if (player.GetHealth() <= 0) player.Die();
     }
