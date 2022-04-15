@@ -16,7 +16,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private CharacterController controller;
     private Rigidbody rb;
     private _PlayerStats playerStats;
-    public bool isGrounded;
+    public bool isGrounded, gravityEnabled;
     private float playerHeight = 2.23f;
     //public LayerMask layerMask;
     private Vector3 velocity;
@@ -26,7 +26,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [SerializeField]
     AudioClip step1, step2, step3, step4, step5;
-
+    RopeCreator rope;
 
     void Start()
     {
@@ -36,6 +36,7 @@ public class ThirdPersonMovement : MonoBehaviour
         rb = Player.GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
         playerStats = GetComponent<_PlayerStats>();
+        gravityEnabled = true;
     }
 
     void Update()
@@ -68,8 +69,11 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //gravity
-        velocity.y += -9.8f * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        if (gravityEnabled)
+        {
+            velocity.y += -9.8f * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -169,25 +173,25 @@ public class ThirdPersonMovement : MonoBehaviour
         source.Play();
     }
 
-    void MovePlayer()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            rb.velocity = new Vector3(speed, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            rb.velocity = new Vector3(speed * -1, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            rb.velocity = new Vector3(0, 0, speed * -1);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            rb.velocity = new Vector3(0, 0, speed);
-        }
-    }
+    // void MovePlayer()
+    // {
+    //     if (Input.GetKey(KeyCode.W))
+    //     {
+    //         rb.velocity = new Vector3(speed, 0, 0);
+    //     }
+    //     else if (Input.GetKey(KeyCode.S))
+    //     {
+    //         rb.velocity = new Vector3(speed * -1, 0, 0);
+    //     }
+    //     else if (Input.GetKey(KeyCode.A))
+    //     {
+    //         rb.velocity = new Vector3(0, 0, speed * -1);
+    //     }
+    //     else if (Input.GetKey(KeyCode.D))
+    //     {
+    //         rb.velocity = new Vector3(0, 0, speed);
+    //     }
+    // }
 
     void OnDrawGizmosSelected()
     {

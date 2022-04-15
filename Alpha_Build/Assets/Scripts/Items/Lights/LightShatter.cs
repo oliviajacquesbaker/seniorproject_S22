@@ -27,19 +27,21 @@ public class LightShatter : MonoBehaviour
     }
     void OnTriggerEnter()
     {
+        Debug.Log("Something hit me!");
         TurnOffLight();
     }
 
     public void TurnOffLight()
     {
         // add light shatter SFX
-        renderer.material = shattered;    
-        light.SetActive(false);
+        //renderer.material = shattered;
+        //light.SetActive(false);
+        Destroy(light);
     }
 
     public void TurnOnLight()
     {
-        renderer.material = original;    
+        renderer.material = original;
         light.SetActive(true);
     }
 }

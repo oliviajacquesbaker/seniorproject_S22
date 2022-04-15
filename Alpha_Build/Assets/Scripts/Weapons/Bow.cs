@@ -168,13 +168,13 @@ public class Bow : MonoBehaviour
         RaycastHit hit;
         //float range = 100f;
 
-        if (Physics.SphereCast(ray, 2f, out hit, 100f, layerMask))
+        if (Physics.SphereCast(ray, 2f, out hit, 50f, layerMask))
         {
             target = hit.transform.gameObject;
             Debug.Log("Aiming at " + hit.transform.gameObject.name);
             var objectHit = hit.transform.gameObject;
             currentHitDistance = hit.distance;
-            if (hit.transform.gameObject.GetComponent<_AIStats>() || hit.transform.gameObject.GetComponent<StatsLinker>())
+            if (hit.transform.gameObject.GetComponent<_AIStats>() || hit.transform.gameObject.GetComponent<StatsLinker>() || hit.transform.gameObject.GetComponent<LightShatter>())
             {
                 camController.ToggleTargetCrosshair();
                 Debug.Log("Aiming at enemy");
