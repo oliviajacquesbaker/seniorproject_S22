@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -29,10 +31,15 @@ public class Boss : MonoBehaviour
     [SerializeField]
     Light pointOut;
 
+
+    [SerializeField]
+    GameObject winscreen;
+
     private float projSpeed;
     [SerializeField]
     private Projectile projectilePrefab;
     public GameObject spawnPoint;
+
 
 
     void Start()
@@ -146,6 +153,7 @@ public class Boss : MonoBehaviour
             {
                 _PlayerStatsController stats = c.gameObject.GetComponent<_PlayerStatsController>();
                 stats.DetractHealth(smashAttackDamage, true);
+                break;
             }
         }
 
@@ -284,5 +292,31 @@ public class Boss : MonoBehaviour
         pointInner.gameObject.SetActive(false);
         pointOut.gameObject.SetActive(false);
         anim.SetTrigger("Die");
+        StartCoroutine(ShutOffLights());
+    }
+
+    IEnumerator ShutOffLights()
+    {
+        yield return new WaitForSeconds(1);
+        RenderSettings.ambientLight = new Color(0.15f,0.1f,0.1f);
+        yield return new WaitForSeconds(1);
+        RenderSettings.ambientLight = Color.black;
+        yield return new WaitForSeconds(1);
+        winscreen.SetActive(true);
+        InvokeRepeating("WinOpaquer", 0f, 0.1f);
+        yield return new WaitForSeconds(5);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Credits");
+    }
+
+    void WinOpaquer()
+    {
+        Image image = winscreen.GetComponent<Image>();
+        var tempColor = image.color;
+        if (tempColor.a > 1f)
+        {
+            CancelInvoke();
+        }
+        tempColor.a += .01f;
+        image.color = tempColor;
     }
 }

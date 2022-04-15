@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
     {
 
         if (other.CompareTag("Player"))
-            player.DetractHealth(50f, true);
+            player.DetractHealth(20f, true);
         
     }
 

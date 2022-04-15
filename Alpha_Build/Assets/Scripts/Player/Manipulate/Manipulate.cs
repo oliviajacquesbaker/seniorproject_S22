@@ -99,12 +99,19 @@ public class Manipulate : MonoBehaviour
 
         heldObj.transform.parent = null;
         heldObj = null;
-        UpdateShadows();
+        UpdateShadowsOnDelay();
         shadowScript.holdingItem = false;
     }
 
     void UpdateShadows()
     {
+        shadowScript.RemoveLabels();
+        shadowScript.DetectShadows();
+    }
+
+    IEnumerator UpdateShadowsOnDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
         shadowScript.RemoveLabels();
         shadowScript.DetectShadows();
     }
