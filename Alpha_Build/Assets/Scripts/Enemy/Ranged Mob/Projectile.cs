@@ -27,8 +27,8 @@ public class Projectile : MonoBehaviour
     {
 
         if (other.CompareTag("Player"))
-            player.DetractHealth(20f, true);
-        
+            player.DetractHealth(50f, true);
+
     }
 
     private void OnTriggerExit(Collider other)
