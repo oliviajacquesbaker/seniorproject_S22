@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.14150941, g: 0.12482198, b: 0.12482198, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.78
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f1985292dee7a1c4fa17864a990d4c29, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -3074,6 +3074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durabilityDecayRate: 5
   opacityDecayRate: 0.25
+  damageReduction: 0
   durability: {fileID: 215647991}
   playerStatsController: {fileID: 1817493039104642102}
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -4763,7 +4764,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407697938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.26, y: 8.49, z: -742.3}
+  m_LocalPosition: {x: 34.9, y: 8.49, z: -742.3}
   m_LocalScale: {x: 23.831818, y: 17.6808, z: 3.7877312}
   m_Children: []
   m_Father: {fileID: 2131997244}
@@ -5539,8 +5540,6 @@ MonoBehaviour:
   camTransf: {fileID: 963194228}
   rope: {fileID: 0}
   keycode: 323
-  turnSmoothTime: 0
-  turnSmoothVelocity: 0
   ropeRange: 40
   ropeRayRadius: 0
   controller: {fileID: 1817493039104642106}
@@ -10575,7 +10574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825097330}
-  m_LocalRotation: {x: 0.14243032, y: 0.20948966, z: -0.03085945, w: 0.96688956}
+  m_LocalRotation: {x: 0.14243032, y: 0.2094897, z: -0.030859454, w: 0.96688956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11486,8 +11485,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.24466257, y: 0.20541988, z: -0.053146385, w: 0.946107}
-  m_LocalPosition: {x: 24.7664, y: 5.9356575, z: -542.1289}
+  m_LocalRotation: {x: 0.24466255, y: 0.20541991, z: -0.053146377, w: 0.946107}
+  m_LocalPosition: {x: 24.7664, y: 5.6086574, z: -542.1289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12788,7 +12787,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071957391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 55.045258}
+  m_LocalPosition: {x: 0, y: 0, z: 55.027832}
   m_LocalScale: {x: 25.841919, y: 25.841919, z: 25.841919}
   m_Children: []
   m_Father: {fileID: 1614137780}
@@ -16110,8 +16109,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338624449}
-  m_LocalRotation: {x: 0.000000021445723, y: -0.7071068, z: 0.000000021445723, w: 0.7071068}
-  m_LocalPosition: {x: 29.689861, y: 2.6225, z: -535.1348}
+  m_LocalRotation: {x: 0.00000003063675, y: -0.7071068, z: 0.00000003063675, w: 0.7071068}
+  m_LocalPosition: {x: 29.689861, y: 2.2954998, z: -535.1348}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 187967382}
@@ -19404,7 +19403,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655587799}
-  m_LocalRotation: {x: 0.26811603, y: 0.20362632, z: -0.05809096, w: 0.93982744}
+  m_LocalRotation: {x: 0.268116, y: 0.20362632, z: -0.058090955, w: 0.93982744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -22067,7 +22066,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829880669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.7664, y: 5.9356575, z: -542.1289}
+  m_LocalPosition: {x: 24.7664, y: 5.6086574, z: -542.1289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1655587801}
@@ -26629,6 +26628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durabilityDecayRate: 5
   opacityDecayRate: 0.25
+  damageReduction: 0.25
   durability: {fileID: 173330893637610461}
   playerStatsController: {fileID: 173330894695286438}
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -26826,6 +26826,7 @@ MonoBehaviour:
   enabled: 0
   anim: {fileID: 5984543032532892478}
   runkey: 304
+  isGrounded: 0
   source: {fileID: 5183340327181393191}
   step1: {fileID: 8300000, guid: a4c0047691c884344be62af7eac26604, type: 3}
   step2: {fileID: 8300000, guid: 2f6fea7c9e30f8b4fb9e9307514cd4c0, type: 3}
@@ -26890,6 +26891,7 @@ MonoBehaviour:
   source: {fileID: 761265513891378104}
   death: {fileID: 8300000, guid: ca8f2dc90a81da440ba771e0969644af, type: 3}
   lightBurn: {fileID: 8300000, guid: 5281bd80e57bf4f46a6634d78f1294c5, type: 3}
+  dmgModifier: 1
 --- !u!114 &173330894695286439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27637,7 +27639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055709653501279230}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 27.29, y: 0.426, z: -536.44}
+  m_LocalPosition: {x: 27.29, y: 0.099, z: -536.44}
   m_LocalScale: {x: 1.34, y: 1.34, z: 1.34}
   m_Children:
   - {fileID: 173330893609912276}
@@ -29998,22 +30000,6 @@ Transform:
   m_Father: {fileID: 2380524515706806965}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1055709653501279224
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055709653501279230}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1 &1055709653501279230
 GameObject:
   m_ObjectHideFlags: 0
@@ -30030,8 +30016,8 @@ GameObject:
   - component: {fileID: 173330894695286439}
   - component: {fileID: 173330894695286432}
   - component: {fileID: 1055709653501279231}
-  - component: {fileID: 1055709653501279224}
   - component: {fileID: 761265513891378104}
+  - component: {fileID: 1055709653501279232}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -30052,7 +30038,25 @@ CapsuleCollider:
   m_Radius: 0.38
   m_Height: 2.24
   m_Direction: 1
-  m_Center: {x: 0, y: 1.03, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!143 &1055709653501279232
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055709653501279230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2.24
+  m_Radius: 0.38
+  m_SlopeLimit: 45
+  m_StepOffset: 0.1
+  m_SkinWidth: 0.038
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1055709653565686142
 GameObject:
   m_ObjectHideFlags: 0
@@ -31381,6 +31385,7 @@ MonoBehaviour:
   source: {fileID: 0}
   death: {fileID: 0}
   lightBurn: {fileID: 0}
+  dmgModifier: 1
 --- !u!114 &1817493039104642103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31458,6 +31463,7 @@ MonoBehaviour:
   enabled: 0
   anim: {fileID: 0}
   runkey: 0
+  isGrounded: 0
   source: {fileID: 0}
   step1: {fileID: 0}
   step2: {fileID: 0}
@@ -32098,8 +32104,6 @@ MonoBehaviour:
   camTransf: {fileID: 963194228}
   rope: {fileID: 1071987013}
   keycode: 323
-  turnSmoothTime: 0
-  turnSmoothVelocity: 0
   ropeRange: 40
   ropeRayRadius: 2
   controller: {fileID: 173330894695286432}

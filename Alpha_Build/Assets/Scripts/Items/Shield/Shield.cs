@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    public float durabilityDecayRate, opacityDecayRate;
+    public float durabilityDecayRate, opacityDecayRate, damageReduction;
     //public float isActive;
     public Durability durability;
     public _PlayerStatsController playerStatsController;
@@ -27,13 +27,15 @@ public class Shield : MonoBehaviour
         if (Input.GetKey(shieldButton))
         {
             RaiseShield();
+            playerStatsController.dmgModifier = damageReduction;
         }
 
         if (Input.GetKeyUp(shieldButton))
         {
             LowerShield();
+            playerStatsController.dmgModifier = 1.0f;
         }
-        if (currentlyRaised  && playerStatsController.GetPerceivedIntensity() > 0.15)
+        if (currentlyRaised && playerStatsController.GetPerceivedIntensity() > 0.15)
         {
             color.a -= Time.deltaTime * opacityDecayRate;
             durability.currDurability -= Time.deltaTime * durabilityDecayRate;

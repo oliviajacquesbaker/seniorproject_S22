@@ -13,7 +13,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool enabled;
     public Animator anim;
     public KeyCode runkey;
-
+    private CharacterController controller;
+    private Rigidbody rb;
+    private _PlayerStats playerStats;
+    public bool isGrounded;
+    private float playerHeight = 2.23f;
+    //public LayerMask layerMask;
+    private Vector3 velocity;
 
     [SerializeField]
     AudioSource source;
@@ -27,13 +33,46 @@ public class ThirdPersonMovement : MonoBehaviour
         Player = GameObject.Find("Player");
         enabled = true;
         anim = GetComponent<Animator>();
+        rb = Player.GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
+        playerStats = GetComponent<_PlayerStats>();
     }
 
     void Update()
     {
+        if (!playerStats.GetAlive()) { return; }
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        // if (controller.isGrounded)
+        // {
+        //     Debug.Log("Touching the floor");
+        // }
+
+        // if (Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight + 0.1f))
+        // {
+        //     Debug.Log("Hitting " + hit.transform.gameObject.name);
+        //     //if (hit.transform.gameObject.tag == "Player") return;
+        //     Debug.Log("Grounded");
+        //     isGrounded = true;
+        // }
+        // else
+        // {
+        //     Debug.Log("Not grounded");
+        //     isGrounded = false;
+        // }
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight + 0.1f);
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -5f;
+        }
+
+        //gravity
+        velocity.y += -9.8f * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -57,9 +96,22 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+
             if (enabled)
             {
-                transform.Translate(multiply * moveDirection * speed * Time.deltaTime, Space.World);
+                //MovePlayer();
+                // if (!isGrounded)
+                // {
+                //     //moveDirection.y -= 10f * Time.deltaTime;
+                //     //controller.Move(moveDirection * Time.deltaTime);
+                //     transform.Translate(Vector3.down * Time.deltaTime);
+                // }
+                // else
+                // {
+                controller.Move(moveDirection.normalized * multiply * speed * Time.deltaTime);
+                //}
+                //rb.velocity = new Vector3(speed, 0, speed * -1);
+                //transform.Translate(multiply * moveDirection * speed * Time.deltaTime, Space.World);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
         }
@@ -68,6 +120,7 @@ public class ThirdPersonMovement : MonoBehaviour
             anim.SetBool("Walking", false);
             anim.SetBool("Running", false);
         }
+
 
         //MovementSound();
     }
@@ -114,6 +167,32 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         source.Play();
+    }
+
+    void MovePlayer()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.velocity = new Vector3(speed, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            rb.velocity = new Vector3(speed * -1, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            rb.velocity = new Vector3(0, 0, speed * -1);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            rb.velocity = new Vector3(0, 0, speed);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        //Gizmos.color = Color.red;
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
     }
 
 }

@@ -30,6 +30,8 @@ public class _PlayerStatsController : MonoBehaviour
 
     bool inLight = false;
 
+    public float dmgModifier = 1.0f;
+
     void Start()
     {
         player = GetComponent<_PlayerStats>();
@@ -46,7 +48,7 @@ public class _PlayerStatsController : MonoBehaviour
                 InvokeRepeating("HudOpaquer", 0f, 0.1f);
             }
             timeSinceDeath += UnityEngine.Time.deltaTime;
-            if(timeSinceDeath > 10)
+            if (timeSinceDeath > 10)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -55,7 +57,7 @@ public class _PlayerStatsController : MonoBehaviour
 
     private void PhaseBurnSound()
     {
-        if(source.volume > 0)
+        if (source.volume > 0)
         {
             source.volume -= 0.01f;
         }
@@ -170,7 +172,7 @@ public class _PlayerStatsController : MonoBehaviour
     //If the player is physically hit?
     public void DetractHealth(float damage, bool hit)
     {
-        player.SetHealth(player.GetHealth() - damage);
+        player.SetHealth(player.GetHealth() - (damage * dmgModifier));
         //if (player.GetHealth() <= 0) player.Die();
     }
 
@@ -203,7 +205,7 @@ public class _PlayerStatsController : MonoBehaviour
     {
         Image image = DeathPanel.GetComponent<Image>();
         var tempColor = image.color;
-        if(tempColor.a > 1f)
+        if (tempColor.a > 1f)
         {
             CancelInvoke();
         }
