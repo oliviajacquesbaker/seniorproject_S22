@@ -15,7 +15,7 @@ public class RopeCreator : MonoBehaviour
     private StateHandler state;
     public GameObject crosshair, aimPoint;
     public LayerMask layerMask;
-    public bool isAimingHook = false;
+    public bool isAimingHook = false, isAimingRope = false;
     private float currentHitDistance;
 
     void Start()
@@ -55,7 +55,7 @@ public class RopeCreator : MonoBehaviour
             var selection = hit.transform;
             if (selection.gameObject.tag == "Hook")
             {
-                isAimingHook = true;
+                if (isAimingRope) isAimingHook = true;
                 rope.snapFirst = true;
                 if (Input.GetKeyUp(keycode))
                 {
@@ -68,17 +68,20 @@ public class RopeCreator : MonoBehaviour
         {
             currentHitDistance = ropeRange;
             isAimingHook = false;
+            isAimingRope = false;
         }
     }
 
     void AimRope()
     {
         cam.Aim();
+        isAimingRope = true;
     }
 
     void StopAimingRope()
     {
         cam.StopAim();
+        isAimingRope = false;
     }
 
     void OnDrawGizmosSelected()

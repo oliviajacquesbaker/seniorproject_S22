@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (rope && rope.isAimingHook)
+        if (rope && rope.isAimingHook && rope.isAimingRope)
         {
             ToggleTargetCrosshair();
         }

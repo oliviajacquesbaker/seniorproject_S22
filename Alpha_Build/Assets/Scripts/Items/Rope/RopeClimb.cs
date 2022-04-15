@@ -15,6 +15,7 @@ public class RopeClimb : MonoBehaviour
     [SerializeField]
     GameObject playerBlob;
     public Animator blobAnim;
+    Vector3 verticalVel;
 
 
     void Start()
@@ -37,6 +38,11 @@ public class RopeClimb : MonoBehaviour
 
             ClimbRope();
         }
+
+        // if (isClimbing)
+        // {
+        //     if (Input.Get)
+        // }
     }
 
     bool IsNextToRope()
@@ -62,24 +68,31 @@ public class RopeClimb : MonoBehaviour
 
         isClimbing = !isClimbing;
         controller.enabled = !controller.enabled;
+        controller.gravityEnabled = !controller.gravityEnabled;
         //        player.GetComponent<Rigidbody>().useGravity = !player.GetComponent<Rigidbody>().useGravity;
     }
 
     void ClimbRope()
     {
+        //Vector3 moveDir = new Vector3(0f, 0f, 0f);
+        CharacterController playerController = controller.GetComponent<CharacterController>();
         if (isClimbing)
         {
             bool triggered = false;
             if (Input.GetKey(KeyCode.W))
             {
-                player.transform.Translate(Vector3.up * Time.deltaTime * climbRate, Space.World); // move up
+                verticalVel.y += 1.0f;
+                playerController.Move(verticalVel * Time.deltaTime * 0.05f);
+                //player.transform.Translate(Vector3.up * Time.deltaTime * climbRate, Space.World); // move up
                 blobAnim.SetBool("Climbing", true);
                 triggered = true;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
-                player.transform.Translate(Vector3.down * Time.deltaTime * climbRate, Space.World); // move down
+                verticalVel.y -= 1.0f;
+                playerController.Move(verticalVel * -1 * Time.deltaTime * 0.05f);
+                //player.transform.Translate(Vector3.down * Time.deltaTime * climbRate, Space.World); // move down
                 blobAnim.SetBool("Climbing", true);
                 triggered = true;
             }
