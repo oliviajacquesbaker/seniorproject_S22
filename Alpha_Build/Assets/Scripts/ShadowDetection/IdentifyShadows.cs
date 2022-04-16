@@ -284,9 +284,9 @@ public class IdentifyShadows : MonoBehaviour
             if (prev < 0) prev += points.Length;
             next = (i + 1) % points.Length;
 
-            curr = ((points[i].x-points[prev].x)*(points[next].y-points[i].y)) - ((points[i].y-points[prev].y)*(points[next].x-points[i].x));
+            curr = ((points[i].x - points[prev].x) * (points[next].y - points[i].y)) - ((points[i].y - points[prev].y) * (points[next].x - points[i].x));
             //Debug.Log(curr + ", " + curr*last);
-            if (curr * last < 0)  return false;
+            if (curr * last < 0) return false;
             last = curr;
         }
         //Debug.Log("THIS ONE IS CONVEX!");
@@ -437,7 +437,7 @@ public class IdentifyShadows : MonoBehaviour
             //if(curr/last < 1 || curr/last2 < 1) 
             //Debug.Log(curr + ", " + last + ", " + curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
 
-            if(curr/last < 0.7)
+            if (curr / last < 0.7)
             {
                 Debug.Log(i);
             }
@@ -453,7 +453,7 @@ public class IdentifyShadows : MonoBehaviour
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if ((flags[count] == 1 || (count > 0 && flags[count-1] == 1)) && curr/lastVals[count] < lenient)
+            else if ((flags[count] == 1 || (count > 0 && flags[count - 1] == 1)) && curr / lastVals[count] < lenient)
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
@@ -477,7 +477,7 @@ public class IdentifyShadows : MonoBehaviour
                 lastVals[count] = curr;
                 flags[count] = 0;
             }
-            else if (last / curr < .35 )//&& (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
+            else if (last / curr < .35)//&& (Mathf.Abs(last - baseline) > 0.4 || curr / brightThreshold > 0.8))
             {
                 toReturn[i] = 0;
                 lastVals[count] = curr;
@@ -489,7 +489,7 @@ public class IdentifyShadows : MonoBehaviour
                 lastVals[count] = curr;
                 flags[count] = 0;
             } //
-            else if (count > 0 && flags[count-1] != 1 && curr / last2 < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (last2 / brightThreshold > 0.8)))
+            else if (count > 0 && flags[count - 1] != 1 && curr / last2 < 0.35 && (Mathf.Abs(curr - baseline) > 0.4 || (last2 / brightThreshold > 0.8)))
             {
                 toReturn[i] = 1;
                 lastVals[count] = curr;
