@@ -416,7 +416,7 @@ public class IdentifyShadows : MonoBehaviour
         int[] lastRow = new int[image.width];
         float[] lastVals = new float[image.width];
         int[] flags = new int[image.width];
-        float brightThreshold = baseline * 1.75f;
+        float brightThreshold = 2.5f;
 
         for (int i = 0; i < image.width; ++i)
         {
@@ -436,11 +436,6 @@ public class IdentifyShadows : MonoBehaviour
             //Debug.Log(curr);
             //if(curr/last < 1 || curr/last2 < 1) 
             //Debug.Log(curr + ", " + last + ", " + curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
-
-            if(curr/last < 0.7)
-            {
-                Debug.Log(i);
-            }
 
             if (pixels[i].r > 0.98 && pixels[i].g < 0.02 && pixels[i].b > 0.9) //ANTISHADOW FLAG
             {
