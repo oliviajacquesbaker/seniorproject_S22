@@ -101,7 +101,7 @@ public class Sword : MonoBehaviour
                 Debug.Log(attacked + ": Hit enemy stats" + enemy.name);
                 _AIStatsController stats = enemy.GetComponent<_AIStatsController>();
                 int additionalDmg = 0;
-                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                if (enemy.gameObject.name == "L_hand" || enemy.gameObject.name == "R_hand.001")
                 {
                     if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
                 }
@@ -112,7 +112,7 @@ public class Sword : MonoBehaviour
                 Debug.Log(attacked + ": Hit enemy " + enemy.name);
                 StatsLinker stats = enemy.GetComponent<StatsLinker>();
                 int additionalDmg = 0;
-                if (enemy.gameObject.name == "BOSSL_hand" || enemy.gameObject.name == "BOSSR_hand")
+                if (enemy.gameObject.name == "L_hand" || enemy.gameObject.name == "R_hand.001")
                 {
                     if (boss.isRecovering) { additionalDmg += 50; Debug.Log("critical hit!"); }
                 }
