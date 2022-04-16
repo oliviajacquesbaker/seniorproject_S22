@@ -148,7 +148,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 100, y: 100, z: 100}
+  m_Size: {x: 400, y: 400, z: 400}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5319439426963564043
 Rigidbody:
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8867714309303700591
 MonoBehaviour:
   m_ObjectHideFlags: 0
