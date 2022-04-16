@@ -11,7 +11,7 @@ public class ShadowResponse : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("TRIGGER ENTERED, ITEM COLLECTED, TYPE: " + itemType + " at " + gameObject.transform.position);
             if (readyToCollect)
