@@ -2111,6 +2111,7 @@ GameObject:
   - component: {fileID: 5636662801042201867}
   - component: {fileID: 5636662801042201860}
   - component: {fileID: 5636662801042201866}
+  - component: {fileID: 7974315495390994960}
   m_Layer: 0
   m_Name: Light Spider Spotlight
   m_TagString: Untagged
@@ -2193,6 +2194,19 @@ MonoBehaviour:
   _animator: {fileID: 5777812868964902872}
   spotlight: {fileID: 5105355853846690036}
   meleePrefab: {fileID: 2850172505167242216, guid: f866a93e6f4115444a208e9acd3784c0, type: 3}
+--- !u!65 &7974315495390994960
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5636662801042201861}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.569316, y: 0.8250374, z: 1.3326416}
+  m_Center: {x: -0.15519035, y: -0.08748871, z: 0.046203613}
 --- !u!1 &5647324229028412130
 GameObject:
   m_ObjectHideFlags: 0
@@ -3486,11 +3500,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c49f0368ca085147b40fb882c0e9494, type: 3}
---- !u!224 &3797769282840764587 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3094420707539064996, guid: 6c49f0368ca085147b40fb882c0e9494, type: 3}
-  m_PrefabInstance: {fileID: 2181418113753921551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3797769284223958623 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3094420708938827344, guid: 6c49f0368ca085147b40fb882c0e9494, type: 3}
@@ -3502,3 +3511,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3797769282840764587 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3094420707539064996, guid: 6c49f0368ca085147b40fb882c0e9494, type: 3}
+  m_PrefabInstance: {fileID: 2181418113753921551}
+  m_PrefabAsset: {fileID: 0}

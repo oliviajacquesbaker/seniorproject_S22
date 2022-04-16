@@ -46,6 +46,7 @@ public class Label : MonoBehaviour
             {
                 float dist = (new Vector3(hitCollider.gameObject.transform.position.x, 0, hitCollider.gameObject.transform.position.z) - pos).magnitude;
                 //Debug.Log(dist);
+                //Debug.Log(hitCollider.gameObject.name);
                 if (dist < minDist)
                 {
                     minDist = dist;
@@ -70,6 +71,13 @@ public class Label : MonoBehaviour
     public void CollectShadow()
     {
         if (objectCastingShadow) objectCastingShadow.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+        if (objectCastingShadow.GetComponent<TurnOffOnCollect>())
+        {
+            TurnOffOnCollect item = objectCastingShadow.GetComponent<TurnOffOnCollect>();
+            item.TurnOffLight();
+        }
+
         RemoveFromScene();
     }
 
