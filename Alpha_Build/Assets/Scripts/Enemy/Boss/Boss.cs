@@ -31,6 +31,10 @@ public class Boss : MonoBehaviour
     [SerializeField]
     Light pointOut;
 
+    [SerializeField]
+    private AudioSource beamattack;
+    [SerializeField]
+    private AudioSource smackattack;
 
     [SerializeField]
     GameObject winscreen;
@@ -74,7 +78,7 @@ public class Boss : MonoBehaviour
         switch (phase)
         {
             case 1:
-                if (timeSinceLastAttack > attackCooldown)
+                if (!isAttacking && timeSinceLastAttack > attackCooldown)
                 {
                     Attack();
                 }
@@ -91,7 +95,7 @@ public class Boss : MonoBehaviour
                 }
         }
 
-        timeSinceLastAttack += Time.deltaTime;
+        if (!isAttacking) timeSinceLastAttack += Time.deltaTime;
     }
 
     void LookAtPlayer()
@@ -145,8 +149,10 @@ public class Boss : MonoBehaviour
     {
         if (isRecovering) return;
 
+        smackattack.Play();
         Debug.Log("Attack!");
-        Collider[] colliders = Physics.OverlapSphere(telegraphEffect.position, attackRadius);
+        Collider[] colliders = new Collider[0];
+        if(telegraphEffect) colliders = Physics.OverlapSphere(telegraphEffect.position, attackRadius);
 
         foreach (Collider c in colliders)
         {
@@ -217,7 +223,7 @@ public class Boss : MonoBehaviour
 
     private void FireProj() // copied from ranged mob attack
     {
-        //source.Play();
+        beamattack.Play();
 
         var position = spawnPoint.transform.position + spawnPoint.transform.forward;
 

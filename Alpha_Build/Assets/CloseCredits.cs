@@ -19,6 +19,8 @@ public class CloseCredits : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         UnityEngine.SceneManagement.SceneManager.LoadScene("StartScene");
     }
 

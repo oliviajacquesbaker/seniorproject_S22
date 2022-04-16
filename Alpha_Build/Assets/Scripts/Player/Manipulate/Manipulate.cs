@@ -23,7 +23,7 @@ public class Manipulate : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other != null && other.name == tempObj.name) tempObj = null;
+        tempObj = null;
     }
 
 
@@ -56,14 +56,16 @@ public class Manipulate : MonoBehaviour
 
     void RotateY()
     {
-        float yRot = heldObj.transform.eulerAngles.y + 1;
-        heldObj.transform.eulerAngles = new Vector3(heldObj.transform.eulerAngles.x, yRot, heldObj.transform.eulerAngles.z);
+        //float yRot = heldObj.transform.eulerAngles.y + 1;
+        //heldObj.transform.eulerAngles = new Vector3(heldObj.transform.eulerAngles.x, yRot, heldObj.transform.eulerAngles.z);
+        heldObj.transform.Rotate(0, 1, 0);
     }
     
     void RotateX()
     {
-        float zRot = heldObj.transform.eulerAngles.z + 1;
-        heldObj.transform.eulerAngles = new Vector3(heldObj.transform.eulerAngles.x, heldObj.transform.eulerAngles.y, zRot);
+        //float zRot = heldObj.transform.eulerAngles.z + 1;
+        //heldObj.transform.eulerAngles = new Vector3(heldObj.transform.eulerAngles.x, heldObj.transform.eulerAngles.y, zRot);
+        heldObj.transform.Rotate(0, 0, 1);
     }
 
     void MoveObject()
@@ -111,7 +113,7 @@ public class Manipulate : MonoBehaviour
 
     IEnumerator UpdateShadowsOnDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.25f);
         shadowScript.RemoveLabels();
         shadowScript.DetectShadows();
     }
