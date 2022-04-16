@@ -21,6 +21,7 @@ public class IdentifyShadows : MonoBehaviour
     float lenient;
     float basenum;
     float strictness;
+    float brightThreshold;
     public bool holdingItem;
 
     List<Shadow> shadows;
@@ -31,9 +32,11 @@ public class IdentifyShadows : MonoBehaviour
     {
         pastPos = this.gameObject.transform.position;
         lenient = (level == 2) ? 0.8f : 0.7f;
-        basenum = (level == 0) ? 0.7f : 0.75f;
+        basenum = (level == 1) ? 0.65f : 0.75f;
         strictness = (level == 2) ? 0.04f : 0.03f;
-        basenum = 0.75f;
+        strictness = (level == 1) ? 0.045f : strictness;
+        brightThreshold = (level == 2) ? 2.5f : 2f;
+        //basenum = 0.75f;
 
         holdingItem = false;
         DetectShadows();
@@ -66,6 +69,7 @@ public class IdentifyShadows : MonoBehaviour
 
     public void DetectShadows()
     {
+        if (holdingItem) return;
         shadows = new List<Shadow>();
         RenderTexture inbetween = new RenderTexture(3 * Screen.width / 4, Screen.height, 24);
         Texture2D image = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGB24, false);
@@ -416,7 +420,6 @@ public class IdentifyShadows : MonoBehaviour
         int[] lastRow = new int[image.width];
         float[] lastVals = new float[image.width];
         int[] flags = new int[image.width];
-        float brightThreshold = baseline * 1.75f;
 
         for (int i = 0; i < image.width; ++i)
         {
@@ -437,11 +440,6 @@ public class IdentifyShadows : MonoBehaviour
             //if(curr/last < 1 || curr/last2 < 1) 
             //Debug.Log(curr + ", " + last + ", " + curr / last + " , " + curr / last2 + " , " + (curr - baseline) + " , " + (last / brightThreshold) + " , " + (last2 / brightThreshold));
 
-            if (curr / last < 0.7)
-            {
-                Debug.Log(i);
-            }
-
             if (pixels[i].r > 0.98 && pixels[i].g < 0.02 && pixels[i].b > 0.9) //ANTISHADOW FLAG
             {
                 toReturn[i] = 0;
@@ -449,6 +447,7 @@ public class IdentifyShadows : MonoBehaviour
             }
             else if (curr / brightThreshold > 0.95)
             {
+                //Debug.Log(curr + "too bright, threshold: " + brightThreshold);
                 toReturn[i] = 0;
                 lastVals[count] = curr;
                 flags[count] = 0;

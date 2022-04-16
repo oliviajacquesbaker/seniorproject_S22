@@ -109,7 +109,7 @@ public class Bow : MonoBehaviour
         anim.SetTrigger("ReleaseArrow");
         bowAnim.SetTrigger("ReleaseArrow");
         Rigidbody arrow = Instantiate(arrowObj, spawn.transform.position, spawn.transform.rotation * Quaternion.Euler(270f, 0f, 0f)) as Rigidbody;
-        if (lockedOn)
+        if (lockedOn && !target.GetComponentInParent<Boss>())
         {
             spawn.LookAt(target.transform);
         }
@@ -171,13 +171,13 @@ public class Bow : MonoBehaviour
         if (Physics.SphereCast(ray, 2f, out hit, 50f, layerMask))
         {
             target = hit.transform.gameObject;
-            Debug.Log("Aiming at " + hit.transform.gameObject.name);
+            //Debug.Log("Aiming at " + hit.transform.gameObject.name);
             var objectHit = hit.transform.gameObject;
             currentHitDistance = hit.distance;
             if (hit.transform.gameObject.GetComponent<_AIStats>() || hit.transform.gameObject.GetComponent<StatsLinker>() || hit.transform.gameObject.GetComponent<LightShatter>())
             {
                 camController.ToggleTargetCrosshair();
-                Debug.Log("Aiming at enemy");
+                Debug.Log("Aiming at " + hit.transform.gameObject.name);
                 lockedOn = true;
                 //Player.transform.LookAt(objectHit.transform);
                 //RotateTowardsEnemy(hit.transform);
