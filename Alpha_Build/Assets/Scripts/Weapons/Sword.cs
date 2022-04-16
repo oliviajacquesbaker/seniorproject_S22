@@ -86,7 +86,7 @@ public class Sword : MonoBehaviour
     {
         if (attacking) return;
         attacked++;
-        //durability.currDurability -= 8;
+        durability.currDurability -= 8;
         attacking = true;
         //add animation here
         anim.SetTrigger("SwordAttack");

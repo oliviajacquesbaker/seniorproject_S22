@@ -21,6 +21,7 @@ public class IdentifyShadows : MonoBehaviour
     float lenient;
     float basenum;
     float strictness;
+    float brightThreshold;
     public bool holdingItem;
 
     List<Shadow> shadows;
@@ -33,6 +34,7 @@ public class IdentifyShadows : MonoBehaviour
         lenient = (level == 2) ? 0.8f : 0.7f;
         basenum = (level == 0) ? 0.7f : 0.75f;
         strictness = (level == 2) ? 0.04f : 0.03f;
+        brightThreshold = (level == 2) ? 2.5f : 2f;
         basenum = 0.75f;
 
         holdingItem = false;
@@ -66,6 +68,7 @@ public class IdentifyShadows : MonoBehaviour
 
     public void DetectShadows()
     {
+        if (holdingItem) return;
         shadows = new List<Shadow>();
         RenderTexture inbetween = new RenderTexture(3 * Screen.width / 4, Screen.height, 24);
         Texture2D image = new Texture2D(3 * Screen.width / 4, Screen.height, TextureFormat.RGB24, false);
@@ -416,7 +419,6 @@ public class IdentifyShadows : MonoBehaviour
         int[] lastRow = new int[image.width];
         float[] lastVals = new float[image.width];
         int[] flags = new int[image.width];
-        float brightThreshold = 2.5f;
 
         for (int i = 0; i < image.width; ++i)
         {

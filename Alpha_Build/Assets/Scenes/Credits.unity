@@ -462,7 +462,10 @@ MonoBehaviour:
     Humanoid Model:\nhttps://www.cgtrader.com/free-3d-models/character/man/jeremy-base-male-character\r\n\nFlashlight
     Model:\nhttps://www.turbosquid.com/3d-models/3d-model-hand-lamp-light/1065832\r\n\nSword
     Model:\nhttps://www.turbosquid.com/3d-models/3d-sword-longsword-single-handed-1680358\r\n\nShield
-    Model:\r\nhttps://www.turbosquid.com/3d-models/3d-model-shield-1406321"
+    Model:\r\nhttps://www.turbosquid.com/3d-models/3d-model-shield-1406321\n\nLevel
+    BGM: https://opengameart.org/content/larik\nUsername: Gundatsch - https://soundcloud.com/gundatsch\n\nMenus
+    BGM: https://opengameart.org/content/titlemenu-screen-bgm\nUsername: el-corleo
+    (Eliot Corley)\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -658,6 +661,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c65db4fbf18e244eb785e1518cf1af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCreditsOn: {fileID: 0}
+  topCreditsOn: {fileID: 0}
+  mainCreditsOff: {fileID: 0}
 --- !u!1 &824423867
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +675,7 @@ GameObject:
   - component: {fileID: 824423870}
   - component: {fileID: 824423869}
   - component: {fileID: 824423868}
+  - component: {fileID: 824423871}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -741,6 +748,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &824423871
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824423867}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b44a49480c202944a93cb986de2e9f8d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1024703492
 GameObject:
   m_ObjectHideFlags: 0

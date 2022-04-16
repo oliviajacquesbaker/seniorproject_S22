@@ -117,6 +117,7 @@ public class Boss : MonoBehaviour
 
     void Attack()
     {
+        if (dead) return;
         isAttacking = true;
 
         Vector3 dist = player.transform.position - transform.position;
@@ -210,6 +211,7 @@ public class Boss : MonoBehaviour
 
     private void FireBeam()
     {
+        if (dead) return;
         anim.SetBool("LongRangeAttack", false);
 
         // FIRE AT PLAYER HERE !!! 
