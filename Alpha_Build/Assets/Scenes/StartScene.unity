@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 31339134}
   - component: {fileID: 31339133}
   - component: {fileID: 31339132}
+  - component: {fileID: 31339135}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -206,6 +207,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &31339135
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31339131}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b44a49480c202944a93cb986de2e9f8d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &31977036
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +733,7 @@ GameObject:
   - component: {fileID: 1401843893}
   - component: {fileID: 1401843892}
   m_Layer: 5
-  m_Name: OptionsBtn
+  m_Name: CreditsBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,10 +787,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 9dec6e691d6d8b24f9fc1551d98217f5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 9dec6e691d6d8b24f9fc1551d98217f5, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 9dec6e691d6d8b24f9fc1551d98217f5, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: 0bc99705b3e35ae4d8f14d4d3e2d44de, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 05b31ef05288faf4c8ac2b5791100aaa, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 05b31ef05288faf4c8ac2b5791100aaa, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 05b31ef05288faf4c8ac2b5791100aaa, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 05b31ef05288faf4c8ac2b5791100aaa, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -704,7 +801,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1401843893}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 897159512}
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
+        m_MethodName: OpenCredits
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1401843893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +834,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d52d04ae31208db49bd1d1dedee98fa9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c355f795fcd7818408723b96a593bff0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

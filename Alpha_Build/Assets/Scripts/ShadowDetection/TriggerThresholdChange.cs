@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TriggerThresholdChange : MonoBehaviour
 {
@@ -21,6 +22,23 @@ public class TriggerThresholdChange : MonoBehaviour
     {
         originalActive = true;
     }
+    void OnEnable()
+    {
+        Debug.Log("OnEnable called");
+
+        Debug.Log("loaded");
+        originalActive = true;
+        foreach (GameObject anti in adjustedAntiShadow)
+        {
+            anti.SetActive(false);
+        }
+
+        foreach (GameObject anti in originalAntiShadow)
+        {
+            anti.SetActive(true);
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

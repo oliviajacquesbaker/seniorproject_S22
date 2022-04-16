@@ -18,6 +18,7 @@ public class StartMenu : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = true;
         if (!PlayerPrefs.HasKey("savedLevel"))
         {
             continueBtn.interactable = false;
@@ -26,7 +27,6 @@ public class StartMenu : MonoBehaviour
         {
             continueBtn.interactable = true;
         }
-        optionsBtn.interactable = false;
     }
     public void NewGame()
     {
@@ -40,6 +40,13 @@ public class StartMenu : MonoBehaviour
         source.clip = click;
         source.Play();
         SceneManager.LoadScene(PlayerPrefs.GetInt("savedLevel"));
+    }
+
+    public void OpenCredits()
+    {
+        source.clip = click;
+        source.Play();
+        SceneManager.LoadScene("Credits");
     }
 
     public void QuitGame()
