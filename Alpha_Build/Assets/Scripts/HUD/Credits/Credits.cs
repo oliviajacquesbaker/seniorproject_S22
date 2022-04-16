@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Credits : MonoBehaviour
 {
+    [SerializeField]
+    GameObject mainCreditsOn;
+    [SerializeField]
+    GameObject topCreditsOn;
+    [SerializeField]
+    GameObject mainCreditsOff;
 
     void Update()
     {
@@ -11,6 +17,13 @@ public class Credits : MonoBehaviour
         {
             loadMainMenu();
         }
+    }
+
+    public void TurnOffCreditsLight()
+    {
+        mainCreditsOff.SetActive(true);
+        mainCreditsOn.SetActive(false);
+        topCreditsOn.SetActive(false);
     }
 
     public void loadMainMenu()

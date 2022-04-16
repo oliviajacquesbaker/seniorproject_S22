@@ -9,7 +9,7 @@ public class PausedController : MonoBehaviour
     [SerializeField]
     GameObject menu,controls;
     [SerializeField]
-    Button optionsBtn,saveBtn,controlBtn,returnBtn;
+    Button saveBtn,controlBtn,returnBtn;
 
     [SerializeField]
     AudioSource source;
@@ -22,7 +22,7 @@ public class PausedController : MonoBehaviour
 
     private void Start()
     {
-        optionsBtn.interactable = false;
+        
     }
 
 
@@ -78,13 +78,8 @@ public class PausedController : MonoBehaviour
         PlayerPrefs.SetInt("savedLevel", SceneManager.GetActiveScene().buildIndex);
         source.clip = click;
         source.Play();
-        Application.Quit();
-    }
-
-    public void OptionsBtn()
-    {
-        source.clip = error;
-        source.Play();
+        UnpauseGame();
+        SceneManager.LoadScene("StartScene");
     }
 
     public void ControlsBtn()
@@ -92,7 +87,6 @@ public class PausedController : MonoBehaviour
         source.clip = click;
         source.Play();
 
-        optionsBtn.gameObject.SetActive(false);
         saveBtn.gameObject.SetActive(false);
         controlBtn.gameObject.SetActive(false);
 
@@ -105,7 +99,6 @@ public class PausedController : MonoBehaviour
         source.clip = click;
         source.Play();
 
-        optionsBtn.gameObject.SetActive(true);
         saveBtn.gameObject.SetActive(true);
         controlBtn.gameObject.SetActive(true);
 
