@@ -118,6 +118,11 @@ public class Sword : MonoBehaviour
                 }
                 stats.statsController.DetractHealth(damage + additionalDmg, true);
             }
+            else if (enemy.GetComponent<BendPipe>())
+            {
+                BendPipe pipe = enemy.gameObject.GetComponent<BendPipe>();
+                pipe.Bend();
+            }
         }
         StartCoroutine(AllowAttack());
     }
