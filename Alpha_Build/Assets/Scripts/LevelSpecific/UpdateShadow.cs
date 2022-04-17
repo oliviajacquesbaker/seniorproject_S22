@@ -18,9 +18,9 @@ public class UpdateShadow : MonoBehaviour
     {
         //if (timeSinceLastUpdate < 3f) return;
 
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" && timeSinceLastUpdate > 3f)
         {
-            shadowScripter.DetectShadows();
+            //shadowScripter.DetectShadows();
             timeSinceLastUpdate = 0f;
         }
     }

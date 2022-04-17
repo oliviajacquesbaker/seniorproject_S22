@@ -12,6 +12,7 @@ TagManager:
   - Weapon
   - Boss
   - ShadowCaster
+  - Booster_Mob
   layers:
   - Default
   - TransparentFX

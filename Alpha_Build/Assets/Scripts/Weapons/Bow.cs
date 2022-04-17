@@ -109,7 +109,11 @@ public class Bow : MonoBehaviour
         anim.SetTrigger("ReleaseArrow");
         bowAnim.SetTrigger("ReleaseArrow");
         Rigidbody arrow = Instantiate(arrowObj, spawn.transform.position, spawn.transform.rotation * Quaternion.Euler(270f, 0f, 0f)) as Rigidbody;
-        if (lockedOn && !target.GetComponentInParent<Boss>())
+        if (lockedOn && target.gameObject.tag == "Booster_Mob")
+        {
+            spawn.LookAt(target.transform.GetChild(0));
+        }
+        else if (lockedOn && !target.GetComponentInParent<Boss>())
         {
             spawn.LookAt(target.transform);
         }

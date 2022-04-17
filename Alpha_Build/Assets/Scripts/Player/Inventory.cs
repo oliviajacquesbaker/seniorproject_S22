@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
         anim = GameObject.Find("Player").GetComponent<Animator>();
         playerStatsController = GameObject.Find("Player").GetComponent<_PlayerStatsController>();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<_PlayerStats>();
-        DebugSettings();
+        //DebugSettings();
     }
 
     void Update()
@@ -248,10 +248,12 @@ public class Inventory : MonoBehaviour
         }
         else if (item == ShadowType.shield)
         {
+            Shield shieldItem = shield.GetComponent<Shield>();
             Debug.Log("Destroying shield");
             shieldEnabled = false;
             playerStats.SetActiveTool("none");
             shield.SetActive(false);
+            shieldItem.shieldAura.SetActive(false);
             playerStatsController.dmgModifier = 1f; // reset dmg modifier if shield was up when it was destroyed
             updated = 3;
         }
