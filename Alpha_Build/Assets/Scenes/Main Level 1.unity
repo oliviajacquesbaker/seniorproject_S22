@@ -10752,7 +10752,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825097330}
-  m_LocalRotation: {x: -0.032649226, y: -0.24828485, z: -0.008373398, w: 0.9681005}
+  m_LocalRotation: {x: -0.03264923, y: -0.24828482, z: -0.008373396, w: 0.96810055}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11946,7 +11946,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.009790688, y: -0.8603424, z: 0.016464934, w: 0.5093566}
+  m_LocalRotation: {x: 0.009790686, y: -0.8603424, z: 0.016464934, w: 0.5093566}
   m_LocalPosition: {x: -28.99722, y: 3.427454, z: -473.84332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12051,9 +12051,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdeae2941e0c6dc46aeb3636576589ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bow: {fileID: 1055709654924823542}
+  sword: {fileID: 1974854204223291346}
   playerMain: {fileID: 761955808571366264}
   middleman: {fileID: 1055709654337474981}
   rope: {fileID: 2073194158109111278}
+  shield: {fileID: 173330893637610432}
   anim: {fileID: 5984543032532892478}
   blobAnim: {fileID: 5984543032470815166}
   middleAnim: {fileID: 5984543032772514149}

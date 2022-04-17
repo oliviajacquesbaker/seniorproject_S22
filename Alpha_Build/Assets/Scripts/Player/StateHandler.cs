@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class StateHandler : MonoBehaviour
 {
+    [SerializeField]
     private GameObject bow;
     //private GameObject inv;
+    [SerializeField]
     private GameObject sword;
     [SerializeField]
     GameObject playerMain;
@@ -14,14 +16,17 @@ public class StateHandler : MonoBehaviour
     GameObject middleman;
     [SerializeField]
     GameObject rope;
+    [SerializeField]
+    GameObject shield;
     private Inventory inv;
     public Animator anim;
     public Animator blobAnim;
     public Animator middleAnim;
+    int activeWhenBlobed;
 
     void Start()
     {
-        bow = GameObject.Find("Bow");
+        //bow = GameObject.Find("Bow");
         playerBlob = GameObject.Find("player_BLOB");
         //playerMain = GameObject.Find("shadowplayer");
         //middleman = GameObject.Find("BLOBTRANSITION");
@@ -31,7 +36,9 @@ public class StateHandler : MonoBehaviour
         middleAnim = middleman.GetComponent<Animator>();
         anim = GameObject.Find("Player").GetComponent<Animator>();
         inv = GameObject.Find("Main Camera").GetComponent<Inventory>();
-        sword = GameObject.Find("Sword");
+        //sword = GameObject.Find("Sword");
+        //shield = GameObject.Find("Shield");
+        activeWhenBlobed = -1;
     }
 
     public bool InvOpen()
@@ -52,7 +59,14 @@ public class StateHandler : MonoBehaviour
         playerMain.SetActive(false);
         middleman.SetActive(true);
         middleAnim.SetBool("Blobify", true);
-        rope.SetActive(false);
+        if (rope.activeInHierarchy) activeWhenBlobed = 1;
+        if (sword && sword.activeInHierarchy) activeWhenBlobed = 2;
+        if (shield && shield.activeInHierarchy) activeWhenBlobed = 3;
+        if (bow && bow.activeInHierarchy) activeWhenBlobed = 4;
+        if(rope) rope.SetActive(false);
+        if(sword) sword.SetActive(false);
+        if(shield) shield.SetActive(false);
+        if(bow) bow.SetActive(false);
     }
 
     //called by middleman blobify
@@ -92,7 +106,11 @@ public class StateHandler : MonoBehaviour
         middleman.SetActive(false);
         playerMain.SetActive(true);
         anim.SetBool("IsBlob", false);
-        rope.SetActive(true);
+
+        if (activeWhenBlobed == 1) rope.SetActive(true);
+        if (activeWhenBlobed == 2) sword.SetActive(true);
+        if (activeWhenBlobed == 3) shield.SetActive(true);
+        if (activeWhenBlobed == 4) bow.SetActive(true);
 
     }
 
