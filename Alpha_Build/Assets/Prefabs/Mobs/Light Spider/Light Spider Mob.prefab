@@ -1480,7 +1480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerDet: 0
-  speed: 3
+  speed: 7
   _animator: {fileID: 2850172504329852809}
   detCol: {fileID: 2850172505167242218}
 --- !u!65 &2850172505167242218
